@@ -1,0 +1,78 @@
+{  
+  "index": {
+    "title": "Getting Started",
+    "display": "hidden",
+    "theme": {
+      "breadcrumb": false,
+      "footer": true,
+      "sidebar": true,
+      "toc": true,
+      "pagination": false
+    }
+  },
+  "faucet": {
+    "title": "Superchain Faucet",
+    "type": "page",
+    "href": "https://app.Inktimism.io/faucet?utm_source=docs",
+    "newWindow": true
+  },
+  "gas": {
+    "title": "Gas Tracker",
+    "type": "page",
+    "href": "https://Inktimistic.grafana.net/public-dashboards/c84a5a9924fe4e14b270a42a8651ceb8?orgId=1&refresh=5m",
+    "newWindow": true
+  },
+  "status": {
+    "title": "Status",
+    "type": "page",
+    "href": "https://status.Inktimism.io/",
+    "newWindow": true
+  },
+
+  "--- INKLETS": {
+    "title": "INKLETS",
+    "type": "separator"
+  },
+  "inklets": {
+    "title": "Inklets",
+    "display": "children"
+  },
+
+  "+++ Ink MAINNET": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- Ink MAINNET": {
+    "title": "Ink MAINNET",
+    "type": "separator"
+  },
+  "chain": {
+    "title": "Ink Mainnet",
+    "display": "children"
+  },
+
+  "+++ Ink TESTNET": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- Ink TESTNET": {
+    "title": "Ink TESTNET",
+    "type": "separator"
+  },
+  "stack": {
+    "title": "Ink Stack",
+    "display": "children"
+  },
+  "+++ CONNECT": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- CONNECT": {
+    "title": "CONNECT",
+    "type": "separator"
+  },
+  "connect": {
+    "title": "Connect",
+    "display": "children"
+  }
+}
