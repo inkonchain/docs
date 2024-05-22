@@ -31,9 +31,12 @@ const config: DocsThemeConfig = {
     ),
     darkMode: true,
     project: {
-        link: 'https://github.com/ethereum-Ink/docs',
+        link: 'https://github.com/inkonchain',
     },
-    docsRepositoryBase: 'https://github.com/ethereum-Ink/docs/blob/main/',
+    chat: {
+        link: 'https://test.com'
+    },
+    docsRepositoryBase: 'https://github.com/inkonchain/docs',
     footer: {
         text: 'OP Documentation',
     },
