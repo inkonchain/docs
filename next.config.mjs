@@ -16,7 +16,6 @@ const config = withNextra({
   eslint: {
     ignoreDuringBuilds: true,
   },
-  output: 'export',
   images: {
     unoptimized: true
   }
