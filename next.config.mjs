@@ -12,9 +12,10 @@ const withNextra = nextra({
   }
 })
 
-export default {
-  ...withNextra(),
+const config = withNextra({
   eslint: {
     ignoreDuringBuilds: true,
   },
-}
+})
+
+export default config
