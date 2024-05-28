@@ -1,4 +1,4 @@
-{  
+{
   "index": {
     "title": "Getting Started",
     "display": "hidden",
@@ -37,44 +37,67 @@
     }
   },
 
-  "faucet": {
-    "title": "Superchain Faucet",
-    "type": "page",
-    "href": "https://app.optimism.io/faucet?utm_source=docs",
-    "newWindow": true
-  },
-  "discord_invite": {
-    "title": "Community",
-    "type": "page",
-    "href": "https://discord.com/invite/inkchain",
-    "newWindow": true
-  },
 
-  "gas": {
-    "title": "Gas Tracker",
-    "type": "page",
-    "href": "https://optimistic.grafana.net/public-dashboards/c84a5a9924fe4e14b270a42a8651ceb8?orgId=1&refresh=5m",
-    "newWindow": true
-  },
-  "status": {
+  "header_status": {
     "title": "Status",
     "type": "page",
     "href": "https://status.optimism.io/",
     "newWindow": true
   },
-  
-  "status_link": {
-    "title": "Status",
-    "href": "https://status.inkchain.xyz"
+  "header_faucet": {
+    "title": "Faucet",
+    "type": "page",
+    "href": "https://app.optimism.io/faucet?utm_source=docs",
+    "newWindow": true
   },
-  "community_link": {
+  "header_discord_invite": {
     "title": "Community",
-    "href": "https://discord.com/invite/inkchain"
+    "type": "page",
+    "href": "https://discord.com/invite/inkchain",
+    "newWindow": true
   },
-  "inkubator_link": {
+  "header_inkubator": {
     "title": "Inkubator",
-    "href": "https://inkchain.xyz/inkubator"
+    "type": "page",
+    "href": "https://inkchain.xyz/inkubator",
+    "newWindow": true
   },
+  "header_developer_waitlist": {
+    "title": "Developer Waitlist",
+    "type": "page",
+    "href": "https://inkchain.xyz",
+    "newWindow": true
+  },
+
+
+
+
+  "status": {
+    "title": "Status",
+    "href": "https://status.optimism.io/",
+    "newWindow": true
+  },
+  "faucet": {
+    "title": "Faucet",
+    "href": "https://app.optimism.io/faucet?utm_source=docs",
+    "newWindow": true
+  },
+  "discord_invite": {
+    "title": "Community",
+    "href": "https://discord.com/invite/inkchain",
+    "newWindow": true
+  },
+  "inkubator": {
+    "title": "Inkubator",
+    "href": "https://inkchain.xyz/inkubator",
+    "newWindow": true
+  },
+  "developer_waitlist": {
+    "title": "Developer Waitlist",
+    "href": "https://inkchain.xyz",
+    "newWindow": true
+  },
+
   "+++ General": {
     "title": "",
     "type": "separator"
@@ -87,6 +110,7 @@
     "title": "General",
     "display": "children"
   },
+
   "+++ Building on Ink": {
     "title": "",
     "type": "separator"
