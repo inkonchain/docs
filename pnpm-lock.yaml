@@ -85,8 +85,8 @@ importers:
         specifier: 4.0.0
         version: 4.0.0
       remark-lint-frontmatter-schema:
-        specifier: 3.15.3
-        version: 3.15.3
+        specifier: 3.15.4
+        version: 3.15.4
       remark-lint-heading-style:
         specifier: 4.0.0
         version: 4.0.0
@@ -124,8 +124,8 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  '@apidevtools/json-schema-ref-parser@10.1.0':
-    resolution: {integrity: sha512-3e+viyMuXdrcK8v5pvP+SDoAQ77FH6OyRmuK48SZKmdHJRFm87RsSs8qm6kP39a/pOPURByJw+OXzQIqcfmKtA==}
+  '@apidevtools/json-schema-ref-parser@11.1.0':
+    resolution: {integrity: sha512-g/VW9ZQEFJAOwAyUb8JFf7MLiLy2uEB4rU270rGzDwICxnxMlPy0O11KVePSgS36K1NI29gSlK84n5INGhd4Ag==}
     engines: {node: '>= 16'}
 
   '@babel/code-frame@7.24.7':
@@ -744,8 +744,8 @@ packages:
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
 
-  ajv@8.16.0:
-    resolution: {integrity: sha512-F0twR8U1ZU67JIEtekUcLkXkoO5mMMmgGD8sK/xUFzJ805jxHQl92hImFAqqXMyMYjSPOyUPAwHYhB72g5sTXw==}
+  ajv@8.12.0:
+    resolution: {integrity: sha512-sRu1kpcO9yLtYxBKvqfTeh9KzZEwO3STyX1HT+4CaDzC6HpTGYhIhPIzj9XuKU7KYDwnaeh5hcOwjy1QuJzBPA==}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -2630,10 +2630,6 @@ packages:
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
-  minimatch@7.4.6:
-    resolution: {integrity: sha512-sBz8G/YjVniEz6lKPNpKxXwazJe4c19fEfV2GDMX6AjFz+MX9uDWIZW8XreVhkFW3fkIdTv/gxWr/Kks5FFAVw==}
-    engines: {node: '>=10'}
-
   minimatch@9.0.3:
     resolution: {integrity: sha512-RHiac9mvaRw0x3AYRgDC1CxAP7HTcNrrECeA8YYJeWnpo+2Q5CegtZjaotWTWxDG3UeGA1coE05iH1mPjT/2mg==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -3121,8 +3117,8 @@ packages:
   remark-lint-final-newline@3.0.0:
     resolution: {integrity: sha512-NaPyn6FiOn3IV/6gIcwWfJmgraPT2IaVLjhakfPglZkKVfn/FrOfETyY8Bp+HLoSRI9967OH0yRDnK7/pPIWeQ==}
 
-  remark-lint-frontmatter-schema@3.15.3:
-    resolution: {integrity: sha512-kruq8FlLUVyGMHRNQpP5FJw/zQBI7+ULBQyajqDHOy4sGhDYoOg+SmkybfN3s2OGmumXSpBuTauwu/5yUawMuA==}
+  remark-lint-frontmatter-schema@3.15.4:
+    resolution: {integrity: sha512-egChkbtCCG4hw1F2qoipzSxp6Ea9z4pxaVkWYa36DnCZ9fn3GhCNyOUjbFSIvdhVcWN+AqvHdqPbXC9Pp81Hmg==}
 
   remark-lint-hard-break-spaces@4.0.0:
     resolution: {integrity: sha512-zCTq7/xfM0ZL3bMopXse9DH2nk38wE1LrxmYwnTrqASBLnEAJWE2U2//tRGVMEBfSAnNvmIo96twz6zkLWjbGA==}
@@ -3836,6 +3832,10 @@ packages:
   yallist@2.1.2:
     resolution: {integrity: sha512-ncTzHV7NvsQZkYe1DW7cbDLm0YpzHmZF5r/iyP3ZnQtMiJ+pjzisCiMNI+Sj+xQF5pXhSHxSB3uDbsBTzY/c2A==}
 
+  yaml@2.3.3:
+    resolution: {integrity: sha512-zw0VAJxgeZ6+++/su5AFoqBbZbrEakwu+X0M5HmcwUiBL7AzcuPKjj5we4xfQLp78LkEMpD0cOnUhmgOVy3KdQ==}
+    engines: {node: '>= 14'}
+
   yaml@2.4.3:
     resolution: {integrity: sha512-sntgmxj8o7DE7g/Qi60cqpLBA3HG3STcDA0kO+WfB05jEKhZMbY7umNm2rBpQvsmZ16/lPXCJGW2672dgOUkrg==}
     engines: {node: '>= 14'}
@@ -3859,7 +3859,7 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@apidevtools/json-schema-ref-parser@10.1.0':
+  '@apidevtools/json-schema-ref-parser@11.1.0':
     dependencies:
       '@jsdevtools/ono': 7.1.3
       '@types/json-schema': 7.0.15
@@ -4452,9 +4452,9 @@ snapshots:
 
   acorn@8.11.3: {}
 
-  ajv-formats@2.1.1(ajv@8.16.0):
+  ajv-formats@2.1.1(ajv@8.12.0):
     optionalDependencies:
-      ajv: 8.16.0
+      ajv: 8.12.0
 
   ajv@6.12.6:
     dependencies:
@@ -4463,7 +4463,7 @@ snapshots:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
 
-  ajv@8.16.0:
+  ajv@8.12.0:
     dependencies:
       fast-deep-equal: 3.1.3
       json-schema-traverse: 1.0.0
@@ -7237,10 +7237,6 @@ snapshots:
     dependencies:
       brace-expansion: 1.1.11
 
-  minimatch@7.4.6:
-    dependencies:
-      brace-expansion: 2.0.1
-
   minimatch@9.0.3:
     dependencies:
       brace-expansion: 2.0.1
@@ -7839,15 +7835,15 @@ snapshots:
       unified-lint-rule: 3.0.0
       vfile-location: 5.0.2
 
-  remark-lint-frontmatter-schema@3.15.3:
+  remark-lint-frontmatter-schema@3.15.4:
     dependencies:
-      '@apidevtools/json-schema-ref-parser': 10.1.0
-      ajv: 8.16.0
-      ajv-formats: 2.1.1(ajv@8.16.0)
+      '@apidevtools/json-schema-ref-parser': 11.1.0
+      ajv: 8.12.0
+      ajv-formats: 2.1.1(ajv@8.12.0)
       find-up: 6.3.0
-      minimatch: 7.4.6
+      minimatch: 9.0.3
       unified-lint-rule: 2.1.2
-      yaml: 2.4.3
+      yaml: 2.3.3
 
   remark-lint-hard-break-spaces@4.0.0:
     dependencies:
@@ -8955,6 +8951,8 @@ snapshots:
   xdg-basedir@5.1.0: {}
 
   yallist@2.1.2: {}
+
+  yaml@2.3.3: {}
 
   yaml@2.4.3: {}
 
