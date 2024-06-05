@@ -12,16 +12,18 @@ jobs:
         with:
           node-version: "20.x"
           cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Add pnpm store path to env var
         id: pnpm-cache
         shell: bash
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
       - name: Cache node modules
         uses: actions/cache@v4
         with:
-          path: ${{ env.STORE_PATH }}
+          path: |
+            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+            **/node_modules
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
@@ -31,27 +33,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          run_install: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
-          cache: "pnpm"
-      - name: Add pnpm store path to env var
-        id: pnpm-cache
-        shell: bash
-        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: TRY
-        shell: bash
-        run: echo ${{ steps.generate_number.outputs.STORE_PATH }}
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.generate_number.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+      - uses: ./.github/actions/base-setup
+        name: Base Setup
       - name: JS linting
         run: pnpm run lint:js
 
@@ -60,22 +43,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          run_install: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
-          cache: "pnpm"
-      # - name: Restore cache
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       ~/.npm
-      #       **/node_modules
-      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node-
+      - uses: ./.github/actions/base-setup
+        name: Base Setup
       - name: MDX linting
         run: pnpm run lint:md
 
@@ -84,22 +53,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          run_install: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
-          cache: "pnpm"
-      # - name: Restore cache
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       ~/.npm
-      #       **/node_modules
-      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node-
+      - uses: ./.github/actions/base-setup
+        name: Base Setup
       - name: Run formatting
         run: pnpm run format:js
 
@@ -108,22 +63,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          run_install: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
-          cache: "pnpm"
-      # - name: Restore cache
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       ~/.npm
-      #       **/node_modules
-      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node-
+      - uses: ./.github/actions/base-setup
+        name: Base Setup
       - name: Run Spellcheck
         run: pnpm run spellcheck:lint
 
@@ -132,21 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          run_install: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
-          cache: "pnpm"
-      # - name: Restore cache
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       ~/.npm
-      #       **/node_modules
-      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node-
+      - uses: ./.github/actions/base-setup
+        name: Base Setup
       - name: Building app
         run: pnpm run build
