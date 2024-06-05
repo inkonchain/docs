@@ -1,0 +1,79 @@
+name: PR Checks
+on: [pull_request]
+jobs:
+  install_modules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Add pnpm store path to env var
+        id: pnpm-cache
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+            **/node_modules
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+  js-lint:
+    needs: install_modules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/base-setup
+        name: Base Setup
+      - name: JS linting
+        run: pnpm run lint:js
+
+  md-lint:
+    needs: install_modules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/base-setup
+        name: Base Setup
+      - name: MDX linting
+        run: pnpm run lint:md
+
+  format:
+    needs: install_modules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/base-setup
+        name: Base Setup
+      - name: Run formatting
+        run: pnpm run format:js
+
+  spell-check:
+    needs: install_modules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/base-setup
+        name: Base Setup
+      - name: Run Spellcheck
+        run: pnpm run spellcheck:lint
+
+  build:
+    needs: install_modules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/base-setup
+        name: Base Setup
+      - name: Building app
+        run: pnpm run build

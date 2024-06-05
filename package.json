@@ -1,4 +1,6 @@
 {
+  "name": "inkchain-docs",
+  "packageManager": "pnpm@9.1.3",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
