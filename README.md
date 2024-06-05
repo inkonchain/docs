@@ -13,8 +13,8 @@ This is a Next.js Documentation application built using [Nextra](https://nextra.
 Clone this repository, install the dependencies, and start the development server with the following commands:
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ## Tooling
