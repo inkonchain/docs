@@ -30,8 +30,12 @@ Here are some of the tools we are using:
 
 ## CI/CD
 
-We leverage Github Actions to perform some automated checks on all of our PRs. In particular we run the following checks:
-// @TODO Add list of checks once we have them
+We leverage GitHub Actions to perform some automated checks on all of our PRs. In particular, we run the following checks:
+
+- **js-lint**: Run Eslint to make sure JS code is formatted correctly.
+- **md-lint**: Run Remark to make sure Markdown code is formatted correctly.
+- **format**: Run Prettier to make sure code is formatted correctly.
+- **spell-check**: Run CSpell to make sure the content of our MDX files has the right spelling. Sometimes this command may fail for legit words (e.g. "inkchain") if that is the case, then we can simply add any word that we'd like to whitelist to the [`./cspell/project-words.txt`](./cspell/project-words.txt) file
 
 ### Feature Branch Deployment
 
