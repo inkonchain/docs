@@ -1,26 +1,12 @@
-import React from 'react';
-import { addNetwork } from './AddNetworkScript';
+import { addNetwork } from "@/utils/add-network";
 
-const AddNetworkButton = () => {
+export const AddNetworkButton = () => {
   return (
     <button
+      className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
       onClick={addNetwork}
-      style={{
-        padding: '10px 20px',
-        fontSize: '16px',
-        cursor: 'pointer',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        backgroundColor: '#f5f5f5',
-        color: '#333',
-        transition: 'backgroundColor 0.3s',
-      }}
-      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#e0e0e0')}
-      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#f5f5f5')}
     >
       Add Ink Sepolia Network
     </button>
   );
 };
-
-export default AddNetworkButton;

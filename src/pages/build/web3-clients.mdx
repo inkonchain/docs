@@ -6,32 +6,32 @@ To connect to Ink by instantiating a new `ethers.js` `JsonRpcProvider` object wi
 
 1. **Install ethers.js**: Ensure you have `ethers.js` installed in your project. If not, you can install it using npm or yarn.
 
-    ```bash
-    npm install ethers
-    ```
+   ```bash
+   npm install ethers
+   ```
 
-    or
+   or
 
-    ```bash
-    yarn add ethers
-    ```
+   ```bash
+   yarn add ethers
+   ```
 
 2. **Instantiate a JsonRpcProvider**: Use the following code snippet to create a new `JsonRpcProvider` object with the RPC URL of Ink's testnet.
 
-    ```javascript
-    const { ethers } = require('ethers');
+   ```javascript
+   const { ethers } = require('ethers');
 
-    const rpcUrl = 'https://sepolia.inkchain.xyz';
-    const provider = new ethers.JsonRpcProvider(rpcUrl);
+   const rpcUrl = 'https://sepolia.inkchain.xyz';
+   const provider = new ethers.JsonRpcProvider(rpcUrl);
 
-    // Example: Getting the block number
-    async function getBlockNumber() {
-        const blockNumber = await provider.getBlockNumber();
-        console.log('Current block number:', blockNumber);
-    }
+   // Example: Getting the block number
+   async function getBlockNumber() {
+       const blockNumber = await provider.getBlockNumber();
+       console.log('Current block number:', blockNumber);
+   }
 
-    getBlockNumber();
-    ```
+   getBlockNumber();
+   ```
 
 3. **Using the Provider**: You can now use the `provider` to interact with Ink's testnet. For example, you can fetch the current block number or interact with smart contracts deployed on the testnet.
 
@@ -51,3 +51,4 @@ async function getBlockNumber() {
 }
 
 getBlockNumber();
+```
