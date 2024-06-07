@@ -46,7 +46,7 @@ jobs:
       - uses: ./.github/actions/base-setup
         name: Base Setup
       - name: MDX linting
-        run: pnpm run lint:md
+        run: pnpm run lint:mdx
 
   format:
     needs: install_modules

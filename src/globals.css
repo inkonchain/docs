@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  a {
+    @apply !text-magic-purple dark:!text-magic-purple;
+  }
+
+  nav {
+    @apply bg-magic-white dark:bg-magic-black;
+  }
+}
+
+/* Some custom hacks to override some issues with Nextra */
+.nextra-nav-container-blur {
+  display: none !important ;
+}
+
+/* Remove the padding from the sidebar link, so that we can pply our own style */
+a:has(div.ink-sidebar-item) {
+  padding: 0 !important;
+  background-color: transparent !important;
+}

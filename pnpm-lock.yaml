@@ -14,6 +14,9 @@ importers:
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next-themes:
+        specifier: 0.3.0
+        version: 0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       nextra:
         specifier: 2.13.4
         version: 2.13.4(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -198,8 +201,8 @@ packages:
   '@cspell/dict-dart@2.0.3':
     resolution: {integrity: sha512-cLkwo1KT5CJY5N5RJVHks2genFkNCl/WLfj+0fFjqNR+tk3tBI1LY7ldr9piCtSFSm4x9pO1x6IV3kRUY1lLiw==}
 
-  '@cspell/dict-data-science@1.0.11':
-    resolution: {integrity: sha512-TaHAZRVe0Zlcc3C23StZqqbzC0NrodRwoSAc8dis+5qLeLLnOCtagYQeROQvDlcDg3X/VVEO9Whh4W/z4PAmYQ==}
+  '@cspell/dict-data-science@2.0.1':
+    resolution: {integrity: sha512-xeutkzK0eBe+LFXOFU2kJeAYO6IuFUc1g7iRLr7HeCmlC4rsdGclwGHh61KmttL3+YHQytYStxaRBdGAXWC8Lw==}
 
   '@cspell/dict-django@4.1.0':
     resolution: {integrity: sha512-bKJ4gPyrf+1c78Z0Oc4trEB9MuhcB+Yg+uTTWsvhY6O2ncFYbB/LbEZfqhfmmuK/XJJixXfI1laF2zicyf+l0w==}
@@ -294,8 +297,8 @@ packages:
   '@cspell/dict-public-licenses@2.0.7':
     resolution: {integrity: sha512-KlBXuGcN3LE7tQi/GEqKiDewWGGuopiAD0zRK1QilOx5Co8XAvs044gk4MNIQftc8r0nHeUI+irJKLGcR36DIQ==}
 
-  '@cspell/dict-python@4.1.11':
-    resolution: {integrity: sha512-XG+v3PumfzUW38huSbfT15Vqt3ihNb462ulfXifpQllPok5OWynhszCLCRQjQReV+dgz784ST4ggRxW452/kVg==}
+  '@cspell/dict-python@4.2.1':
+    resolution: {integrity: sha512-9X2jRgyM0cxBoFQRo4Zc8oacyWnXi+0/bMI5FGibZNZV4y/o9UoFEr6agjU260/cXHTjIdkX233nN7eb7dtyRg==}
 
   '@cspell/dict-r@2.0.1':
     resolution: {integrity: sha512-KCmKaeYMLm2Ip79mlYPc8p+B2uzwBp4KMkzeLd5E6jUlCL93Y5Nvq68wV5fRLDRTf7N1LvofkVFWfDcednFOgA==}
@@ -309,8 +312,8 @@ packages:
   '@cspell/dict-scala@5.0.2':
     resolution: {integrity: sha512-v97ClgidZt99JUm7OjhQugDHmhx4U8fcgunHvD/BsXWjXNj4cTr0m0YjofyZoL44WpICsNuFV9F/sv9OM5HUEw==}
 
-  '@cspell/dict-software-terms@3.4.1':
-    resolution: {integrity: sha512-JgNHVdWEUhZKCYBiAjsLojkw8WhvsTXyk/IfFby0Lzbl+/AoJvL/XZqr0pvqfpBjbv7pwtnjahrbGxPRCOV+gA==}
+  '@cspell/dict-software-terms@3.4.2':
+    resolution: {integrity: sha512-mdnTfWSWQVGdth7OTlX4WsNsHGBiBEzIEs8/rmmq//IDbjBYpIdbA4d/pZRhfUF0CpXkQdytccyg0EHtmN4+7w==}
 
   '@cspell/dict-sql@2.1.3':
     resolution: {integrity: sha512-SEyTNKJrjqD6PAzZ9WpdSu6P7wgdNtGV2RV8Kpuw1x6bV+YsSptuClYG+JSdRExBTE6LwIe1bTklejUp3ZP8TQ==}
@@ -918,8 +921,8 @@ packages:
     resolution: {integrity: sha512-DLIsRzJVBQu72meAKPkWQOLcujdXT32hwdfnkI1frSiSRMK1MofjKHf+MEx0SB6fjEFXL8fBDv1dKymBlOp4Qw==}
     engines: {node: '>=0.10.0'}
 
-  caniuse-lite@1.0.30001628:
-    resolution: {integrity: sha512-S3BnR4Kh26TBxbi5t5kpbcUlLJb9lhtDXISDPwOfI+JoC+ik0QksvkZtUVyikw3hjnkgkMPSJ8oIM9yMm9vflA==}
+  caniuse-lite@1.0.30001629:
+    resolution: {integrity: sha512-c3dl911slnQhmxUIT4HhYzT7wnBK/XYpGnYLOj4nJBaRiw52Ibe7YxlDaAeRECvA786zCuExhxIUJ2K7nHMrBw==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -1339,8 +1342,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.4.790:
-    resolution: {integrity: sha512-eVGeQxpaBYbomDBa/Mehrs28MdvCXfJmEFzaMFsv8jH/MJDLIylJN81eTJ5kvx7B7p18OiPK0BkC06lydEy63A==}
+  electron-to-chromium@1.4.795:
+    resolution: {integrity: sha512-hHo4lK/8wb4NUa+NJYSFyJ0xedNHiR6ylilDtb8NUW9d4dmBFmGiecYEKCEbti1wTNzbKXLfl4hPWEkAFbHYlw==}
 
   elkjs@0.9.3:
     resolution: {integrity: sha512-f/ZeWvW/BCXbhGEf1Ujp29EASo/lk1FDnETgNKwJrsVvGZhUWCZyg3xLJjAsxfOmt8KjswHmI5EwCQcPMpOYhQ==}
@@ -2367,8 +2370,8 @@ packages:
   mdast-util-to-hast@12.3.0:
     resolution: {integrity: sha512-pits93r8PhnIoU4Vy9bjW39M2jJ6/tdHyja9rrot9uujkN7UTU9SDnE6WNJz/IGyQk3XHX6yNNtrBH6cQzm8Hw==}
 
-  mdast-util-to-hast@13.1.0:
-    resolution: {integrity: sha512-/e2l/6+OdGp/FB+ctrJ9Avz71AN/GRH3oi/3KAx/kMnoUsD6q0woXlDT8lLEeViVKE7oZxE7RXzvO3T8kF2/sA==}
+  mdast-util-to-hast@13.2.0:
+    resolution: {integrity: sha512-QGYKEuUsYT9ykKBCMOEDLsU5JRObWQusAolFMeko/tYPufNkRffBAQjIE+99jbA87xv6FgmjLtwjh9wBWajwAA==}
 
   mdast-util-to-markdown@1.5.0:
     resolution: {integrity: sha512-bbv7TPv/WC49thZPg3jXuqzuvI45IL2EVAr/KxF0BSdHsU0ceFHOmwQn6evxAh1GaoK/6GQ1wp4R4oW2+LFL/A==}
@@ -2695,6 +2698,12 @@ packages:
       next: '*'
       react: '*'
       react-dom: '*'
+
+  next-themes@0.3.0:
+    resolution: {integrity: sha512-/QHIrsYpd6Kfk7xakK4svpDI5mmXP0gfvCoJdGpZQ2TOrQZmsW0QxjaiLn8wbIKjtm4BTSqLoix4lxYYOnLJ/w==}
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18
+      react-dom: ^16.8 || ^17 || ^18
 
   next@14.2.3:
     resolution: {integrity: sha512-dowFkFTR8v79NPJO4QsBUtxv0g9BrS/phluVpMAt2ku7H+cbcBJlopXjkWlwxrk/xGqMemr7JkGPGemPrLLX7A==}
@@ -3929,12 +3938,12 @@ snapshots:
       '@cspell/dict-php': 4.0.7
       '@cspell/dict-powershell': 5.0.4
       '@cspell/dict-public-licenses': 2.0.7
-      '@cspell/dict-python': 4.1.11
+      '@cspell/dict-python': 4.2.1
       '@cspell/dict-r': 2.0.1
       '@cspell/dict-ruby': 5.0.2
       '@cspell/dict-rust': 4.0.3
       '@cspell/dict-scala': 5.0.2
-      '@cspell/dict-software-terms': 3.4.1
+      '@cspell/dict-software-terms': 3.4.2
       '@cspell/dict-sql': 2.1.3
       '@cspell/dict-svelte': 1.0.2
       '@cspell/dict-swift': 2.0.1
@@ -3974,7 +3983,7 @@ snapshots:
 
   '@cspell/dict-dart@2.0.3': {}
 
-  '@cspell/dict-data-science@1.0.11': {}
+  '@cspell/dict-data-science@2.0.1': {}
 
   '@cspell/dict-django@4.1.0': {}
 
@@ -4038,9 +4047,9 @@ snapshots:
 
   '@cspell/dict-public-licenses@2.0.7': {}
 
-  '@cspell/dict-python@4.1.11':
+  '@cspell/dict-python@4.2.1':
     dependencies:
-      '@cspell/dict-data-science': 1.0.11
+      '@cspell/dict-data-science': 2.0.1
 
   '@cspell/dict-r@2.0.1': {}
 
@@ -4050,7 +4059,7 @@ snapshots:
 
   '@cspell/dict-scala@5.0.2': {}
 
-  '@cspell/dict-software-terms@3.4.1': {}
+  '@cspell/dict-software-terms@3.4.2': {}
 
   '@cspell/dict-sql@2.1.3': {}
 
@@ -4594,7 +4603,7 @@ snapshots:
   autoprefixer@10.4.19(postcss@8.4.38):
     dependencies:
       browserslist: 4.23.0
-      caniuse-lite: 1.0.30001628
+      caniuse-lite: 1.0.30001629
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
@@ -4632,8 +4641,8 @@ snapshots:
 
   browserslist@4.23.0:
     dependencies:
-      caniuse-lite: 1.0.30001628
-      electron-to-chromium: 1.4.790
+      caniuse-lite: 1.0.30001629
+      electron-to-chromium: 1.4.795
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.0)
 
@@ -4662,7 +4671,7 @@ snapshots:
 
   camelcase@2.1.1: {}
 
-  caniuse-lite@1.0.30001628: {}
+  caniuse-lite@1.0.30001629: {}
 
   ccount@2.0.1: {}
 
@@ -5143,7 +5152,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.4.790: {}
+  electron-to-chromium@1.4.795: {}
 
   elkjs@0.9.3: {}
 
@@ -5853,7 +5862,7 @@ snapshots:
       hast-util-from-parse5: 8.0.1
       hast-util-to-parse5: 8.0.0
       html-void-elements: 3.0.0
-      mdast-util-to-hast: 13.1.0
+      mdast-util-to-hast: 13.2.0
       parse5: 7.1.2
       unist-util-position: 5.0.0
       unist-util-visit: 5.0.0
@@ -6585,7 +6594,7 @@ snapshots:
       unist-util-position: 4.0.4
       unist-util-visit: 4.1.2
 
-  mdast-util-to-hast@13.1.0:
+  mdast-util-to-hast@13.2.0:
     dependencies:
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
@@ -7294,12 +7303,17 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  next-themes@0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@next/env': 14.2.3
       '@swc/helpers': 0.5.5
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001628
+      caniuse-lite: 1.0.30001629
       graceful-fs: 4.2.11
       postcss: 8.4.31
       react: 18.3.1
