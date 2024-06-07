@@ -8,7 +8,7 @@
     "lint": "pnpm run lint:js && pnpm run lint:mdx && pnpm run format:js:check && pnpm run spellcheck:lint",
     "lint:fix": "pnpm run lint:js:fix && pnpm run lint:mdx:fix && pnpm run format:js && pnpm run spellcheck:fix",
     "lint:js": "eslint ./src theme.config.tsx --ext js,jsx,ts,tsx",
-    "lint:js:fix": "eslint ./src --fix --ext js,jsx,ts,tsx",
+    "lint:js:fix": "eslint ./src theme.config.tsx --fix --ext js,jsx,ts,tsx",
     "format:js": "prettier --write \"**/*.{ts,tsx,css,scss}\"",
     "format:js:check": "prettier --check \"**/*.{ts,tsx,css,scss}\"",
     "lint:mdx": "remark -e mdx -u mdx ./src",
@@ -37,6 +37,7 @@
   "dependencies": {
     "clsx": "2.1.1",
     "next": "14.2.3",
+    "next-themes": "0.3.0",
     "nextra": "2.13.4",
     "nextra-theme-docs": "2.13.4",
     "react": "18.3.1",
