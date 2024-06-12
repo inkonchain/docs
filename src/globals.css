@@ -3,12 +3,35 @@
 @tailwind utilities;
 
 @layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply !text-magic-deep-purple dark:!text-magic-white;
+  }
+
   a {
-    @apply !text-magic-purple dark:!text-magic-purple;
+    @apply !text-magic-purple dark:!text-magic-semi-deep-purple;
+  }
+
+  nav > a {
+    @apply !text-ink-grey-400 dark:!text-magic-white dark:hover:!text-ink-grey-400 hover:!text-ink-grey-700;
+  }
+
+  nav > a > svg {
+    @apply !fill-magic-black dark:!fill-magic-white;
   }
 
   nav {
-    @apply bg-magic-white dark:bg-magic-black;
+    @apply bg-white dark:bg-magic-black;
+  }
+
+  pre {
+    @apply !bg-magic-semi-deep-purple/15;
+  }
+
+  .toc-link {
+    @apply cursor-pointer !text-ink-grey-400 dark:!text-magic-white group-hover:!text-ink-grey-700 dark:group-hover:!text-ink-grey-700;
   }
 }
 

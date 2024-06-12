@@ -25,7 +25,22 @@ const config: DocsThemeConfig = {
   head: Head,
   components: {
     a(props) {
-      return <a {...props} className={clsx("text-magic-purple")} />;
+      return (
+        <a
+          {...props}
+          className="text-magic-purple transitiona-all hover:underline"
+        />
+      );
+    },
+    code(props) {
+      return (
+        <code
+          {...props}
+          className={clsx(
+            "bg-magic-semi-deep-purple/15 text-magic-purple dark:text-magic-white text-sm rounded-md px-2 py-0.5"
+          )}
+        />
+      );
     },
   },
   sidebar: {
@@ -47,6 +62,7 @@ const config: DocsThemeConfig = {
     key: "2.4-release",
     text: (
       <a
+        className="!text-magic-white dark:!text-magic-white"
         href="/builders/notices/fp-changes"
         target="_self"
         rel="noopener noreferrer"

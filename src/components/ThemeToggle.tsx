@@ -5,7 +5,7 @@ import { MoonIcon } from "../icons/Moon";
 import { SunIcon } from "../icons/Sun";
 
 export const ThemeToggle = () => {
-  const { resolvedTheme, setTheme, ...rest } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
   const onToggleTheme = () => {
@@ -31,7 +31,7 @@ export const ThemeToggle = () => {
   return (
     <button className="w-6 h-6" type="button" onClick={onToggleTheme}>
       {resolvedTheme === "light" ? (
-        <SunIcon className="w-6 h-6 text-magic-purple" />
+        <SunIcon className="w-6 h-6 text-magic-black" />
       ) : (
         <MoonIcon className="w-6 h-6 text-white" />
       )}
