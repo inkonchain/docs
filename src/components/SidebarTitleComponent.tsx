@@ -24,7 +24,7 @@ export const SidebarTitleComponent: React.FC<SidebarTitleComponentProps> = ({
   return (
     <div
       className={clsx(
-        "ink-sidebar-item px-2 py-1.5 rounded-sm w-full transition-all",
+        "ink-sidebar-item px-2 py-1.5 rounded-lg w-full transition-all",
         {
           "text-ink-grey-400 dark:text-magic-white dark:hover:text-ink-grey-700 hover:text-ink-grey-700 hover:bg-ink-grey-100":
             !isActive,
