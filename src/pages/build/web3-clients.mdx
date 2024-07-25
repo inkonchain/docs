@@ -21,7 +21,7 @@ To connect to Ink by instantiating a new `ethers.js` `JsonRpcProvider` object wi
    ```javascript
    const { ethers } = require('ethers');
 
-   const rpcUrl = 'https://sepolia.inkchain.xyz';
+   const rpcUrl = 'https://sepolia-rpc.inkchain.xyz';
    const provider = new ethers.JsonRpcProvider(rpcUrl);
 
    // Example: Getting the block number
@@ -42,7 +42,7 @@ The following code snippet demonstrates how to fetch and print the current block
 ```javascript
 const { ethers } = require('ethers');
 
-const rpcUrl = 'https://sepolia.inkchain.xyz';
+const rpcUrl = 'https://sepolia-rpc.inkchain.xyz';
 const provider = new ethers.JsonRpcProvider(rpcUrl);
 
 async function getBlockNumber() {
