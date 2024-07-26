@@ -1,123 +1,133 @@
-# Running an Ink node
+import { Callout } from 'nextra/components'
 
-This tutorial will walk you through setting up your own [Ink Node].
+# Running an Ink Node
 
-## Objectives
+Welcome to the [Ink Node] setup tutorial. Follow these steps to deploy and sync your own node efficiently.
 
-By the end of this tutorial you should be able to:
+## Tutorial Goals
 
-- Deploy and sync an Ink node
+By the end of this guide, you will:
 
+- Successfully deploy an [Ink Node].
+- Ensure your node is in sync with the network.
 
+## Before You Begin
 
-## Prerequisites
+<Callout emoji="⚠️" type='warning'>
+Running a node is resource-intensive and time-consuming. Make sure you have a clear purpose for setting up your node.
 
-⚠️ Running a node is time consuming, resource expensive, and potentially costly. If you don't already know why you want to run your own node, you probably don't need to.
-<br></br>
+For those starting out and needing an RPC URL, our free endpoints are available:
 
-If you're just getting started and need an RPC URL, you can use our free endpoints:
-<br></br>
+- **Mainnet**: `not available yet`
+- **Testnet (Sepolia)**: `https://sepolia-rpc.inkchain.xyz/`
 
-- **Mainnet**: `https://mainnet.inkonchain.xyz`
-- **Testnet (Sepolia)**: `https://sepolia.inkonchain.xyz`
+**Note:** These RPCs are rate-limited and unsuitable for production applications.
+</Callout>
 
-**Note:** Our RPCs are rate-limited, they are not suitable for production apps.
+### System Requirements
 
-If you're looking to harden your app and avoid rate-limiting for your users, please check out one of our partners.
-
-### Hardware requirements
-
-We recommend you have this configuration to run a node:
+To run a node, your system should meet these minimum specifications:
 
 - 8-Core CPU
-- at least 16 GB RAM
-- an SSD drive (NVME recommended) with at least 750GB (full node) or 4.5TB (archive node) free
+- 8 GB RAM or more
+- SSD drive (NVME recommended) with at least 100GB storage
 
-ℹ️ If utilizing Amazon Elastic Block Store (EBS), ensure timing buffered disk reads are fast enough in order to avoid latency issues alongside the rate of new blocks added to Ink during the initial synchronization process.
+Running an archive node will demand additional disk space over time. More CPU and RAM will enhance performance with higher RPC traffic.
 
-### Docker
+### Software Prerequisites
 
-This tutorial assumes you are familiar with [Docker] and have it running on your machine.
+Ensure [Docker] is installed and running on your machine. Familiarity with [Docker] is assumed.
 
-### L1 RPC URL
+### Optional: Custom L1 RPC URL
 
-You'll need your own L1 RPC URL. This can be one that you run yourself, or via a third-party provider, such as our partners.
+By default, the [Ink Node] repository leverages public L1 RPC & Beacon APIs. For more stability, we encourage you to use your own L1 RPC and Beacon APIs.
 
+## Step-by-Step Guide
 
+1. **Clone the Repository:** [Ink Node repository](https://github.com/inkonchain/node).
 
-## Running a Node
+2. **Download the Snapshot:** [latest snapshot](#snapshots-table).
 
-1. Clone the [repo].
-2. Ensure you have an Ethereum L1 full node RPC available (not Ink), and set `OP_NODE_L1_ETH_RPC` & `OP_NODE_L1_BEACON` (in the `.env.*` file if using `docker-compose`). If running your own L1 node, it needs to be synced before Ink will be able to fully sync.
-3. Uncomment the line relevant to your network (`.env.sepolia`, or `.env.mainnet`) under the 2 `env_file` keys in `docker-compose.yml`.
-4. Run `docker compose up`. Confirm you get a response from:
+3. **Prepare the Snapshot:** Move the downloaded `geth.tar.lz4` file to the root of the repository.
+   ```sh
+      node/
+      ├── op-geth/
+      ├── op-node/
+      ├── .env.ink-sepolia
+      ├── .gitignore
+      ├── docker-compose.yml
+      ├── geth.tar.lz4 # <-- place it here
+      ├── README.md
+      └── setup.sh
+   ```
 
-```bash
-curl -d '{"id":0,"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["latest",false]}' \
-  -H "Content-Type: application/json" http://localhost:8545
+4. **Run Setup Script:**
+   ```sh
+   ./setup.sh
+   ```
+
+5. **Optional Configuration:**
+   Create a `.env` file at the root and set the following variables:
+   ```sh
+   L1_RPC_URL=your_rpc_url
+   L1_BEACON_URL=your_beacon_url
+   ```
+
+6. **Start the Node:**
+   ```sh
+   docker compose up # --build to force rebuild the images
+   ```
+
+<Callout emoji="⚠️" type='warning'>
+Syncing your node may take several days. Monitor usage and plan accordingly.
+</Callout>
+
+## Snapshots
+
+| Network | URL |
+| :----- | :---- |
+| Sepolia | [Download Sepolia Snapshot](https://drive.google.com/file/d/1Nt6X8va7WTgOL6s7BHWqGAI8gyVdE4GE/view?usp=sharing) |
+
+## Verifying Sync Status
+
+### Using op-node API
+
+Check the sync status using the `optimism_syncStatus` method:
+```sh
+curl -X POST -H "Content-Type: application/json" --data \
+    '{"jsonrpc":"2.0","method":"optimism_syncStatus","params":[],"id":1}' \
+    http://localhost:9545 | jq
 ```
 
-⚠️ Syncing your node may take **days** and will consume a vast amount of your requests quota. Be sure to monitor usage and up your plan if needed.
+### Using op-geth API
 
-
-
-### Snapshots
-
-If you're a prospective or current Ink Node operator and would like to restore from a snapshot to save time on the initial sync, it's possible to always get the latest available snapshot of the Ink chain on mainnet and/or testnet by using the following CLI commands. The snapshots are updated every week.
-
-#### Restoring from snapshot
-
-In the home directory of your Ink Node, create a folder named `geth-data`. If you already have this folder, remove it to clear the existing state and then recreate it. Next, run the following code and wait for the operation to complete.
-
-**Testnet (Full)**
-
-```
-wget https://sepolia-full-snapshots.inkonchain.xyz/$(curl https://sepolia-full-snapshots.inkonchain.xyz/latest)
+To verify if your node is fully synced, use the `eth_blockNumber` method:
+```sh
+curl http://localhost:8545 -X POST \
+    -H "Content-Type: application/json" \
+    --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params": [],"id":1}' | jq -r .result | sed 's/^0x//' | awk '{printf "%d\n", "0x" $0}';
 ```
 
-**Testnet (Archive)**
+A synced node will display the latest block number as seen on the [block explorer](https://sepolia-explorer.inkchain.xyz/).
 
-```
-wget https://sepolia-archive-snapshots.inkonchain.xyz/$(curl https://sepolia-archive-snapshots.inkonchain.xyz/latest)
-```
+### Comparing with Ink Public RPC
 
-**Mainnet (Full)**
-
-```
-wget https://mainnet-full-snapshots.inkonchain.xyz/$(curl https://mainnet-full-snapshots.inkonchain.xyz/latest)
-```
-
-**Mainnet (Archive)**
-
-```
-wget https://mainnet-archive-snapshots.inkonchain.xyz/$(curl https://mainnet-archive-snapshots.inkonchain.xyz/latest)
+Compare your local node's finalized block with the public RPC block:
+```sh
+local_block=$(curl -s -X POST http://localhost:8545 -H "Content-Type: application/json" \
+  --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["finalized", false],"id":1}' \
+  | jq -r .result.number | sed 's/^0x//' | awk '{printf "%d\n", "0x" $0}'); \
+public_rpc_block=$(curl -s -X POST https://sepolia-rpc.inkchain.xyz/ -H "Content-Type: application/json" \
+ --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["finalized", false],"id":1}' \
+ | jq -r .result.number | sed 's/^0x//' | awk '{printf "%d\n", "0x" $0}'); \
+echo -e "Local finalized block: $local_block\nRemote finalized block: $public_rpc_block"
 ```
 
-You'll then need to untar the downloaded snapshot and place the `geth` subfolder inside of it in the `geth-data` folder you created (unless you changed the location of your data directory).
-
-Return to the root of your Ink node folder and start your node.
-
+A synced node will have equal local and remote finalized blocks:
+```text
+Local finalized block: 4449608
+Remote finalized block: 4449608
 ```
-cd ..
-docker compose up --build
-```
-
-Your node should begin syncing from the last block in the snapshot.
-
-Check the latest block to make sure you're syncing from the snapshot and that it restored correctly. If so, you can remove the snapshot archive that you downloaded.
-
-### Syncing
-
-You can monitor the progress of your sync with:
-
-```bash
-echo Latest synced block behind by: $((($(date +%s)-$( \
-  curl -d '{"id":0,"jsonrpc":"2.0","method":"optimism_syncStatus"}' \
-  -H "Content-Type: application/json" http://localhost:7545 | \
-  jq -r .result.unsafe_l2.timestamp))/60)) minutes
-```
-
-You'll also know that the sync hasn't completed if you get `Error: nonce has already been used` if you try to deploy using your node.
 
 [docker]: https://www.docker.com/
 [ink node]: https://github.com/inkonchain/node

@@ -28,7 +28,7 @@ const config: DocsThemeConfig = {
       return (
         <a
           {...props}
-          className="text-magic-purple transitiona-all hover:underline"
+          className="text-magic-purple transition-all hover:underline"
         />
       );
     },
