@@ -3,5 +3,6 @@
     "ink-contracts": "Ink Contracts",
     "bridged-token-addresses": "Bridged Token Addresses",
     "web3-clients": "Web3 Clients",
-    "tools": "Tools"
+    "tools": "Tools",
+    "run-an-ink-node": "Running an Ink node"
   }
