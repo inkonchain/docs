@@ -1,0 +1,134 @@
+import { Callout } from 'nextra/components'
+
+# Running an Ink Node
+
+Welcome to the [Ink Node] setup tutorial. Follow these steps to deploy and sync your own node efficiently.
+
+## Tutorial Goals
+
+By the end of this guide, you will:
+
+- Successfully deploy an [Ink Node].
+- Ensure your node is in sync with the network.
+
+## Before You Begin
+
+<Callout emoji="⚠️" type='warning'>
+Running a node is resource-intensive and time-consuming. Make sure you have a clear purpose for setting up your node.
+
+For those starting out and needing an RPC URL, our free endpoints are available:
+
+- **Mainnet**: `not available yet`
+- **Testnet (Sepolia)**: `https://sepolia-rpc.inkchain.xyz/`
+
+**Note:** These RPCs are rate-limited and unsuitable for production applications.
+</Callout>
+
+### System Requirements
+
+To run a node, your system should meet these minimum specifications:
+
+- 8-Core CPU
+- 8 GB RAM or more
+- SSD drive (NVME recommended) with at least 100GB storage
+
+Running an archive node will demand additional disk space over time. More CPU and RAM will enhance performance with higher RPC traffic.
+
+### Software Prerequisites
+
+Ensure [Docker] is installed and running on your machine. Familiarity with [Docker] is assumed.
+
+### Optional: Custom L1 RPC URL
+
+By default, the [Ink Node] repository leverages public L1 RPC & Beacon APIs. For more stability, we encourage you to use your own L1 RPC and Beacon APIs.
+
+## Step-by-Step Guide
+
+1. **Clone the Repository:** [Ink Node repository](https://github.com/inkonchain/node).
+
+2. **Download the Snapshot:** [latest snapshot](#snapshots-table).
+
+3. **Prepare the Snapshot:** Move the downloaded `geth.tar.lz4` file to the root of the repository.
+   ```sh
+      node/
+      ├── op-geth/
+      ├── op-node/
+      ├── .env.ink-sepolia
+      ├── .gitignore
+      ├── docker-compose.yml
+      ├── geth.tar.lz4 # <-- place it here
+      ├── README.md
+      └── setup.sh
+   ```
+
+4. **Run Setup Script:**
+   ```sh
+   ./setup.sh
+   ```
+
+5. **Optional Configuration:**
+   Create a `.env` file at the root and set the following variables:
+   ```sh
+   L1_RPC_URL=your_rpc_url
+   L1_BEACON_URL=your_beacon_url
+   ```
+
+6. **Start the Node:**
+   ```sh
+   docker compose up # --build to force rebuild the images
+   ```
+
+<Callout emoji="⚠️" type='warning'>
+Syncing your node may take several days. Monitor usage and plan accordingly.
+</Callout>
+
+## Snapshots
+
+| Network | URL |
+| :----- | :---- |
+| Sepolia | [Download Sepolia Snapshot](https://drive.google.com/file/d/1Nt6X8va7WTgOL6s7BHWqGAI8gyVdE4GE/view?usp=sharing) |
+
+## Verifying Sync Status
+
+### Using op-node API
+
+Check the sync status using the `optimism_syncStatus` method:
+```sh
+curl -X POST -H "Content-Type: application/json" --data \
+    '{"jsonrpc":"2.0","method":"optimism_syncStatus","params":[],"id":1}' \
+    http://localhost:9545 | jq
+```
+
+### Using op-geth API
+
+To verify if your node is fully synced, use the `eth_blockNumber` method:
+```sh
+curl http://localhost:8545 -X POST \
+    -H "Content-Type: application/json" \
+    --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params": [],"id":1}' | jq -r .result | sed 's/^0x//' | awk '{printf "%d\n", "0x" $0}';
+```
+
+A synced node will display the latest block number as seen on the [block explorer](https://sepolia-explorer.inkchain.xyz/).
+
+### Comparing with Ink Public RPC
+
+Compare your local node's finalized block with the public RPC block:
+```sh
+local_block=$(curl -s -X POST http://localhost:8545 -H "Content-Type: application/json" \
+  --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["finalized", false],"id":1}' \
+  | jq -r .result.number | sed 's/^0x//' | awk '{printf "%d\n", "0x" $0}'); \
+public_rpc_block=$(curl -s -X POST https://sepolia-rpc.inkchain.xyz/ -H "Content-Type: application/json" \
+ --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["finalized", false],"id":1}' \
+ | jq -r .result.number | sed 's/^0x//' | awk '{printf "%d\n", "0x" $0}'); \
+echo -e "Local finalized block: $local_block\nRemote finalized block: $public_rpc_block"
+```
+
+A synced node will have equal local and remote finalized blocks:
+```text
+Local finalized block: 4449608
+Remote finalized block: 4449608
+```
+
+[docker]: https://www.docker.com/
+[ink node]: https://github.com/inkonchain/node
+[repo]: https://github.com/inkonchain/node
