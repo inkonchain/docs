@@ -41,58 +41,40 @@
   "header_status": {
     "title": "Status",
     "type": "page",
-    "href": "https://status.optimism.io/",
+    "href": "https://test2704.statuspage.io/",
     "newWindow": true
   },
   "header_faucet": {
     "title": "Faucet",
     "type": "page",
-    "href": "https://app.optimism.io/faucet?utm_source=docs",
-    "newWindow": true
+    "href": "/faucet"
   },
   "header_discord_invite": {
-    "title": "Community",
-    "type": "page",
-    "href": "https://discord.com/invite/inkchain",
-    "newWindow": true
+    "title": "Community"
   },
   "header_inkubator": {
-    "title": "Inkubator",
-    "type": "page",
-    "href": "https://inkchain.xyz/inkubator",
-    "newWindow": true
+    "title": "Inkubator"
   },
   "header_developer_waitlist": {
-    "title": "Developer Waitlist",
-    "type": "page",
-    "href": "https://inkchain.xyz",
-    "newWindow": true
+    "title": "Developer Waitlist"
   },
 
   "status": {
     "title": "Status",
-    "href": "https://status.optimism.io/",
+    "href": "https://test2704.statuspage.io/",
     "newWindow": true
   },
   "faucet": {
-    "title": "Faucet",
-    "href": "https://app.optimism.io/faucet?utm_source=docs",
-    "newWindow": true
+    "title": "Faucet"
   },
   "discord_invite": {
-    "title": "Community",
-    "href": "https://discord.com/invite/inkchain",
-    "newWindow": true
+    "title": "Community (coming soon)"
   },
   "inkubator": {
-    "title": "Inkubator",
-    "href": "https://inkchain.xyz/inkubator",
-    "newWindow": true
+    "title": "Inkubator (coming soon)"
   },
   "developer_waitlist": {
-    "title": "Developer Waitlist",
-    "href": "https://inkchain.xyz",
-    "newWindow": true
+    "title": "Developer Waitlist (coming soon)"
   },
 
   "+++ General": {
