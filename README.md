@@ -1,5 +1,12 @@
 # InkChain Docs App
 
+## Build
+
+```bash
+docker build -t docs .
+docker run -p 3000:3000 docs
+```
+
 ## Requirements
 
 - NodeJs (v20.11.0)
