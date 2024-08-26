@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@types/node": "22.4.1",
-    "@types/react": "18.3.3",
+    "@types/react": "18.3.4",
     "@types/react-dom": "18.3.0",
     "autoprefixer": "10.4.20",
     "cspell": "8.14.2",
