@@ -1,0 +1,68 @@
+# Badges
+
+## Welcome To Ink
+
+> Awarded for bridging Ethereum to Ink.
+
+To bridge Ethereum, you can use the `L1StandardBridge` on the sepolia network crafted for the Inkchain.
+
+There are two ways to do it:
+
+### Gelato Bridge app
+
+The app provides a very simple UI to deposit or withdraw SepoliaETH from and to Sepolia Ink.
+
+Here is the app: https://testnet-bridge.gelato.network/bridge/inkchain-testnet
+
+Connect your wallet, select the amount to transfer, and that's it!
+
+### Directly calling the contract
+
+You can call the `bridgeETH` method in the contract here: https://sepolia.etherscan.io/address/0xC0d337f71aD19a8f17a1b297cDb3a86c5EEf9Eec#writeProxyContract
+
+For instance, if you want to bridge 1 Sepolia ETH into 1 Sepolia "Ink" ETH:
+
+1. Connect your Wallet using the "Connect to Web3" button
+2. Expand the `bridgeETH` method and enter `bridgeETH: 1`
+3. Enter `_minGasLimit: 1000` (or whatever suits you)
+4. Enter `_extraData: 0x00`
+5. Click "Write", then validate the transaction in MetaMask, then sign it to complete the transaction.
+
+## Wrapped ETH
+
+> Awarded for wrapping Ethereum into WETH.
+
+To create Wrapped ETH tokens (WETH), you can interact with the `deposit` method in the contract here: https://sepolia-explorer.inkchain.xyz/token/0x03956fCdB1ad808EFBc34125A5d0c8495c69eA70?tab=write_contract
+
+1. Connect your Wallet using the button
+2. Expand the `deposit` method and enter `Send native ETH: 10 000 000 000 000 000`.
+  * This is equivalent to 0.01 ETH, adjust as needed
+3. Click "Write", then validate the transaction in MetaMask, then sign it to complete the transaction.
+
+If you want the token to appear in MetaMask, click on the MetaMask button at the top of the page
+
+## ERC20 Interactions
+
+> Awarded for minting, sending, and receiving ERC20 tokens.
+
+_coming soon_
+
+## NFT Interactions
+
+> Awarded for minting, sending, and receiving NFTs.
+
+_coming soon_
+
+## Faucet User
+
+> Awarded for using the Ink faucet.
+
+Get here: https://faucet.ink.kraken.zone/
+
+Enter your address, enter the captcha, that's it!
+
+## Smart Contract Deployer
+
+> Awarded for deploying a smart contract.
+
+_coming soon_
