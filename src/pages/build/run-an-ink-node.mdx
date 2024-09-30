@@ -46,34 +46,19 @@ By default, the [Ink Node] repository leverages public L1 RPC & Beacon APIs. For
 
 1. **Clone the Repository:** [Ink Node repository](https://github.com/inkonchain/node).
 
-2. **Download the Snapshot:** [latest snapshot](#snapshots-table).
-
-3. **Prepare the Snapshot:** Move the downloaded `geth.tar.lz4` file to the root of the repository.
-   ```sh
-      node/
-      ├── op-geth/
-      ├── op-node/
-      ├── .env.ink-sepolia
-      ├── .gitignore
-      ├── docker-compose.yml
-      ├── geth.tar.lz4 # <-- place it here
-      ├── README.md
-      └── setup.sh
-   ```
-
-4. **Run Setup Script:**
+2. **Run Setup Script:**
    ```sh
    ./setup.sh
    ```
 
-5. **Optional Configuration:**
+3. **Optional Configuration:**
    Create a `.env` file at the root and set the following variables:
    ```sh
    L1_RPC_URL=your_rpc_url
    L1_BEACON_URL=your_beacon_url
    ```
 
-6. **Start the Node:**
+4. **Start the Node:**
    ```sh
    docker compose up # --build to force rebuild the images
    ```
@@ -81,12 +66,6 @@ By default, the [Ink Node] repository leverages public L1 RPC & Beacon APIs. For
 <Callout emoji="⚠️" type='warning'>
 Syncing your node may take several days. Monitor usage and plan accordingly.
 </Callout>
-
-## Snapshots
-
-| Network | URL |
-| :----- | :---- |
-| Sepolia | [Download Sepolia Snapshot](https://drive.google.com/file/d/1Nt6X8va7WTgOL6s7BHWqGAI8gyVdE4GE/view?usp=sharing) |
 
 ## Verifying Sync Status
 
