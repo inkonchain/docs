@@ -49,6 +49,30 @@
     "type": "page",
     "href": "/faucet"
   },
+
+
+  "+++ Quick Start": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- Quick Start": {
+    "title": "Quick Start",
+    "type": "separator"
+  },
+  "quick-start": {
+    "title": "Quick Start",
+    "display": "children"
+  },
+
+
+  "+++ To be renamed": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- To be renamed": {
+    "title": "To be renamed",
+    "type": "separator"
+  },
   "header_discord_invite": {
     "title": "Community"
   },
