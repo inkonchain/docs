@@ -39,9 +39,9 @@
 
 
   "header_status": {
-    "title": "Status",
+    "title": "Status Page",
     "type": "page",
-    "href": "https://test2704.statuspage.io/",
+    "href": "https://status.inkonchain.com/",
     "newWindow": true
   },
   "header_faucet": {
