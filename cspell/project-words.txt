@@ -83,3 +83,6 @@ untar
 NVME
 nextra
 Gelato
+Quicknode
+Superchain
+Seplia
