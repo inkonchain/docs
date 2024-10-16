@@ -50,6 +50,19 @@
     "href": "/faucet"
   },
 
+  "+++ General": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- General": {
+    "title": "General",
+    "type": "separator"
+  },
+  "general": {
+    "title": "General",
+    "display": "children"
+  },
+
 
   "+++ Quick Start": {
     "title": "",
@@ -64,6 +77,18 @@
     "display": "children"
   },
 
+  "+++ Building on Ink": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- Building on Ink": {
+    "title": "Building on Ink",
+    "type": "separator"
+  },
+  "build": {
+    "title": "Building on Ink",
+    "display": "children"
+  },
 
   "+++ To be renamed": {
     "title": "",
@@ -72,6 +97,9 @@
   "--- To be renamed": {
     "title": "To be renamed",
     "type": "separator"
+  },
+  "badges": {
+    "title": "Discord Badges"
   },
   "header_discord_invite": {
     "title": "Community"
@@ -82,7 +110,6 @@
   "header_developer_waitlist": {
     "title": "Developer Waitlist"
   },
-
   "status": {
     "title": "Status",
     "href": "https://status.inkonchain.com/",
@@ -99,31 +126,5 @@
   },
   "developer_waitlist": {
     "title": "Developer Waitlist (coming soon)"
-  },
-
-  "+++ General": {
-    "title": "",
-    "type": "separator"
-  },
-  "--- General": {
-    "title": "General",
-    "type": "separator"
-  },
-  "general": {
-    "title": "General",
-    "display": "children"
-  },
-
-  "+++ Building on Ink": {
-    "title": "",
-    "type": "separator"
-  },
-  "--- Building on Ink": {
-    "title": "Building on Ink",
-    "type": "separator"
-  },
-  "build": {
-    "title": "Building on Ink",
-    "display": "children"
   }
 }
