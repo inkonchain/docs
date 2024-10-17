@@ -4,5 +4,9 @@
     "bridged-token-addresses": "Bridged Token Addresses",
     "web3-clients": "Web3 Clients",
     "tools": "Tools",
-    "run-an-ink-node": "Running an Ink node"
+    "run-an-ink-node": "Running an Ink node",
+    "fees": "Fees",
+    "compare-ink-eth": "Ink vs. Ethereum",
+    "running-nodes": "Nodes",
+    "tutorials": "Tutorials"
   }
