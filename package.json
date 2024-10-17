@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "clsx": "2.1.1",
-    "next": "14.2.14",
+    "next": "14.2.15",
     "next-themes": "0.3.0",
     "nextra": "2.13.4",
     "nextra-theme-docs": "2.13.4",
@@ -44,13 +44,13 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@types/node": "22.7.4",
+    "@types/node": "22.7.5",
     "@types/react": "18.3.11",
-    "@types/react-dom": "18.3.0",
+    "@types/react-dom": "18.3.1",
     "autoprefixer": "10.4.20",
-    "cspell": "8.14.4",
+    "cspell": "8.15.2",
     "eslint": "8.57.1",
-    "eslint-config-next": "14.2.14",
+    "eslint-config-next": "14.2.15",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-mdx": "3.1.5",
