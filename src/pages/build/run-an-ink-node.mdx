@@ -19,7 +19,7 @@ Running a node is resource-intensive and time-consuming. Make sure you have a cl
 For those starting out and needing an RPC URL, our free endpoints are available:
 
 - **Mainnet**: `not available yet`
-- **Testnet (Sepolia)**: `https://sepolia-rpc.inkchain.xyz/`
+- **Testnet (Sepolia)**: `https://rpc-gel-sepolia.inkonchain.com/`
 
 **Note:** These RPCs are rate-limited and unsuitable for production applications.
 </Callout>
@@ -87,7 +87,7 @@ curl http://localhost:8545 -X POST \
     --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params": [],"id":1}' | jq -r .result | sed 's/^0x//' | awk '{printf "%d\n", "0x" $0}';
 ```
 
-A synced node will display the latest block number as seen on the [block explorer](https://sepolia-explorer.inkchain.xyz/).
+A synced node will display the latest block number as seen on the [block explorer](https://explorer-sepolia.inkonchain.com/).
 
 ### Comparing with Ink Public RPC
 
@@ -96,7 +96,7 @@ Compare your local node's finalized block with the public RPC block:
 local_block=$(curl -s -X POST http://localhost:8545 -H "Content-Type: application/json" \
   --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["finalized", false],"id":1}' \
   | jq -r .result.number | sed 's/^0x//' | awk '{printf "%d\n", "0x" $0}'); \
-public_rpc_block=$(curl -s -X POST https://sepolia-rpc.inkchain.xyz/ -H "Content-Type: application/json" \
+public_rpc_block=$(curl -s -X POST https://rpc-gel-sepolia.inkonchain.com/ -H "Content-Type: application/json" \
  --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["finalized", false],"id":1}' \
  | jq -r .result.number | sed 's/^0x//' | awk '{printf "%d\n", "0x" $0}'); \
 echo -e "Local finalized block: $local_block\nRemote finalized block: $public_rpc_block"
