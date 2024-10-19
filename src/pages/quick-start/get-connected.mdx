@@ -22,24 +22,30 @@ Adding Ink testnet to Metamask, both via our blockscout explorer, and manually v
 
 
 ## What Do I Need to Start Developing on Ink?
-- Editor (with a solidity highlighting package)
-- Development framework like Foundry/Hardhat/Remix
-- Wallet address 
-- Testnet funds 
-- Web3 wallet extension
+1. An editor (with a Solidity highlighting package) like Visual Studio Code
+2. A web3 wallet 
+3. Testnet funds
+4. Recommended: a development framework like Foundry or Hardhat 
+5. If you want to deploy code to the blockchain through the browser, a web3 browser extension (most web3 wallets will have one)
+
+As an alternative to most of the above you can use [Remix](https://remix.ethereum.org/), but you will still need a web3 wallet with funds to deploy your code.
 
 ## Connecting to Ink
 
-In order to deploy code to Ink, you need a blockchain wallet that has funds in it in order to pay the deployment cost. The easiest way of getting set up is by:
-1. creating a wallet through e.g. Metamask
-2. connecting the wallet to the Ink chain
-3. getting funds to use on Ink from a [faucet](https://https://docs.inkonchain.com/quick-start/faucets) or by [bridging]()
+In order to deploy code to Ink, you need a blockchain wallet that has funds in it in order to pay the deployment cost of the code. The easiest way of getting set up is by:
+1. Creating a wallet
+2. Connecting the wallet to the Ink chain
+3. Getting funds to use on Ink from a [faucet](https://https://docs.inkonchain.com/quick-start/faucets) or by [bridging]()
 
 ###### Creating a wallet
+1. Get a wallet from [Rabby](https://rabby.io/), [Metamask](https://metamask.io/), [Rainbow](https://rainbow.me/en-us/) or many more. 
+    - Make sure your wallet is EVM compatible i.e. works with Ethereum-based chains. The ones mentioned above do. 
+    - Use the browser extension of the wallet you chose to simplify deploying code.
+2. Set up your wallet, which will include writing down a mnemonic (a set of words) and getting an address that starts with "0x". 
 
-###### Connecting Metamask wallet to Ink Sepolia
+###### Connecting Metamask wallet to Ink Sepolia (Testnet)
 
-In order to connect your to Ink Sepolia you must add it as a custom network. Note that your wallet should be EVM-compatible.
+In order to connect your wallet to Ink you must add Ink Sepolia as a custom network. Note that your wallet should be EVM-compatible.
 
     1. Open your Metamask browser extension.
     2. Open the network selection dropdown menu by clicking the dropdown button at the top left of the extension.
@@ -54,14 +60,9 @@ Next: get some [play money](#faucet) from our faucets!
 ![Tux, the Linux mascot](../../images/add_network.png)
 
 ###### Fund your wallet
-Get fake Ether (ETH) from these faucets so you can fund your wallet to send transactions and deploy contracts on Ink Sepolia.
+Get fake Ether (ETH) from these faucets so you can fund your wallet to send transactions and deploy contracts on Ink Sepolia. Kraken's in house faucet provides a quick and easy way to acquire testnet ETH:
+https://faucet.ink.kraken.zone/
 
-- Kraken 
-    -  Our in house faucet provides a quick and easy way to acquire testnet ETH.
-    - https://faucet.ink.kraken.zone/
+Check out alternative faucets [here](https://docs.inkonchain.com/quick-start/faucets). Alternatively, you can [bridge](https://docs.inkonchain.com/quick-start/faucets#bridging-funds-to-ink-sepolia) testnet funds. 
 
 ## Troubleshooting
-
-If the above button doesn't work, try:
-
-1.
