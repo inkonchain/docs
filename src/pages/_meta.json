@@ -90,12 +90,12 @@
     "display": "children"
   },
 
-  "+++ To be renamed": {
+  "+++ Work with Ink": {
     "title": "",
     "type": "separator"
   },
-  "--- To be renamed": {
-    "title": "To be renamed",
+  "--- Work with Ink": {
+    "title": "Work with Ink",
     "type": "separator"
   },
   "badges": {
@@ -114,9 +114,6 @@
     "title": "Status",
     "href": "https://status.inkonchain.com/",
     "newWindow": true
-  },
-  "faucet": {
-    "title": "Faucet"
   },
   "discord_invite": {
     "title": "Community (coming soon)"
