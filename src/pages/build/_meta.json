@@ -1,12 +1,9 @@
 {
-  "tools": "Tools",  
-  "network-information": "Network Information",
-  "ink-contracts": "Ink Contracts",
-  "bridged-token-addresses": "Bridged Token Addresses",
   "web3-clients": "Web3 Clients",
+  "oracles": "Oracles",
+  "tutorials": "Tutorials",
   "run-an-ink-node": "Running Ink Nodes",
   "fees": "Fees",
-  "compare-ink-eth": "Ink & Ethereum",
-  "running-nodes": "Nodes",
-  "tutorials": "Tutorials"
+  "tools": "Tools",
+  "useful-data": "Useful Data"
 }

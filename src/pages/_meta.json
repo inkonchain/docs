@@ -45,9 +45,9 @@
     "newWindow": true
   },
   "header_faucet": {
-    "title": "Faucet",
+    "title": "Faucets",
     "type": "page",
-    "href": "/faucet"
+    "href": "/quick-start/faucets"
   },
 
   "+++ General": {
