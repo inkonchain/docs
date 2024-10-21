@@ -1,0 +1,13 @@
+{
+    "rpcs": "RPCs",
+    "multisig": "Multisig",
+    "account-abstraction": "Account Abstraction",
+    "bridges": "Bridges",
+    "faucets": "Faucets",
+    "block-explorers": "Block Explorers",
+    "indexers": "Indexers",
+    "subgraphs": "Subgraphs",
+    "oracles": "Oracles",
+    "vrf": "VRF",
+    "tooling": "Tooling"
+  }

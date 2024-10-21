@@ -1,12 +1,12 @@
 {
-    "network-information": "Network Information",
-    "ink-contracts": "Ink Contracts",
-    "bridged-token-addresses": "Bridged Token Addresses",
-    "web3-clients": "Web3 Clients",
-    "tools": "Tools",
-    "run-an-ink-node": "Running an Ink node",
-    "fees": "Fees",
-    "compare-ink-eth": "Ink & Ethereum",
-    "running-nodes": "Nodes",
-    "tutorials": "Tutorials"
-  }
+  "tools": "Tools",  
+  "network-information": "Network Information",
+  "ink-contracts": "Ink Contracts",
+  "bridged-token-addresses": "Bridged Token Addresses",
+  "web3-clients": "Web3 Clients",
+  "run-an-ink-node": "Running Ink Nodes",
+  "fees": "Fees",
+  "compare-ink-eth": "Ink & Ethereum",
+  "running-nodes": "Nodes",
+  "tutorials": "Tutorials"
+}
