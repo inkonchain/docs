@@ -112,6 +112,9 @@
   "header_inkubator": {
     "title": "Inkubator"
   },
+  "contributing": {
+    "title": "Contribution Guide"
+  },
   "header_developer_waitlist": {
     "title": "Developer Waitlist"
   }
