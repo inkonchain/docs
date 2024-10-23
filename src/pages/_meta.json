@@ -77,16 +77,34 @@
     "display": "children"
   },
 
-  "+++ Building on Ink": {
+  "+++ Build on Ink": {
     "title": "",
     "type": "separator"
   },
-  "--- Building on Ink": {
-    "title": "Building on Ink",
+  "--- Build on Ink": {
+    "title": "Build on Ink",
     "type": "separator"
   },
   "build": {
-    "title": "Building on Ink",
+    "title": "Build on Ink",
+    "display": "children"
+  },
+  "status": {
+    "title": "Status Page",
+    "href": "https://status.inkonchain.com/",
+    "newWindow": true
+  },
+
+  "+++ Use Ink": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- Use Ink": {
+    "title": "Use Ink",
+    "type": "separator"
+  },
+  "use-ink": {
+    "title": "Use Ink",
     "display": "children"
   },
 
@@ -107,21 +125,10 @@
   "header_inkubator": {
     "title": "Inkubator"
   },
+  "contributing": {
+    "title": "Contribution Guide"
+  },
   "header_developer_waitlist": {
     "title": "Developer Waitlist"
-  },
-  "status": {
-    "title": "Status",
-    "href": "https://status.inkonchain.com/",
-    "newWindow": true
-  },
-  "discord_invite": {
-    "title": "Community (coming soon)"
-  },
-  "inkubator": {
-    "title": "Inkubator (coming soon)"
-  },
-  "developer_waitlist": {
-    "title": "Developer Waitlist (coming soon)"
   }
 }

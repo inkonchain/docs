@@ -7,7 +7,6 @@
     "block-explorers": "Block Explorers",
     "indexers": "Indexers",
     "subgraphs": "Subgraphs",
-    "oracles": "Oracles",
     "vrf": "VRF",
     "tooling": "Tooling"
   }
