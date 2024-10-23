@@ -95,6 +95,19 @@
     "newWindow": true
   },
 
+  "+++ Use Ink": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- Use Ink": {
+    "title": "Use Ink",
+    "type": "separator"
+  },
+  "use-ink": {
+    "title": "Use Ink",
+    "display": "children"
+  },
+
   "+++ Work with Ink": {
     "title": "",
     "type": "separator"
