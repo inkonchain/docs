@@ -86,7 +86,7 @@
     "type": "separator"
   },
   "build": {
-    "title": "Building on Ink",
+    "title": "Build on Ink",
     "display": "children"
   },
   "status": {
