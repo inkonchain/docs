@@ -95,4 +95,5 @@ Rabby
 Protofire
 Zerodev 
 Permissionless 
-Crosschain 
+Crosschain
+Supersim
