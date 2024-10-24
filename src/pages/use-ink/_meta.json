@@ -1,5 +1,8 @@
 {
-    "bridges": "Bridges",
+    "bridges": {
+        "title": "Bridges",
+        "href": "/build/tools/bridges"
+    },
     "crosschain": "Crosschain",
     "block-explorers": {
         "title": "Block Explorers",
