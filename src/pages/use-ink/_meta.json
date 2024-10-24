@@ -1,5 +1,6 @@
 {
     "bridges": "Bridges",
     "crosschain": "Crosschain",
-    "multisig": "Multisig"
+    "multisig": "Multisig",
+    "block-explorers": "Block Explorers"
 }
