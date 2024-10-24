@@ -116,7 +116,8 @@
     "title": "Work with Ink",
     "type": "separator"
   },
-  "badges": {
+  "_badges": {
+    "display": "hidden",
     "title": "Discord Badges"
   },
   "header_discord_invite": {

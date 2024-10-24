@@ -1,4 +1,5 @@
 {
     "deploy-smart-contract": "Deploying a Smart Contract",
-    "verify-smart-contract": "Verifying a Smart Contract"
+    "verify-smart-contract": "Verifying a Smart Contract",
+    "superchain-contract": "Creating a Superchain Dapp"
 }
