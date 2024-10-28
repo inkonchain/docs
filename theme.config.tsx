@@ -19,7 +19,7 @@ const config: DocsThemeConfig = {
     link: URLS.githubOrgUrl,
   },
   chat: {
-    link: "https://test.com",
+    link: "https://discord.com/invite/inkonchain",
   },
   docsRepositoryBase: URLS.repositoryUrl,
   head: Head,
