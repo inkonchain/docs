@@ -2,8 +2,9 @@
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
 
-import "../globals.css";
 import { inter, plus_jakarta_sans } from "../fonts";
+
+import "../globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
