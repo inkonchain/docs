@@ -2,33 +2,34 @@ import { AddNetworkButton } from "../../components/AddNetworkButton";
 
 # Get Connected
 
-Step-by-step instructions for the following:
-
-Adding Ink testnet to Metamask, both via our blockscout explorer, and manually via metamask.
+The button below will automatically add Sepolia to your web3 wallet:
 
 <AddNetworkButton />
 
 
 ## Network Information
 
-| Field           | Information                                                    |
-| --------------- | -------------------------------------------------------------- |
-| Network Name    | Ink Sepolia                                                    |
-| Description     | Ink's public testnet                                           |
-| RPC Endpoint    | [https://rpc-gel-sepolia.inkonchain.com](https://rpc-gel-sepolia.inkonchain.com)   |
-| Chain ID        | 763373                                                         |
-| Currency Symbol | ETH                                                            |
-| Block Explorer  | [https://explorer-sepolia.inkonchain.com](https://explorer-sepolia.inkonchain.com) |
+| Field                | Information                                                    |
+| -------------------- | -------------------------------------------------------------- |
+| Network Name         | Ink Sepolia                                                    |
+| Description          | Ink's public testnet                                           |
+| RPC Endpoint (HTTPS) | https://rpc-gel-sepolia.inkonchain.com                         |
+| RPC Endpoint (WSS)   | wss://ws-gel-sepolia.inkonchain.com                            |
+| Chain ID             | 763373                                                         |
+| Currency Symbol      | ETH                                                            |
+| Block Explorer       | https://explorer-sepolia.inkonchain.com                        |
 
 
-## What Do I Need to Start Developing on Ink?
-1. An editor (with a Solidity highlighting package) like Visual Studio Code
-2. A web3 wallet
-3. Testnet funds
-4. Recommended: a development framework like Foundry or Hardhat
-5. If you want to deploy code to the blockchain through the browser, a web3 browser extension (most web3 wallets will have one)
+## What do I Need to Start Developing on Ink?
+1. An editor (with a Solidity highlighting package) like [Visual Studio Code](https://code.visualstudio.com/) to efficiently write smart contract code. This code will need the be compiled before deployment; see Step 4.
+2. A web3 wallet that holds funds to transact and deploy blockchain code such as [Kraken Wallet](https://www.kraken.com/wallet)
+3. Testnet funds to fund your transactions (see [Get Testnet Funds](/quick-start/faucets))
+4. Recommended: a development framework like [Foundry](https://book.getfoundry.sh/) or [Hardhat](https://hardhat.org/) to streamline smart contract development. 
+    - You will need the private key to your wallet account to deploy through these frameworks.
+    - These frameworks can also take care of code compilation for you - otherwise you will need a standalone [solution](https://docs.soliditylang.org/en/latest/installing-solidity.html).
+5. If you want to deploy code to the blockchain through the browser instead, a web3 browser extension (most web3 wallets will have one)
 
-As an alternative to most of the above you can use [Remix](https://remix.ethereum.org/), but you will still need a web3 wallet with funds to deploy your code.
+As an alternative to most of the above you can use [Remix](https://remix.ethereum.org/), but you will still need a web3 wallet browser extension with funds to deploy your code.
 
 ## Connecting to Ink
 
@@ -37,13 +38,13 @@ In order to deploy code to Ink, you need a blockchain wallet that has funds in i
 2. Connecting the wallet to the Ink chain
 3. Getting funds to use on Ink from a [faucet](https://https://docs.inkonchain.com/quick-start/faucets) or by [bridging]()
 
-###### Creating a wallet
-1. Get a wallet from [Rabby](https://rabby.io/), [Metamask](https://metamask.io/), [Rainbow](https://rainbow.me/en-us/) or many more.
-    - Make sure your wallet is EVM compatible i.e. works with Ethereum-based chains. The ones mentioned above do.
+###### Creating a Wallet
+1. Get a wallet from [Kraken Wallet](https://www.kraken.com/wallet), [Metamask](https://metamask.io/), [Rainbow](https://rainbow.me/en-us/) or many more. 
+    - Make sure your wallet is EVM compatible i.e. works with Ethereum-based chains. The ones mentioned above do. 
     - Use the browser extension of the wallet you chose to simplify deploying code.
 2. Set up your wallet, which will include writing down a mnemonic (a set of words) and getting an address that starts with "0x".
 
-###### Connecting Metamask wallet to Ink Sepolia (Testnet)
+###### Connecting Metamask Wallet to Ink Sepolia (Testnet)
 
 In order to connect your wallet to Ink you must add Ink Sepolia as a custom network. Note that your wallet should be EVM-compatible.
 
@@ -59,10 +60,12 @@ Next: get some [play money](#faucet) from our faucets!
 
 ![Tux, the Linux mascot](../../images/add_network.png)
 
-###### Fund your wallet
-Get fake Ether (ETH) from these faucets so you can fund your wallet to send transactions and deploy contracts on Ink Sepolia. Kraken's in house faucet provides a quick and easy way to acquire testnet ETH:
-https://mystery-faucet.demo.inkonchain.com/
+###### Fund your Wallet
+Get fake Ether (ETH) from these faucets so you can fund your wallet to send transactions and deploy contracts on Ink Sepolia.
 
-Check out alternative faucets [here](https://docs.inkonchain.com/quick-start/faucets). Alternatively, you can [bridge](https://docs.inkonchain.com/quick-start/faucets#bridging-funds-to-ink-sepolia) testnet funds.
+Check out faucets [here](https://docs.inkonchain.com/quick-start/faucets). Alternatively, you can [bridge](https://docs.inkonchain.com/quick-start/faucets#bridging-funds-to-ink-sepolia) testnet funds. 
+
+## What Next? 
+Check out the [tutorials](/build/tutorials) to learn how to deploy contracts on Ink and more!
 
 ## Troubleshooting
