@@ -16,7 +16,7 @@ const config: DocsThemeConfig = {
     link: URLS.githubOrgUrl,
   },
   chat: {
-    link: "https://test.com",
+    link: "https://discord.com/invite/inkonchain?utm_source=docs&utm_medium=nav",
   },
   docsRepositoryBase: URLS.repositoryUrl,
   head: Head,
