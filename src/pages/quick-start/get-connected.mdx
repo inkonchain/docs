@@ -20,13 +20,15 @@ The button below will automatically add Sepolia to your web3 wallet:
 
 
 ## What do I Need to Start Developing on Ink?
-1. An editor (with a Solidity highlighting package) like [Visual Studio Code](https://code.visualstudio.com/) to efficiently write smart contract code
+1. An editor (with a Solidity highlighting package) like [Visual Studio Code](https://code.visualstudio.com/) to efficiently write smart contract code. This code will need the be compiled before deployment; see Step 4.
 2. A web3 wallet that holds funds to transact and deploy blockchain code such as [Kraken Wallet](https://www.kraken.com/wallet)
-3. Testnet funds to fund your transactions (see [Faucets](/quick-start/faucets))
-4. Recommended: a development framework like [Foundry](https://book.getfoundry.sh/) or [Hardhat](https://hardhat.org/) to streamline smart contract development
-5. If you want to deploy code to the blockchain through the browser, a web3 browser extension (most web3 wallets will have one)
+3. Testnet funds to fund your transactions (see [Get Testnet Funds](/quick-start/faucets))
+4. Recommended: a development framework like [Foundry](https://book.getfoundry.sh/) or [Hardhat](https://hardhat.org/) to streamline smart contract development. 
+    - You will need the private key to your wallet account to deploy through these frameworks.
+    - These frameworks can also take care of code compilation for you - otherwise you will need a standalone [solution](https://docs.soliditylang.org/en/latest/installing-solidity.html).
+5. If you want to deploy code to the blockchain through the browser instead, a web3 browser extension (most web3 wallets will have one)
 
-As an alternative to most of the above you can use [Remix](https://remix.ethereum.org/), but you will still need a web3 wallet with funds to deploy your code.
+As an alternative to most of the above you can use [Remix](https://remix.ethereum.org/), but you will still need a web3 wallet browser extension with funds to deploy your code.
 
 ## Connecting to Ink
 
@@ -64,6 +66,6 @@ https://faucet.ink.kraken.zone/
 Check out alternative faucets [here](https://docs.inkonchain.com/quick-start/faucets). Alternatively, you can [bridge](https://docs.inkonchain.com/quick-start/faucets#bridging-funds-to-ink-sepolia) testnet funds. 
 
 ## What Next? 
-Check out the [tutorials](/build/tutorials) to learn how to deploy contracts and more!
+Check out the [tutorials](/build/tutorials) to learn how to deploy contracts on Ink and more!
 
 ## Troubleshooting
