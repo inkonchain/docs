@@ -2,7 +2,7 @@
 
 ## Ethers.js - Instructions for Connecting to Ink
 
-Ethers.js documentation: https://docs.ethers.org/v5/ 
+Ethers.js documentation: [https://docs.ethers.org/v5/](https://docs.ethers.org/v5/)
 
 To connect to Ink by instantiating a new `ethers.js` `JsonRpcProvider` object with an RPC URL of Ink's testnet, follow the steps below:
 
@@ -55,9 +55,9 @@ async function getBlockNumber() {
 getBlockNumber();
 ```
 
-## Viem - Instructions for Connecting to Ink 
+## Viem - Instructions for Connecting to Ink
 
-Viem documentation: https://viem.sh/docs/introduction
+Viem documentation: [https://viem.sh/docs/introduction](https://viem.sh/docs/introduction)
 
 1. **Install Viem**: Ensure you have `viem` installed in your project. If not, you can install it using npm or yarn.
 
@@ -73,9 +73,9 @@ Viem documentation: https://viem.sh/docs/introduction
 
 2. **Define** a new chain
 
-```javascript 
+```javascript
 import { defineChain } from 'viem'
- 
+
 export const ink = defineChain({
   id: 763373,
   name: 'Ink',
@@ -105,24 +105,23 @@ export const ink = defineChain({
 ```javascript
 import { createPublicClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
- 
-const client = createPublicClient({ 
-  chain: mainnet, 
-  transport: http(), 
-}) 
-```
 
-4. **Consuming Ethereum Actions**
-
-```javascript 
-import { createPublicClient, http } from 'viem'
-import { mainnet } from 'viem/chains'
- 
 const client = createPublicClient({
   chain: mainnet,
   transport: http(),
 })
- 
-const blockNumber = await client.getBlockNumber() 
 ```
 
+4. **Consuming Ethereum Actions**
+
+```javascript
+import { createPublicClient, http } from 'viem'
+import { mainnet } from 'viem/chains'
+
+const client = createPublicClient({
+  chain: mainnet,
+  transport: http(),
+})
+
+const blockNumber = await client.getBlockNumber()
+```
