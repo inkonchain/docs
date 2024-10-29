@@ -14,11 +14,9 @@ const config: DocsThemeConfig = {
   darkMode: false,
   project: {
     link: URLS.githubOrgUrl,
-    className: "mr-2",
   },
   chat: {
     link: "https://discord.com/invite/inkonchain?utm_source=docs&utm_medium=nav",
-    className: "mr-2",
   },
   docsRepositoryBase: URLS.repositoryUrl,
   head: Head,
