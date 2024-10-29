@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer utilities {
+  body {
+    background-color: blue;
+    font-family: var(--font-plus-jakarta-sans), var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
 @layer base {
   h1,
   h2,

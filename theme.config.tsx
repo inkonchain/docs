@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-
 import { clsx } from "clsx";
 import { DocsThemeConfig } from "nextra-theme-docs";
 
@@ -12,14 +10,13 @@ import { InkLogo } from "@/icons/InkLogo";
 import { URLS } from "@/utils/urls";
 
 const config: DocsThemeConfig = {
-  logo: InkLogo,
-  // We are actually using the dark mode, but enabling it in here creates a ugly component in the sidebar, which can not be customized
+  logo: <InkLogo/>,
   darkMode: false,
   project: {
     link: URLS.githubOrgUrl,
   },
   chat: {
-    link: "https://discord.com/invite/inkonchain",
+    link: "https://discord.com/invite/inkonchain?utm_source=docs&utm_medium=nav",
   },
   docsRepositoryBase: URLS.repositoryUrl,
   head: Head,
