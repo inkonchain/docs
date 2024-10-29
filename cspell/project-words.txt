@@ -93,8 +93,8 @@ scawy
 Brid
 Rabby
 Protofire
-Zerodev 
-Permissionless 
+Zerodev
+Permissionless
 Crosschain
 Supersim
 verif
