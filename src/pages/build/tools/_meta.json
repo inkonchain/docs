@@ -3,7 +3,10 @@
     "multisig": "Multisig",
     "account-abstraction": "Account Abstraction",
     "bridges": "Bridges",
-    "faucets": "Faucets",
+    "faucets": {
+      "title": "Faucets",
+      "href": "/quick-start/faucets"
+    },
     "block-explorers": "Block Explorers",
     "indexers": "Indexers",
     "subgraphs": "Subgraphs",
