@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { clsx } from "clsx";
 import { DocsThemeConfig } from "nextra-theme-docs";
 
@@ -25,7 +26,7 @@ const config: DocsThemeConfig = {
       return (
         <a
           {...props}
-          className="text-magic-purple transition-all hover:underline"
+          className="text-magic-purple underline decoration-1 transition-all hover:text-magic-purple/80 dark:text-magic-soft-pink dark:hover:text-magic-soft-pink/80"
         />
       );
     },
@@ -69,14 +70,12 @@ const config: DocsThemeConfig = {
       </a>
     ),
   },
-  //   useNextSeoProps() {
-  //     const { asPath } = useRouter()
-  //     if (asPath !== '/') {
-  //       return {
-  //         titleTemplate: '%s | Ink Docs'
-  //       }
-  //     }
-  //   },
+  useNextSeoProps() {
+    const { asPath } = useRouter()
+    return {
+      titleTemplate: asPath === '/' ? 'Ink Docs' : '%s | Ink Docs'
+    }
+  },
 };
 
 export default config;
