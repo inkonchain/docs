@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { clsx } from "clsx";
 import { DocsThemeConfig } from "nextra-theme-docs";
 
@@ -69,14 +70,12 @@ const config: DocsThemeConfig = {
       </a>
     ),
   },
-  //   useNextSeoProps() {
-  //     const { asPath } = useRouter()
-  //     if (asPath !== '/') {
-  //       return {
-  //         titleTemplate: '%s | Ink Docs'
-  //       }
-  //     }
-  //   },
+  useNextSeoProps() {
+    const { asPath } = useRouter()
+    return {
+      titleTemplate: asPath === '/' ? 'Ink Docs' : '%s | Ink Docs'
+    }
+  },
 };
 
 export default config;
