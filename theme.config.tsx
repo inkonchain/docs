@@ -61,8 +61,8 @@ const config: DocsThemeConfig = {
     text: (
       <a
         className="!text-magic-white dark:!text-magic-white"
-        href="/builders/notices/fp-changes"
-        target="_self"
+        href="https://blog.kraken.com/news/announcing-ink"
+        target="_blank"
         rel="noopener noreferrer"
         aria-label="Preparing for Fault Proof Breaking Changes"
       >
