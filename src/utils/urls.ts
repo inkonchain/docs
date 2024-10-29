@@ -5,7 +5,7 @@ export const URLS = {
   inkubatorUrl: "https://inkonchain.com/inkubator",
   discordUrl: "https://discord.com/invite/inkonchain?utm_source=docs&utm_medium=nav",
   repositoryUrl: "https://github.com/inkonchain/docs",
-  developerWailistUrl: "https://inkonchain.com",
+  developerWaitlistUrl: "https://inkonchain.com",
   feedbackUrl: "https://inkonchain.com",
   editDocsOnGithub: "https://github.com/inkonchain",
 };

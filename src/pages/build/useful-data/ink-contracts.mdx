@@ -1,26 +1,59 @@
+import { Callout } from 'nextra/components'
+
 # Contract Addresses
-
-## L1 Testnet Contracts (Sepolia)
-
-| Contract Name    | Contract Address                                                                                                              |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| L1StandardBridge | [0xC0d337f71aD19a8f17a1b297cDb3a86c5EEf9Eec](https://sepolia.etherscan.io/address/0xC0d337f71aD19a8f17a1b297cDb3a86c5EEf9Eec) |
-| ...              | ...                                                                                                                           |
-
-## Ink Testnet Contracts of Interest
-
-| Contract Name | Contract Address                                                                                                                         |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| WETH          | [0x47d1f931eaff721549cc0ad57da81729baa8b4b2](https://explorer-sepolia.inkonchain.com/address/0x47d1f931eaff721549cc0ad57da81729baa8b4b2) |
-| ...           | ...                                                                                                                                      |
 
 ## Utility Contracts
 
-| Factory Contract Name    | Factory Contract Address    |
-| ------------------------ | --------------------------- |
-| \[Factory Contract Name] | \[Factory Contract Address] |
-| ...                      | ...                         |
+<Callout type="warning" emoji="⚠️">
+  Multicall contracts are not tooling compatible at the moment and will be upgraded ASAP.
+</Callout>
+
+| Contract Name     | Contract Address                                                                                                                                      |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| WETH9             | [0x4200000000000000000000000000000000000006](https://explorer-sepolia.inkonchain.com/address/0x4200000000000000000000000000000000000006?tab=contract) |
+| Multicall3        | [0x9f5CfC9f799CE16aD877Bb9959106538b9d157d6](https://explorer-sepolia.inkonchain.com/address/0x9f5CfC9f799CE16aD877Bb9959106538b9d157d6?tab=contract) |                                                                                                                                                  |
+| Multicall2        | [0x9E7faA8F5Ca4B3f2f677a6384c3c77B435033A21](https://explorer-sepolia.inkonchain.com/address/0x9E7faA8F5Ca4B3f2f677a6384c3c77B435033A21?tab=contract) |
+| Multicall         | [0xdD8E57A4ca66819596F892a80cA3aa3a425c9B60](https://explorer-sepolia.inkonchain.com/address/0xdD8E57A4ca66819596F892a80cA3aa3a425c9B60?tab=contract) |
+| MultiSend         | [0xD81104884bDb006803316FCbd6445e901f284ebB](https://explorer-sepolia.inkonchain.com/address/0xD81104884bDb006803316FCbd6445e901f284ebB?tab=contract) |
+| MultiSendCallOnly | [0x306bAC400fd5e1e0AA2801972F64a76c4cf6C595](https://explorer-sepolia.inkonchain.com/address/0x306bAC400fd5e1e0AA2801972F64a76c4cf6C595?tab=contract) |
+
+## Ink Testnet Contracts
+
+<Callout type="info" emoji="ℹ️">
+  These addresses are pre-determined by Optimism - see [documentation](https://specs.optimism.io/protocol/predeploys.html).
+</Callout>
+
+| Contract Name                 | Contract Address                                                                                                                 |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| L2CrossDomainMessenger        | [0x4200000000000000000000000000000000000007](https://explorer-sepolia.inkonchain.com/address/0x4200000000000000000000000000000000000007) |
+| L2StandardBridge              | [0x4200000000000000000000000000000000000010](https://explorer-sepolia.inkonchain.com/address/0x4200000000000000000000000000000000000010) |
+| OptimismMintableERC20Factory  | [0x4200000000000000000000000000000000000012](https://explorer-sepolia.inkonchain.com/address/0x4200000000000000000000000000000000000012) |
+| GasPriceOracle                | [0x420000000000000000000000000000000000000F](https://explorer-sepolia.inkonchain.com/address/0x420000000000000000000000000000000000000F) |
+| L2ToL1MessagePasser           | [0x4200000000000000000000000000000000000016](https://explorer-sepolia.inkonchain.com/address/0x4200000000000000000000000000000000000016) |
+| L2ERC721Bridge                | [0x4200000000000000000000000000000000000014](https://explorer-sepolia.inkonchain.com/address/0x4200000000000000000000000000000000000014) |
+| OptimismMintableERC721Factory | [0x4200000000000000000000000000000000000017](https://explorer-sepolia.inkonchain.com/address/0x4200000000000000000000000000000000000017) |
+| ProxyAdmin                    | [0x4200000000000000000000000000000000000018](https://explorer-sepolia.inkonchain.com/address/0x4200000000000000000000000000000000000018) |
+| BaseFeeVault                  | [0x4200000000000000000000000000000000000019](https://explorer-sepolia.inkonchain.com/address/0x4200000000000000000000000000000000000019) |
+| L1FeeVault                    | [0x420000000000000000000000000000000000001a](https://explorer-sepolia.inkonchain.com/address/0x420000000000000000000000000000000000001a) |
+
+## L1 Testnet Contracts (Sepolia)
+
+| Contract Name                | Contract Address                                                                                                              |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------|
+| L1StandardBridge             | [0x33f60714bbd74d62b66d79213c348614de51901c](https://sepolia.etherscan.io/address/0x33f60714bbd74d62b66d79213c348614de51901c) |
+| ProxyAdmin                   | [0xd7db319a49362b2328cf417a934300cccb442c8d](https://sepolia.etherscan.io/address/0xd7db319a49362b2328cf417a934300cccb442c8d) |
+| SystemConfig                 | [0x05c993e60179f28bf649a2bb5b00b5f4283bd525](https://sepolia.etherscan.io/address/0x05c993e60179f28bf649a2bb5b00b5f4283bd525) |
+| AddressManager               | [0x3454f9df5e750f1383e58c1cb001401e7a4f3197](https://sepolia.etherscan.io/address/0x3454f9df5e750f1383e58c1cb001401e7a4f3197) |
+| L1ERC721Bridge               | [0xd1c901bbd7796546a7ba2492e0e199911fae68c7](https://sepolia.etherscan.io/address/0xd1c901bbd7796546a7ba2492e0e199911fae68c7) |
+| OptimismPortal               | [0x5c1d29c6c9c8b0800692acc95d700bcb4966a1d7](https://sepolia.etherscan.io/address/0x5c1d29c6c9c8b0800692acc95d700bcb4966a1d7) |
+| DisputeGameFactory           | [0x860e626c700af381133d9f4af31412a2d1db3d5d](https://sepolia.etherscan.io/address/0x860e626c700af381133d9f4af31412a2d1db3d5d) |
+| AnchorStateRegistry          | [0x89126a987717207d4e990ed2e8880fd170dcea1a](https://sepolia.etherscan.io/address/0x89126a987717207d4e990ed2e8880fd170dcea1a) |
+| L1CrossDomainMessenger       | [0x9fe1d3523f5342535e6e7770ed09ed85dbc1acc2](https://sepolia.etherscan.io/address/0x9fe1d3523f5342535e6e7770ed09ed85dbc1acc2) |
+| DelayedWETHPermissionedGame  | [0x180ac451088b8f87006ab0ca98a01507e42ac456](https://sepolia.etherscan.io/address/0x180ac451088b8f87006ab0ca98a01507e42ac456) |
+| OptimismMintableERC20Factory | [0x686f782a749d1854f6fa3f948450f4c65c6674f0](https://sepolia.etherscan.io/address/0x686f782a749d1854f6fa3f948450f4c65c6674f0) |
+
 
 ## Contract Deployments - Instructions for Developers
 
-Developers should verify their contracts on our recommended block explorer. For now, the recommended block explorer is Blockscout. The domain of our Blockscout instance is [https://explorer-sepolia.inkonchain.com](https://explorer-sepolia.inkonchain.com).
+###### Contract Verification
+Please see [how to verify contracts](/build/tutorials/verify-smart-contract).

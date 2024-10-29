@@ -93,8 +93,8 @@ scawy
 Brid
 Rabby
 Protofire
-Zerodev 
-Permissionless 
+Zerodev
+Permissionless
 Crosschain
 Supersim
 verif
@@ -106,3 +106,8 @@ inkonchain
 Drand
 Viem
 viem
+hackathons
+Goldsky
+Multicall
+Mintable
+Permissioned

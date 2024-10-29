@@ -121,15 +121,10 @@
     "title": "Discord Badges"
   },
   "header_discord_invite": {
-    "title": "Community"
-  },
-  "header_inkubator": {
-    "title": "Inkubator"
+    "title": "Community",
+    "href": "/quick-start/developer-community"
   },
   "contributing": {
     "title": "Contribution Guide"
-  },
-  "header_developer_waitlist": {
-    "title": "Developer Waitlist"
   }
 }
