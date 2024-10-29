@@ -1,6 +1,9 @@
 {
   "name": "inkchain-docs",
-  "packageManager": "pnpm@9.2.0",
+  "volta": {
+    "node": "20.11.0",
+    "pnpm": "9.2.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
