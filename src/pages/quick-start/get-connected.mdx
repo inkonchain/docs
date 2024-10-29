@@ -21,15 +21,13 @@ The button below will automatically add Sepolia to your web3 wallet:
 
 
 ## What do I Need to Start Developing on Ink?
-1. An editor (with a Solidity highlighting package) like [Visual Studio Code](https://code.visualstudio.com/) to efficiently write smart contract code. This code will need the be compiled before deployment; see Step 4.
-2. A web3 wallet that holds funds to transact and deploy blockchain code such as [Kraken Wallet](https://www.kraken.com/wallet)
-3. Testnet funds to fund your transactions (see [Get Testnet Funds](/quick-start/faucets))
-4. Recommended: a development framework like [Foundry](https://book.getfoundry.sh/) or [Hardhat](https://hardhat.org/) to streamline smart contract development. 
-    - You will need the private key to your wallet account to deploy through these frameworks.
-    - These frameworks can also take care of code compilation for you - otherwise you will need a standalone [solution](https://docs.soliditylang.org/en/latest/installing-solidity.html).
-5. If you want to deploy code to the blockchain through the browser instead, a web3 browser extension (most web3 wallets will have one)
-
-As an alternative to most of the above you can use [Remix](https://remix.ethereum.org/), but you will still need a web3 wallet browser extension with funds to deploy your code.
+1. An IDE (integrated developer environment) like [Visual Studio Code](https://code.visualstudio.com/) or [Remix](https://remix.ethereum.org/) to write smart contracts in solidity.
+1. A web3 wallet that holds ETH such as [Kraken Wallet](https://www.kraken.com/wallet).
+    - We suggest having at least 0.05 ETH for standard deployments on Ink.
+    - You can request Ink Sepolia ETH using our [Faucets](/quick-start/faucets).
+1. We recommend using a development framework like [Foundry](https://book.getfoundry.sh/) or [Hardhat](https://hardhat.org/)
+    - @TODO [Guide to deploy a contract using Foundry]()
+    - @TODO [Guide to deploy a contract using Hardhat]()
 
 ## Connecting to Ink
 
@@ -39,8 +37,8 @@ In order to deploy code to Ink, you need a blockchain wallet that has funds in i
 3. Getting funds to use on Ink from a [faucet](https://https://docs.inkonchain.com/quick-start/faucets) or by [bridging]()
 
 ###### Creating a Wallet
-1. Get a wallet from [Kraken Wallet](https://www.kraken.com/wallet), [Metamask](https://metamask.io/), [Rainbow](https://rainbow.me/en-us/) or many more. 
-    - Make sure your wallet is EVM compatible i.e. works with Ethereum-based chains. The ones mentioned above do. 
+1. Get a wallet from [Kraken Wallet](https://www.kraken.com/wallet), [Metamask](https://metamask.io/), [Rainbow](https://rainbow.me/en-us/) or many more.
+    - Make sure your wallet is EVM compatible i.e. works with Ethereum-based chains. The ones mentioned above do.
     - Use the browser extension of the wallet you chose to simplify deploying code.
 2. Set up your wallet, which will include writing down a mnemonic (a set of words) and getting an address that starts with "0x".
 
@@ -63,9 +61,9 @@ Next: get some [play money](#faucet) from our faucets!
 ###### Fund your Wallet
 Get fake Ether (ETH) from these faucets so you can fund your wallet to send transactions and deploy contracts on Ink Sepolia.
 
-Check out faucets [here](https://docs.inkonchain.com/quick-start/faucets). Alternatively, you can [bridge](https://docs.inkonchain.com/quick-start/faucets#bridging-funds-to-ink-sepolia) testnet funds. 
+Check out faucets [here](https://docs.inkonchain.com/quick-start/faucets). Alternatively, you can [bridge](https://docs.inkonchain.com/quick-start/faucets#bridging-funds-to-ink-sepolia) testnet funds.
 
-## What Next? 
+## What Next?
 Check out the [tutorials](/build/tutorials) to learn how to deploy contracts on Ink and more!
 
 ## Troubleshooting
