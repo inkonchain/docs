@@ -46,19 +46,20 @@ By default, the [Ink Node] repository leverages public L1 RPC & Beacon APIs. For
 
 1. **Clone the Repository:** [Ink Node repository](https://github.com/inkonchain/node).
 
+1. **Configuration:**
+   To run the Ink node, it's required to bring your own L1 Sepolia Node. We suggest using [QuickNode](https://www.quicknode.com/) for this purpose.
+   Create a `.env` file in the root of the repository with the following environment variables, replacing `...` with your node's details:
+   ```sh
+   L1_RPC_URL=...
+   L1_BEACON_URL=...
+   ```
+
 2. **Run Setup Script:**
    ```sh
    ./setup.sh
    ```
 
-3. **Optional Configuration:**
-   Create a `.env` file at the root and set the following variables:
-   ```sh
-   L1_RPC_URL=your_rpc_url
-   L1_BEACON_URL=your_beacon_url
-   ```
-
-4. **Start the Node:**
+3. **Start the Node:**
    ```sh
    docker compose up # --build to force rebuild the images
    ```
