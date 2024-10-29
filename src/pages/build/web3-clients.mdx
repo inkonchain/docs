@@ -71,7 +71,7 @@ Viem documentation: https://viem.sh/docs/introduction
    yarn add viem
    ```
 
-2. **Define** a new chain
+2. **Define** a new chain: set up a new object representing Ink.
 
 ```javascript 
 import { defineChain } from 'viem'
@@ -100,7 +100,7 @@ export const ink = defineChain({
 
 ```
 
-3. **Instantiate Provider**
+3. **Instantiate Provider**: Set up a provider to help fetch data from Ink. 
 
 ```javascript
 import { createPublicClient, http } from 'viem'
@@ -112,7 +112,7 @@ const client = createPublicClient({
 }) 
 ```
 
-4. **Consuming Ethereum Actions**
+4. **Consuming Actions**: You can now interact with Ink's chain! Here we are getting the current block number.
 
 ```javascript 
 import { createPublicClient, http } from 'viem'
