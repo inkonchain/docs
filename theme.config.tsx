@@ -22,10 +22,12 @@ const config: DocsThemeConfig = {
   docsRepositoryBase: URLS.repositoryUrl,
   head: Head,
   components: {
-    a(props) {
+    a(props: { href?: string }) {
+      const isExternal = props.href?.startsWith('http');
       return (
         <a
           {...props}
+          {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
           className="text-magic-purple underline decoration-1 transition-all hover:text-magic-purple/80 dark:text-magic-soft-pink dark:hover:text-magic-soft-pink/80"
         />
       );
