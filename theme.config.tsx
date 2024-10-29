@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
 import { clsx } from "clsx";
+import { useRouter } from "next/router";
 import { DocsThemeConfig } from "nextra-theme-docs";
 
 import { Footer } from "@/components/Footer";
