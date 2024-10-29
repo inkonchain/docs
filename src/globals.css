@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer utilities {
+  body {
+    background-color: blue;
+    font-family: var(--font-plus-jakarta-sans), var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
 @layer base {
   h1,
   h2,
@@ -10,12 +20,12 @@
     @apply !text-magic-deep-purple dark:!text-magic-white;
   }
 
-  a {
-    @apply !text-magic-purple dark:!text-magic-semi-deep-purple;
+  a:not(.nextra-sidebar-container a):not(nav a):not(.toc-link) {
+    @apply !text-magic-purple dark:!text-magic-soft-pink !underline hover:!text-magic-purple/80 dark:hover:!text-magic-soft-pink/80;
   }
 
   nav > a {
-    @apply !text-ink-grey-400 dark:!text-magic-white dark:hover:!text-ink-grey-400 hover:!text-ink-grey-700;
+    @apply !text-ink-grey-400 dark:!text-magic-white dark:hover:!text-ink-grey-400 hover:!text-ink-grey-700 !no-underline;
   }
 
   nav > a > svg {
@@ -32,6 +42,13 @@
 
   .toc-link {
     @apply cursor-pointer !text-ink-grey-400 dark:!text-magic-white group-hover:!text-ink-grey-700 dark:group-hover:!text-ink-grey-700;
+  }
+
+  /* We need to override the underline for nav links and sidebar items */
+  nav > a,
+  a:has(div.ink-sidebar-item),
+  .toc-link {
+    @apply no-underline;
   }
 }
 

@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-
 import { clsx } from "clsx";
+import { useRouter } from "next/router";
 import { DocsThemeConfig } from "nextra-theme-docs";
 
 import { Footer } from "@/components/Footer";
@@ -12,14 +11,13 @@ import { InkLogo } from "@/icons/InkLogo";
 import { URLS } from "@/utils/urls";
 
 const config: DocsThemeConfig = {
-  logo: InkLogo,
-  // We are actually using the dark mode, but enabling it in here creates a ugly component in the sidebar, which can not be customized
+  logo: <InkLogo/>,
   darkMode: false,
   project: {
     link: URLS.githubOrgUrl,
   },
   chat: {
-    link: "https://test.com",
+    link: "https://discord.com/invite/inkonchain?utm_source=docs&utm_medium=nav",
   },
   docsRepositoryBase: URLS.repositoryUrl,
   head: Head,
@@ -28,7 +26,7 @@ const config: DocsThemeConfig = {
       return (
         <a
           {...props}
-          className="text-magic-purple transition-all hover:underline"
+          className="text-magic-purple underline decoration-1 transition-all hover:text-magic-purple/80 dark:text-magic-soft-pink dark:hover:text-magic-soft-pink/80"
         />
       );
     },
@@ -72,14 +70,12 @@ const config: DocsThemeConfig = {
       </a>
     ),
   },
-  //   useNextSeoProps() {
-  //     const { asPath } = useRouter()
-  //     if (asPath !== '/') {
-  //       return {
-  //         titleTemplate: '%s | Ink Docs'
-  //       }
-  //     }
-  //   },
+  useNextSeoProps() {
+    const { asPath } = useRouter()
+    return {
+      titleTemplate: asPath === '/' ? 'Ink Docs' : '%s | Ink Docs'
+    }
+  },
 };
 
 export default config;

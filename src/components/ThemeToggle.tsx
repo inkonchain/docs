@@ -29,7 +29,7 @@ export const ThemeToggle = () => {
   }
 
   return (
-    <button className="w-6 h-6" type="button" onClick={onToggleTheme}>
+    <button className="w-6 h-6 ml-2" type="button" onClick={onToggleTheme}>
       {resolvedTheme === "light" ? (
         <SunIcon className="w-6 h-6 text-magic-black" />
       ) : (
