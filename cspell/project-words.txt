@@ -111,3 +111,4 @@ Goldsky
 Multicall
 Mintable
 Permissioned
+preinstalls
