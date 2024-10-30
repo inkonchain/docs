@@ -13,6 +13,7 @@ jobs:
       - uses: volta-cli/action@v4
       - uses: pnpm/action-setup@v2
         with:
+          version: 9.12.3
           run_install: false
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
