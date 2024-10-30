@@ -4,6 +4,7 @@
     "node": "20.11.0",
     "pnpm": "9.2.0"
   },
+  "packageManager": "pnpm@9.12.3",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
