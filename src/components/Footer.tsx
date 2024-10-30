@@ -7,7 +7,12 @@ export const Footer = () => {
         <div className="text-sm text-gray-600">
           Made with 💜 by the Ink team
         </div>
-
+        <div className="text-sm text-gray-600">
+          <a href="https://inkonchain.com/en-US/privacy" target="_blank">Privacy Notice</a>
+        </div>
+        <div className="text-sm text-gray-600">
+          <a href="https://inkonchain.com/en-US/terms" target="_blank">Terms of Service</a>
+        </div>
         <ThemeToggle />
       </div>
     </div>
