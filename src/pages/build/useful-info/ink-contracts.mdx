@@ -4,30 +4,25 @@ import { Callout } from 'nextra/components'
 
 ## Utility Contracts
 
-<Callout type="warning" emoji="⚠️">
-  Multicall contracts are not tooling compatible at the moment and will be upgraded ASAP.
-</Callout>
-
-| Contract Name     | Contract Address                                                                                                                                      | Comment |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| WETH9             | [0x4200000000000000000000000000000000000006](https://explorer-sepolia.inkonchain.com/address/0x4200000000000000000000000000000000000006?tab=contract) | Needs contract verification |
-| [Multicall3](https://www.multicall3.com/) | [0x9f5CfC9f799CE16aD877Bb9959106538b9d157d6](https://explorer-sepolia.inkonchain.com/address/0x9f5CfC9f799CE16aD877Bb9959106538b9d157d6?tab=contract) | Contract deployed, but to be deprecated by the row below |
-| [Multicall3](https://www.multicall3.com/) | [0xcA11bde05977b3631167028862bE2a173976CA11](https://explorer-sepolia.inkonchain.com/address/0xcA11bde05977b3631167028862bE2a173976CA11?tab=contract) | Official address. This is the preferred Multicall3, but not deployed yet  |
+| Contract Name     | Contract Address                                                                                                                                      |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| WETH9             | [0x4200000000000000000000000000000000000006](https://explorer-sepolia.inkonchain.com/address/0x4200000000000000000000000000000000000006?tab=contract) |
+| [Multicall3](https://www.multicall3.com/) | [0xcA11bde05977b3631167028862bE2a173976CA11](https://explorer-sepolia.inkonchain.com/address/0xcA11bde05977b3631167028862bE2a173976CA11?tab=contract) |
 | Multicall2        | [0x9E7faA8F5Ca4B3f2f677a6384c3c77B435033A21](https://explorer-sepolia.inkonchain.com/address/0x9E7faA8F5Ca4B3f2f677a6384c3c77B435033A21?tab=contract) |
 | Multicall         | [0xdD8E57A4ca66819596F892a80cA3aa3a425c9B60](https://explorer-sepolia.inkonchain.com/address/0xdD8E57A4ca66819596F892a80cA3aa3a425c9B60?tab=contract) |
-| MultiSend         | [0x998739BFdAAdde7C933B942a68053933098f9EDa](https://explorer-sepolia.inkonchain.com/address/0x998739BFdAAdde7C933B942a68053933098f9EDa?tab=contract) | |
+| MultiSend         | [0x998739BFdAAdde7C933B942a68053933098f9EDa](https://explorer-sepolia.inkonchain.com/address/0x998739BFdAAdde7C933B942a68053933098f9EDa?tab=contract) |
 | MultiSendCallOnly | [0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B](https://explorer-sepolia.inkonchain.com/address/0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B?tab=contract) |
 | Safe              | [0x69f4D1788e39c87893C980c06EdF4b7f686e2938](https://explorer-sepolia.inkonchain.com/address/0x69f4D1788e39c87893C980c06EdF4b7f686e2938?tab=contract) |
 | SafeL2            | [0xfb1bffC9d739B8D520DaF37dF666da4C687191EA](https://explorer-sepolia.inkonchain.com/address/0xfb1bffC9d739B8D520DaF37dF666da4C687191EA?tab=contract) |
 | SafeSingletonFactory | [0x914d7Fec6aaC8cd542e72Bca78B30650d45643d7](https://explorer-sepolia.inkonchain.com/address/0x914d7Fec6aaC8cd542e72Bca78B30650d45643d7?tab=contract) |
-| Create2Deployer   | [0x13b0D85CcB8bf860b6b79AF3029fCA081AE9beF2](https://explorer-sepolia.inkonchain.com/address/0x13b0D85CcB8bf860b6b79AF3029fCA081AE9beF2?tab=contract) | Not deployed |
-| CreateX           | [0xba5Ed099633D3B313e4D5F7bdc1305d3c28ba5Ed](https://explorer-sepolia.inkonchain.com/address/0xba5Ed099633D3B313e4D5F7bdc1305d3c28ba5Ed?tab=contract) | Not deployed |
+| Create2Deployer   | [0x13b0D85CcB8bf860b6b79AF3029fCA081AE9beF2](https://explorer-sepolia.inkonchain.com/address/0x13b0D85CcB8bf860b6b79AF3029fCA081AE9beF2?tab=contract) |
+| CreateX           | [0xba5Ed099633D3B313e4D5F7bdc1305d3c28ba5Ed](https://explorer-sepolia.inkonchain.com/address/0xba5Ed099633D3B313e4D5F7bdc1305d3c28ba5Ed?tab=contract) |
 | Arachnid's Deterministic Deployment Proxy | [0x4e59b44847b379578588920cA78FbF26c0B4956C](https://explorer-sepolia.inkonchain.com/address/0x4e59b44847b379578588920cA78FbF26c0B4956C?tab=contract) |
-| Permit2           | [0x000000000022D473030F116dDEE9F6B43aC78BA3](https://explorer-sepolia.inkonchain.com/address/0x000000000022D473030F116dDEE9F6B43aC78BA3?tab=contract) | Not deployed |
-| ERC-4337 v0.6.0 EntryPoint | [0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789](https://explorer-sepolia.inkonchain.com/address/0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789?tab=contract) | Not deployed |
-| ERC-4337 v0.6.0 SenderCreator | [0x7fc98430eaedbb6070b35b39d798725049088348](https://explorer-sepolia.inkonchain.com/address/0x7fc98430eaedbb6070b35b39d798725049088348?tab=contract) | Not deployed |
-| ERC-4337 v0.7.0 EntryPoint | [0x0000000071727De22E5E9d8BAf0edAc6f37da032](https://explorer-sepolia.inkonchain.com/address/0x0000000071727De22E5E9d8BAf0edAc6f37da032?tab=contract) | Not deployed |
-| ERC-4337 v0.7.0 SenderCreator | [0xEFC2c1444eBCC4Db75e7613d20C6a62fF67A167C](https://explorer-sepolia.inkonchain.com/address/0xEFC2c1444eBCC4Db75e7613d20C6a62fF67A167C?tab=contract) | Not deployed |
+| Permit2           | [0x000000000022D473030F116dDEE9F6B43aC78BA3](https://explorer-sepolia.inkonchain.com/address/0x000000000022D473030F116dDEE9F6B43aC78BA3?tab=contract) |
+| ERC-4337 v0.6.0 EntryPoint | [0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789](https://explorer-sepolia.inkonchain.com/address/0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789?tab=contract) |
+| ERC-4337 v0.6.0 SenderCreator | [0x7fc98430eaedbb6070b35b39d798725049088348](https://explorer-sepolia.inkonchain.com/address/0x7fc98430eaedbb6070b35b39d798725049088348?tab=contract) |
+| ERC-4337 v0.7.0 EntryPoint | [0x0000000071727De22E5E9d8BAf0edAc6f37da032](https://explorer-sepolia.inkonchain.com/address/0x0000000071727De22E5E9d8BAf0edAc6f37da032?tab=contract) |
+| ERC-4337 v0.7.0 SenderCreator | [0xEFC2c1444eBCC4Db75e7613d20C6a62fF67A167C](https://explorer-sepolia.inkonchain.com/address/0xEFC2c1444eBCC4Db75e7613d20C6a62fF67A167C?tab=contract) |
 
 For more information on these preinstalls, take a look at the [Optimism Specs](https://specs.optimism.io/protocol/preinstalls.html).
 
