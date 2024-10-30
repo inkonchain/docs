@@ -112,3 +112,4 @@ Multicall
 Mintable
 Permissioned
 preinstalls
+multisignatures
