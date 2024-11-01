@@ -118,3 +118,4 @@ Smol
 foundryup
 inksepolia
 INKSEPOLIA
+commoditizes
