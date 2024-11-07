@@ -9,7 +9,7 @@ docker run -p 3000:3000 docs
 
 ## Requirements
 
-- NodeJs (v20.11.0)
+- Node.js (v20.11.0)
 
 ## Overview
 
