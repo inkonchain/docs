@@ -75,7 +75,7 @@ const config: DocsThemeConfig = {
   useNextSeoProps() {
     const { asPath } = useRouter()
     return {
-      titleTemplate: asPath === '/' ? 'Ink Docs' : '%s | Ink Docs'
+      titleTemplate: asPath === '/' ? "Ink Docs - The Official Developer Guide for Ink" : '%s | Ink Docs'
     }
   },
 };
