@@ -1,10 +1,36 @@
 import { ThemeProvider } from "next-themes"
+import Script from 'next/script'
 import { inter, plus_jakarta_sans } from "../fonts"
 import "../globals.css"
 
 export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider attribute="class">
+      <Script
+        id="schema-markup"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Ink Documentation",
+            description: "Comprehensive documentation for Ink, a Layer 2 (L2) blockchain built on Optimism's Superchain",
+            url: "https://docs.inkonchain.com",
+            publisher: {
+              "@type": "Organization",
+              name: "Ink",
+              url: "https://inkonchain.com",
+              sameAs: [
+                "https://x.com/inkonchain",
+                "https://github.com/inkonchain",
+                "https://discord.com/invite/inkonchain",
+                "https://t.me/inkonchain",
+              ],
+            }
+          })
+        }}
+      />
       <div className={`${inter.variable} ${plus_jakarta_sans.variable} font-sans`}>
         <div className="bg-white dark:bg-magic-black">
           <Component {...pageProps} />
