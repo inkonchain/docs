@@ -81,10 +81,5 @@
     "title": "Status Page",
     "href": "https://status.inkonchain.com/",
     "newWindow": true
-  },
-
-  "_badges": {
-    "display": "hidden",
-    "title": "Discord Badges"
   }
 }
