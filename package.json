@@ -76,7 +76,7 @@
     "remark-lint-unordered-list-marker-style": "4.0.0",
     "remark-preset-lint-consistent": "6.0.0",
     "remark-preset-lint-recommended": "7.0.0",
-    "tailwindcss": "3.4.14",
+    "tailwindcss": "3.4.15",
     "typescript": "5.6.3"
   }
 }
