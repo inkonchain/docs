@@ -40,27 +40,27 @@
   },
   "dependencies": {
     "clsx": "2.1.1",
-    "next": "15.0.2",
-    "next-themes": "0.4.1",
+    "next": "15.0.3",
+    "next-themes": "0.4.3",
     "nextra": "2.13.4",
     "nextra-theme-docs": "2.13.4",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@types/node": "22.8.7",
+    "@types/node": "22.9.0",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "autoprefixer": "10.4.20",
-    "cspell": "8.15.7",
+    "cspell": "8.16.0",
     "eslint": "8.57.1",
-    "eslint-config-next": "15.0.2",
+    "eslint-config-next": "15.0.3",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-mdx": "3.1.5",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "mdx": "0.3.1",
-    "postcss": "8.4.47",
+    "postcss": "8.4.49",
     "prettier": "3.3.3",
     "remark": "15.0.1",
     "remark-cli": "12.0.1",
@@ -76,7 +76,7 @@
     "remark-lint-unordered-list-marker-style": "4.0.0",
     "remark-preset-lint-consistent": "6.0.0",
     "remark-preset-lint-recommended": "7.0.0",
-    "tailwindcss": "3.4.14",
+    "tailwindcss": "3.4.15",
     "typescript": "5.6.3"
   }
 }

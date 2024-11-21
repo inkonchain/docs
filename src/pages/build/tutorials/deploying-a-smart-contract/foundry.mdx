@@ -1,3 +1,5 @@
+import CopyableCode from '@/components/CopyableCode'
+
 # Getting Started with Foundry on INK
 
 This guide will walk you through setting up a new project using Foundry, a blazing fast toolkit for Ethereum application development written in Rust.
@@ -43,16 +45,55 @@ my_project/
 
 ## Writing Your First Contract
 
-Replace the default Counter.sol with your own contract in `src/`:
+Remove the default Counter example contract:
+
+```bash
+rm -rf src/Counter.sol script/Counter.s.sol test/Counter.t.sol
+```
+
+Create a new contract and put it in the file <CopyableCode code="src/InkContract.sol" />:
 
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 contract InkContract {
     string public greeting = "Hello, Ink!";
-    
+
     function setGreeting(string memory _greeting) public {
         greeting = _greeting;
+    }
+}
+```
+
+Create the tests for this contract in the file <CopyableCode code="test/InkContract.t.sol" />:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
+
+import {Test} from "forge-std/Test.sol";
+import {InkContract} from "../src/InkContract.sol";
+
+contract InkContractTest is Test {
+    InkContract public ink;
+
+    function setUp() public {
+        ink = new InkContract();
+    }
+
+    function test_DefaultGreeting() public view {
+        assertEq(ink.greeting(), "Hello, Ink!");
+    }
+
+    function test_SetGreeting() public {
+        string memory newGreeting = "New greeting!";
+        ink.setGreeting(newGreeting);
+        assertEq(ink.greeting(), newGreeting);
+    }
+
+    function testFuzz_SetGreeting(string memory randomGreeting) public {
+        ink.setGreeting(randomGreeting);
+        assertEq(ink.greeting(), randomGreeting);
     }
 }
 ```
@@ -73,7 +114,7 @@ forge test
 
 ## Deployment
 
-1. First, create a `.env` file in your project root:
+1. First, create a <CopyableCode code=".env" /> file in your project root:
 
 ```env
 PRIVATE_KEY=your_private_key_here
@@ -81,21 +122,22 @@ RPC_URL=https://rpc-gel-sepolia.inkonchain.com/
 BLOCKSCOUT_API_KEY=your_blockscout_api_key_here
 ```
 
-2. Create a deployment script in `script/Deploy.s.sol`:
+2. Create a deployment script in <CopyableCode code="script/Deploy.s.sol" />:
 
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 import "forge-std/Script.sol";
 import "../src/InkContract.sol";
+
 contract DeployScript is Script {
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-        
+
         vm.startBroadcast(deployerPrivateKey);
-        
-        InkContract inkContract = new InkContract();
-        
+
+        new InkContract();
+
         vm.stopBroadcast();
     }
 }
@@ -116,7 +158,7 @@ forge script script/Deploy.s.sol:DeployScript --rpc-url $RPC_URL --broadcast --v
 If you want to verify your contract on Etherscan:
 
 ```bash
-forge verify-contract <DEPLOYED_CONTRACT_ADDRESS> src/MyContract.sol:MyContract \
+forge verify-contract <DEPLOYED_CONTRACT_ADDRESS> src/InkContract.sol:InkContract \
     --chain-id 763373 \
     --etherscan-api-key $BLOCKSCOUT_API_KEY
 ```
