@@ -17,7 +17,7 @@ export const ThemeToggle = () => {
   };
 
   /**
-   * This is not ideal, but it's best solution we have to avoid rendering the button
+   * This is not ideal, but it's the best solution we have to avoid rendering the button
    * with the wrong color
    */
   useEffect(() => {
