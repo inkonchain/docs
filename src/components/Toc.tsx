@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { PencilIcon } from "@/icons/Pencil";
-import { ThumpUpIcon } from "@/icons/ThumpUp";
+import { ThumbUpIcon } from "@/icons/ThumbUp";
 import { URLS } from "@/utils/urls";
 
 interface Heading {
