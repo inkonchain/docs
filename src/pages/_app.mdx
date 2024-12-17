@@ -1,6 +1,7 @@
 import { ThemeProvider } from "next-themes"
 import Script from 'next/script'
 import { inter, plus_jakarta_sans } from "../fonts"
+import { AskCookbook } from "../components/AskCookbook"
 import "../globals.css"
 
 export default function App({ Component, pageProps }) {
@@ -36,6 +37,7 @@ export default function App({ Component, pageProps }) {
           <Component {...pageProps} />
         </div>
       </div>
+      <AskCookbook />
     </ThemeProvider>
   )
 } 
