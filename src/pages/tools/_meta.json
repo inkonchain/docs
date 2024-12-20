@@ -1,0 +1,13 @@
+{
+  "account-abstraction": "Account Abstraction",
+  "block-explorers": "Block Explorers",
+  "bridges": "Bridges",
+  "crosschain": "Crosschain",
+  "faucets": "Faucets",
+  "indexers": "Indexers",
+  "multisig": "Multisig",
+  "oracles": "Oracles",
+  "rpc": "RPC",
+  "security": "Security",
+  "vrf": "VRF"
+}

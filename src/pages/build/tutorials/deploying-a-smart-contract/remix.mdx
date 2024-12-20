@@ -1,8 +1,9 @@
-import { Callout } from 'nextra/components'
+import { Callout } from "nextra/components";
+import { TestnetDisclaimer } from "@/components/TestnetDisclaimer";
 
-# Getting Started with Remix IDE on INK
+# Deploying a Smart Contract with Remix
 
-This guide will walk you through deploying a smart contract on INK using Remix IDE, a popular browser-based development environment for Ethereum smart contracts.
+This guide will walk you through deploying a smart contract on Ink using Remix IDE, a popular browser-based development environment for Ethereum smart contracts.
 
 ## What is Remix?
 
@@ -24,12 +25,13 @@ pragma solidity ^0.8.19;
 
 contract InkContract {
     string public greeting = "Hello, Ink!";
-    
+
     function setGreeting(string memory _greeting) public {
         greeting = _greeting;
     }
 }
 ```
+
 ![inkContract.sol](src/images/remix_deploy_1.png)
 
 ## Compiling Your Contract
@@ -41,18 +43,18 @@ contract InkContract {
 
 ![inkContract.sol](src/images/remix_deploy_2.png)
 
-## Connecting to INK Network
+## Connecting to Ink Network
 
 1. On the left sidebar, click the `Deploy & run transactions` tab (represented by a deployment arrow icon ▶️)
 2. In the `ENVIRONMENT` dropdown:
    - If you see `Injected Provider`, select it
    - If not visible, click `Customize this list...` in dropdown
    - In the opened "Environment Explorer" window, under "Deploy using a Browser Extension" section, select `Injected Provider - [WALLET_NAME]`, where [WALLET_NAME] is your connected Web3 wallet (e.g., MetaMask, Rabby)
-3. Configure your preferred Web3 wallet with INK Sepolia network details:
-   - Network Name: INK Sepolia
+3. Configure your preferred Web3 wallet with Ink Sepolia network details:
+   - Network Name: Ink Sepolia
    - RPC URL: https://rpc-gel-sepolia.inkonchain.com/
    - Chain ID: 763373
-   - Currency Symbol: INK
+   - Currency Symbol: Ink
    - Block Explorer URL: https://explorer-sepolia.inkonchain.com/
 
 Most modern Web3 wallets will allow you to add custom networks through their settings. Look for options like `Add Network`, `Custom RPC`, or `Networks` in your wallet's interface.
@@ -62,11 +64,13 @@ Most modern Web3 wallets will allow you to add custom networks through their set
 ## Deploying Your Contract
 
 1. Before deploying, ensure:
-   - Your Web3 wallet is connected to INK Sepolia network
+
+   - Your Web3 wallet is connected to Ink Sepolia network
    - You have sufficient ETH for deployment
    - Your wallet is connected to Remix IDE (accept the connection prompt if shown)
 
 2. In the "Deploy & Run Transactions" tab:
+
    - Select `InkContract` from the `CONTRACT` dropdown
    - Click `Deploy`
    - A popup from your wallet will appear - review and confirm the transaction
@@ -91,7 +95,7 @@ Most modern Web3 wallets will allow you to add custom networks through their set
 
 See also the respective [tutorial](/build/tutorials/verify-smart-contract).
 
-1. Go to [INK Blockscout](https://explorer-sepolia.inkonchain.com)
+1. Go to [Ink Blockscout](https://explorer-sepolia.inkonchain.com)
 2. Find your contract by its address
 3. Click `Verify & Publish`
 4. Fill in the verification details:
@@ -102,7 +106,8 @@ See also the respective [tutorial](/build/tutorials/verify-smart-contract).
    - Click `Verify & Publish`
 
 <Callout emoji="">
-  Make sure to verify whether optimization is on or off in Remix Compiler's Advanced Configuration as this can affect verification success.
+  Make sure to verify whether optimization is on or off in Remix Compiler's
+  Advanced Configuration as this can affect verification success.
 </Callout>
 
 ## Tips and Best Practices
@@ -123,3 +128,5 @@ See also the respective [tutorial](/build/tutorials/verify-smart-contract).
 
 - Explore [Remix Documentation](https://remix-ide.readthedocs.io/) for advanced features
 - Learn about [Solidity](https://docs.soliditylang.org/) programming
+
+<TestnetDisclaimer />

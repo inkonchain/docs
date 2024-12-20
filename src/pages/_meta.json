@@ -10,7 +10,6 @@
       "pagination": false
     }
   },
-
   "404": {
     "title": "404",
     "display": "hidden",
@@ -23,7 +22,6 @@
       "pagination": false
     }
   },
-
   "500": {
     "title": "500",
     "display": "hidden",
@@ -36,8 +34,6 @@
       "pagination": false
     }
   },
-
-
   "header_status": {
     "title": "Status Page",
     "type": "page",
@@ -47,35 +43,67 @@
   "header_faucet": {
     "title": "Faucets",
     "type": "page",
-    "href": "/quick-start/faucets"
+    "href": "/tools/faucets"
   },
-
-
+  "--- GENERAL": {
+    "title": "General",
+    "type": "separator"
+  },
   "general": {
-    "title": "General"
+    "title": "General",
+    "display": "children"
   },
-
-
-  "quick-start": {
-    "title": "Quick Start"
+  "+++ Build on Ink": {
+    "title": "",
+    "type": "separator"
   },
-
-  "use-ink": {
-    "title": "Use Ink"
+  "--- Build On Ink": {
+    "title": "Build On Ink",
+    "type": "separator"
   },
-
   "build": {
-    "title": "Build on Ink"
+    "title": "Build on Ink",
+    "display": "children"
   },
-
-
-  "work-ink": {
+  "+++ Tools": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- Tools": {
+    "title": "Tools",
+    "type": "separator"
+  },
+  "tools": {
+    "title": "Tools",
+    "display": "children"
+  },
+  "+++ Useful Information": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- Useful Information": {
+    "title": "Useful Information",
+    "type": "separator"
+  },
+  "useful-information": {
+    "title": "Useful Information",
+    "display": "children"
+  },
+  "+++ Work with Ink": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- Work with Ink": {
     "title": "Work with Ink",
+    "type": "separator"
+  },
+  "work-with-ink": {
+    "title": "Work with Ink",
+    "display": "children",
     "theme": {
       "pagination": true
     }
   },
-
   "---": {
     "type": "separator"
   },

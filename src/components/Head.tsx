@@ -7,7 +7,8 @@ export const Head = () => {
   const baseUrl = "https://docs.inkonchain.com";
   const url =
     baseUrl + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
-  const title = frontMatter.title || "Ink Docs - The Official Developer Guide for Ink";
+  const title =
+    frontMatter.title || "Ink Docs - The Official Developer Guide for Ink";
   const description =
     frontMatter.description ||
     "Comprehensive documentation for Ink, a cutting-edge Layer 2 (L2) blockchain built on Optimism's Superchain. Learn how to build, integrate, and leverage Ink's DeFi capabilities.";
@@ -39,7 +40,7 @@ export const Head = () => {
       <meta property="twitter:creator" content="@inkonchain" />
 
       {/* Favicon */}
-      <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+      <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon" />
     </>
   );
 };

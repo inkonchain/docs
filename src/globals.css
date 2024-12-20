@@ -2,11 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer utilities {
   body {
-    background-color: blue;
-    font-family: var(--font-plus-jakarta-sans), var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family:
+      var(--font-plus-jakarta-sans),
+      var(--font-inter),
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Helvetica,
+      "Apple Color Emoji",
+      Arial,
+      sans-serif,
+      "Segoe UI Emoji",
+      "Segoe UI Symbol";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -63,7 +72,6 @@ a:has(div.ink-sidebar-item) {
   background-color: transparent !important;
 }
 
-
 /* Target both the banner container and its text */
 .nextra-banner-container {
   @apply text-white !important;
@@ -74,7 +82,8 @@ a:has(div.ink-sidebar-item) {
 }
 
 /* Override the purple link styles specifically for the banner */
-.nextra-banner-container a:not(.nextra-sidebar-container a):not(nav a):not(.toc-link) {
+.nextra-banner-container
+  a:not(.nextra-sidebar-container a):not(nav a):not(.toc-link) {
   @apply text-white hover:text-white/80 underline !important;
 }
 

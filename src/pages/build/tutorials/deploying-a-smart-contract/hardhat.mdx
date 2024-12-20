@@ -1,4 +1,6 @@
-# Getting Started with Hardhat on INK
+import { TestnetDisclaimer } from "@/components/TestnetDisclaimer";
+
+# Deploying a Smart Contract with Hardhat
 
 This guide will walk you through setting up a new project using Hardhat, a popular development environment for Ethereum software.
 
@@ -53,7 +55,7 @@ pragma solidity ^0.8.19;
 
 contract InkContract {
     string public greeting = "Hello, Ink!";
-    
+
     function setGreeting(string memory _greeting) public {
         greeting = _greeting;
     }
@@ -155,7 +157,7 @@ main()
   });
 ```
 
-Deploy to INK Sepolia testnet:
+Deploy to Ink Sepolia testnet:
 
 ```bash
 npx hardhat run scripts/deploy.js --network inksepolia
@@ -202,3 +204,5 @@ npx hardhat node
 ## Next Steps
 
 - Explore [Hardhat Documentation](https://hardhat.org/docs) for more features
+
+<TestnetDisclaimer />

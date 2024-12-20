@@ -11,7 +11,7 @@ import { InkLogo } from "@/icons/InkLogo";
 import { URLS } from "@/utils/urls";
 
 const config: DocsThemeConfig = {
-  logo: <InkLogo/>,
+  logo: <InkLogo />,
   darkMode: false,
   project: {
     link: URLS.githubOrgUrl,
@@ -23,11 +23,13 @@ const config: DocsThemeConfig = {
   head: Head,
   components: {
     a(props: { href?: string }) {
-      const isExternal = props.href?.startsWith('http');
+      const isExternal = props.href?.startsWith("http");
       return (
         <a
           {...props}
-          {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          {...(isExternal
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
           className="text-magic-purple underline decoration-1 transition-all hover:text-magic-purple/80 dark:text-magic-soft-pink dark:hover:text-magic-soft-pink/80"
         />
       );
@@ -44,7 +46,7 @@ const config: DocsThemeConfig = {
     },
   },
   sidebar: {
-    defaultMenuCollapseLevel: 3,
+    defaultMenuCollapseLevel: 1,
     autoCollapse: true,
     titleComponent: SidebarTitleComponent,
   },
@@ -68,15 +70,18 @@ const config: DocsThemeConfig = {
         rel="noopener noreferrer"
         aria-label="Documentation Status"
       >
-        🏗️ Documentation is under active development. Testnet is live!
+        🎉 Mainnet is LIVE! 🎉
       </a>
     ),
   },
   useNextSeoProps() {
-    const { asPath } = useRouter()
+    const { asPath } = useRouter();
     return {
-      titleTemplate: asPath === '/' ? "Ink Docs - The Official Developer Guide for Ink" : '%s | Ink Docs'
-    }
+      titleTemplate:
+        asPath === "/"
+          ? "Ink Docs - The Official Developer Guide for Ink"
+          : "%s | Ink Docs",
+    };
   },
 };
 

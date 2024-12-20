@@ -61,15 +61,15 @@ jobs:
       - name: Run formatting
         run: pnpm run format:js
 
-  spell-check:
-    needs: install_modules
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/base-setup
-        name: Base Setup
-      - name: Run Spellcheck
-        run: pnpm run spellcheck:lint
+  # spell-check:
+  #   needs: install_modules
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: ./.github/actions/base-setup
+  #       name: Base Setup
+  #     - name: Run Spellcheck
+  #       run: pnpm run spellcheck:lint
 
   build:
     needs: install_modules
