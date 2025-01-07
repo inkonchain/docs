@@ -1,4 +1,4 @@
-# InkChain Documentation App
+# InkChain Documentation App TEST
 
 An advanced, streamlined documentation platform built with Next.js and Nextra for InkChain.
 
