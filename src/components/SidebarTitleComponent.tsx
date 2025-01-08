@@ -28,7 +28,8 @@ export const SidebarTitleComponent: React.FC<SidebarTitleComponentProps> = ({
         {
           "text-ink-grey-400 dark:text-magic-white dark:hover:text-ink-grey-700 hover:text-ink-grey-700 hover:bg-ink-grey-100":
             !isActive,
-          "bg-magic-semi-deep-purple/15 text-magic-purple dark:text-magic-soft-pink": isActive,
+          "bg-magic-semi-deep-purple/15 text-magic-purple dark:text-magic-soft-pink":
+            isActive,
         }
       )}
     >

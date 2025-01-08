@@ -16,8 +16,8 @@
     "lint:js:fix": "eslint ./src theme.config.tsx --fix --ext js,jsx,ts,tsx",
     "format:js": "prettier --write \"**/*.{ts,tsx,css,scss}\"",
     "format:js:check": "prettier --check \"**/*.{ts,tsx,css,scss}\"",
-    "lint:mdx": "remark -e mdx -u mdx ./src",
-    "lint:mdx:fix": "remark -e mdx -u mdx ./src --output",
+    "lint:mdx": "remark . --quiet --frail",
+    "lint:mdx:fix": "remark . -o --quiet",
     "spellcheck:lint": "cspell lint \"**/*.mdx\"",
     "spellcheck:fix": "cspell --words-only --unique \"**/*.mdx\" | sort --ignore-case | uniq"
   },
@@ -27,9 +27,20 @@
       "strong": "*"
     },
     "plugins": [
+      "remark-frontmatter",
       "remark-preset-lint-consistent",
       "remark-preset-lint-recommended",
       "remark-gfm",
+      [
+        "remark-mdx",
+        {
+          "commonmark": true,
+          "extensions": [
+            ".mdx"
+          ],
+          "jsx": true
+        }
+      ],
       "remark-lint-frontmatter-schema",
       "remark-lint-heading-style",
       "remark-lint-list-item-indent",
@@ -76,6 +87,7 @@
     "remark-lint-table-pipe-alignment": "4.0.0",
     "remark-lint-table-pipes": "5.0.0",
     "remark-lint-unordered-list-marker-style": "4.0.0",
+    "remark-mdx": "2.3.0",
     "remark-preset-lint-consistent": "6.0.0",
     "remark-preset-lint-recommended": "7.0.0",
     "tailwindcss": "3.4.17",

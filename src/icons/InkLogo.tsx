@@ -9,7 +9,10 @@ export const InkLogo: React.FC<InkLogoProps> = ({
   className = "text-magic-purple",
 }) => {
   const { resolvedTheme } = useTheme();
-  const logoSrc = resolvedTheme === "dark" ? "/logo/ink-logo-dark.svg" : "/logo/ink-logo-light.svg";
+  const logoSrc =
+    resolvedTheme === "dark"
+      ? "/logo/ink-logo-dark.svg"
+      : "/logo/ink-logo-light.svg";
 
   return (
     <Image
