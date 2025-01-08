@@ -1,8 +1,8 @@
-interface ThumpUpProps {
+interface ThumbUpProps {
   className?: string;
 }
 
-export const ThumbUpIcon: React.FC<ThumpUpProps> = ({
+export const ThumbUpIcon: React.FC<ThumbUpProps> = ({
   className = "size-6",
 }) => {
   return (

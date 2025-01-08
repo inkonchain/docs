@@ -1,17 +1,12 @@
-import { Callout } from "nextra/components";
-import CopyableCode from "@/components/CopyableCode";
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
-# Ink Token Contracts
+export default function Redirect() {
+  const router = useRouter()
 
-<Callout type="info" emoji="ℹ️">
-  This page is a work in progress. If there are missing tokens, please feel free
-  to edit this page by submitting a PR to our
-  [Github](https://github.com/inkonchain).
-</Callout>
+  useEffect(() => {
+    router.replace('/useful-information/ink-contracts')
+  }, [])
 
-| Name  | Contract Address                                                                                                                                           |
-| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| WETH9 | <CopyableCode code="0x4200000000000000000000000000000000000006" href="https://explorer.inkonchain.com/token/0x4200000000000000000000000000000000000006" />          |
-| USDC  | <CopyableCode code="0xF1815bd50389c46847f0Bda824eC8da914045D14" href="https://explorer.inkonchain.com/token/0xF1815bd50389c46847f0Bda824eC8da914045D14" /> |
-| USDT  | Coming soon                                                                                                                                                |
-| DAI   | Coming soon                                                                                                                                                |
+  return null
+}
