@@ -16,7 +16,7 @@ An advanced, streamlined documentation platform built with Next.js and Nextra fo
 
 ## 📋 Requirements
 
-- **Node.js**: v20.11.0 or higher
+* **Node.js**: v20.11.0 or higher
 
 ## 📖 Overview
 
@@ -40,20 +40,20 @@ To get started with local development:
 
 Our development setup includes multiple tools to maintain high-quality code and documentation:
 
-- **[CSpell](https://cspell.org/)**: Real-time spell checking to maintain documentation accuracy.
-- **[Remark](https://remark.js.org/)**: Processes and renders Markdown content with added plugins.
-- **[ESLint](https://eslint.org/)**: Ensures code quality by catching potential issues.
-- **[Prettier](https://prettier.io/)**: Enforces consistent code formatting.
-- **[Tailwind CSS](https://tailwindcss.com/)**: Utility-first CSS framework for fast, responsive UI development.
+* **[CSpell](https://cspell.org/)**: Real-time spell checking to maintain documentation accuracy.
+* **[Remark](https://remark.js.org/)**: Processes and renders Markdown content with added plugins.
+* **[ESLint](https://eslint.org/)**: Ensures code quality by catching potential issues.
+* **[Prettier](https://prettier.io/)**: Enforces consistent code formatting.
+* **[Tailwind CSS](https://tailwindcss.com/)**: Utility-first CSS framework for fast, responsive UI development.
 
 ## 🚦 CI/CD Pipeline
 
 Our CI/CD setup utilizes GitHub Actions to run automated checks on every pull request (PR):
 
-- **js-lint**: Ensures proper JavaScript code formatting with ESLint.
-- **md-lint**: Checks Markdown code formatting with Remark.
-- **format**: Enforces consistent code style with Prettier.
-- **spell-check**: Uses CSpell to verify correct spelling in documentation. For any unique terms (e.g., "InkChain"), add them to the [`./cspell/project-words.txt`](./cspell/project-words.txt) file to whitelist.
+* **js-lint**: Ensures proper JavaScript code formatting with ESLint.
+* **md-lint**: Checks Markdown code formatting with Remark.
+* **format**: Enforces consistent code style with Prettier.
+* **spell-check**: Uses CSpell to verify correct spelling in documentation. For any unique terms (e.g., "InkChain"), add them to the [`./cspell/project-words.txt`](./cspell/project-words.txt) file to whitelist.
 
 ## 🌐 Feature Branch Deployment
 

@@ -28,7 +28,7 @@ export const networkParams = {
 };
 
 export async function isNetworkAdded(network: NetworkType): Promise<boolean> {
-  if (!(window as any as any).ethereum) return false;
+  if (!(window as any).ethereum) return false;
 
   try {
     const chainId = await (window as any as any).ethereum.request({
