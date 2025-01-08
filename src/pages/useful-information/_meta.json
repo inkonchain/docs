@@ -1,5 +1,9 @@
 {
   "contracts": "Contracts",
-  "ink-token-contracts": "Ink Token Contracts",
+  "ink-contracts": "Ink Contracts",
+  "ink-token-contracts": {
+    "title": "Ink Token Contracts",
+    "display": "hidden"
+  },
   "the-superchain": "The Superchain"
 }

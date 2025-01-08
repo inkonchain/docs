@@ -29,11 +29,11 @@ To connect to Ink by instantiating a new `ethers.js` `JsonRpcProvider` object wi
 
 3. **Using the Provider**: You can now use the `provider` to interact with Ink's testnet. For example, you can fetch the current block number or interact with smart contracts deployed on the testnet.
 
-    ```javascript
-    // previous code
-    const blockNumber = await provider.getBlockNumber();
-    console.log(blockNumber);
-    ```
+   ```javascript
+   // previous code
+   const blockNumber = await provider.getBlockNumber();
+   console.log(blockNumber);
+   ```
 
 ### Example: Fetching the Current Block Number
 
@@ -56,20 +56,20 @@ Viem documentation: [https://viem.sh/docs/introduction](https://viem.sh/docs/int
    ```
 
 2. **Instantiate a Public Client**: Use the following code snippet to create a new `Public Client` object with the Ink Sepolia testnet.
-    ```javascript
-    import { createPublicClient, http } from 'viem'
-    import { inkSepolia } from 'viem/chains'
+   ```javascript
+   import { createPublicClient, http } from 'viem'
+   import { inkSepolia } from 'viem/chains'
 
-    const client = createPublicClient({
-      chain: inkSepolia,
-      transport: http(),
-    })
-    ```
+   const client = createPublicClient({
+     chain: inkSepolia,
+     transport: http(),
+   })
+   ```
 
-2. **Consuming Actions**: You can now interact with Ink's chain! Here we are getting the current block number.
+3. **Consuming Actions**: You can now interact with Ink's chain! Here we are getting the current block number.
 
-    ```javascript
-    // previous code
-    const blockNumber = await client.getBlockNumber();
-    console.log(blockNumber);
-    ```
+   ```javascript
+   // previous code
+   const blockNumber = await client.getBlockNumber();
+   console.log(blockNumber);
+   ```
