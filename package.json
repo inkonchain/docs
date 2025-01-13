@@ -88,7 +88,7 @@
     "remark-lint-table-pipe-alignment": "4.0.0",
     "remark-lint-table-pipes": "5.0.0",
     "remark-lint-unordered-list-marker-style": "4.0.0",
-    "remark-mdx": "2.3.0",
+    "remark-mdx": "3.1.0",
     "remark-preset-lint-consistent": "6.0.0",
     "remark-preset-lint-recommended": "7.0.0",
     "tailwindcss": "3.4.17",
