@@ -115,8 +115,8 @@ importers:
         specifier: 4.0.0
         version: 4.0.0
       remark-mdx:
-        specifier: 2.3.0
-        version: 2.3.0
+        specifier: 3.1.0
+        version: 3.1.0
       remark-preset-lint-consistent:
         specifier: 6.0.0
         version: 6.0.0
