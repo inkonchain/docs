@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@cookbookdev/docsbot':
-        specifier: ^4.24.8
-        version: 4.24.8(@types/react-dom@18.3.1)(@types/react@18.3.12)(babel-plugin-macros@3.1.0)(monaco-editor@0.52.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17)(typescript@5.7.2)(zod@3.23.8)
+        specifier: ^4.24.9
+        version: 4.24.9(@types/react-dom@18.3.1)(@types/react@18.3.12)(babel-plugin-macros@3.1.0)(monaco-editor@0.52.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17)(typescript@5.7.2)(zod@3.23.8)
       clsx:
         specifier: 2.1.1
         version: 2.1.1
@@ -175,8 +175,8 @@ packages:
   '@braintree/sanitize-url@6.0.4':
     resolution: {integrity: sha512-s3jaWicZd0pkP0jf5ysyHUI/RE7MHos6qlToFcGWXVp+ykHOy77OUMrfbgJ9it2C5bow7OIQwYYaHjk9XlBQ2A==}
 
-  '@cookbookdev/docsbot@4.24.8':
-    resolution: {integrity: sha512-gPbwhz3p9WnnEGi+6LuabYRwkWcyYfjPPbCUz10MxULDrPyV+w3YBIvE0FLIFWFEC8bn0SzbEcQPeVQ11/PhEg==}
+  '@cookbookdev/docsbot@4.24.9':
+    resolution: {integrity: sha512-yawje1OvjcCRCRrgeyb4ePNClSF4dTIy8tOJ/1yqvLhqjLejV6QEtIJSBE6LZyQWCORcAYEuD/+CqGUeBtA4Vg==}
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
       react-dom: ^16.8 || ^17.0 || ^18.0
@@ -5631,7 +5631,7 @@ snapshots:
 
   '@braintree/sanitize-url@6.0.4': {}
 
-  '@cookbookdev/docsbot@4.24.8(@types/react-dom@18.3.1)(@types/react@18.3.12)(babel-plugin-macros@3.1.0)(monaco-editor@0.52.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17)(typescript@5.7.2)(zod@3.23.8)':
+  '@cookbookdev/docsbot@4.24.9(@types/react-dom@18.3.1)(@types/react@18.3.12)(babel-plugin-macros@3.1.0)(monaco-editor@0.52.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17)(typescript@5.7.2)(zod@3.23.8)':
     dependencies:
       '@cookbookdev/sonner': 1.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@headlessui/react': 1.7.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
