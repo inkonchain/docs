@@ -62,3 +62,4 @@ For every new PR, our CI/CD pipeline deploys a temporary environment via **AWS A
 ## 🚀 Production Deployment
 
 The `main` branch is configured for automatic continuous deployment via **AWS Amplify**. Every merge triggers a new build and deployment, ensuring that the latest version of the documentation is available to users without manual intervention.
+*
