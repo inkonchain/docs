@@ -74,7 +74,7 @@
     "eslint-plugin-mdx": "3.1.5",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "mdx": "0.3.1",
-    "postcss": "8.5.1",
+    "postcss": "8.5.3",
     "prettier": "3.5.2",
     "remark": "15.0.1",
     "remark-cli": "12.0.1",
