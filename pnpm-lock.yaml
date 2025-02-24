@@ -100,8 +100,8 @@ importers:
         specifier: 4.0.1
         version: 4.0.1
       remark-lint-list-item-indent:
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 4.0.1
+        version: 4.0.1
       remark-lint-table-cell-padding:
         specifier: 5.1.1
         version: 5.1.1
@@ -4959,8 +4959,8 @@ packages:
   remark-lint-list-item-content-indent@4.0.1:
     resolution: {integrity: sha512-KSopxxp64O6dLuTQ2sWaTqgjKWr1+AoB1QCTektMJ3mfHfn0QyZzC2CZbBU22KGzBhiYXv9cIxlJlxUtq2NqHg==}
 
-  remark-lint-list-item-indent@4.0.0:
-    resolution: {integrity: sha512-Yd6/g8CH9e4vlPAPNgl7F575uKhP+pTo/qwGkE61GOcgEVNJ/529hjumUhyQ4sOAX0YAPAjxvq6fJvb4AhVOOA==}
+  remark-lint-list-item-indent@4.0.1:
+    resolution: {integrity: sha512-gJd1Q+jOAeTgmGRsdMpnRh01DUrAm0O5PCQxE8ttv1QZOV015p/qJH+B4N6QSmcUuPokHLAh9USuq05C73qpiA==}
 
   remark-lint-no-blockquote-without-marker@6.0.1:
     resolution: {integrity: sha512-b4IOkNcG7C16HYAdKUeAhO7qPt45m+v7SeYbVrqvbSFtlD3EUBL8fgHRgLK1mdujFXDP1VguOEMx+Txv8JOT4w==}
@@ -5620,9 +5620,6 @@ packages:
 
   unified-lint-rule@2.1.2:
     resolution: {integrity: sha512-JWudPtRN7TLFHVLEVZ+Rm8FUb6kCAtHxEXFgBGDxRSdNMnGyTU5zyYvduHSF/liExlFB3vdFvsAHnNVE/UjAwA==}
-
-  unified-lint-rule@3.0.0:
-    resolution: {integrity: sha512-Sz96ILLsTy3djsG3H44zFb2b77MFf9CQVYnV3PWkxgRX8/n31fFrr+JnzUaJ6cbOHTtZnL1A71+YodsTjzwAew==}
 
   unified-lint-rule@3.0.1:
     resolution: {integrity: sha512-HxIeQOmwL19DGsxHXbeyzKHBsoSCFO7UtRVUvT2v61ptw/G+GbysWcrpHdfs5jqbIFDA11MoKngIhQK0BeTVjA==}
@@ -12195,12 +12192,12 @@ snapshots:
       unist-util-visit-parents: 6.0.1
       vfile-message: 4.0.2
 
-  remark-lint-list-item-indent@4.0.0:
+  remark-lint-list-item-indent@4.0.1:
     dependencies:
       '@types/mdast': 4.0.4
       mdast-util-phrasing: 4.1.0
       pluralize: 8.0.0
-      unified-lint-rule: 3.0.0
+      unified-lint-rule: 3.0.1
       unist-util-position: 5.0.0
       unist-util-visit-parents: 6.0.1
 
@@ -12441,7 +12438,7 @@ snapshots:
       remark-lint-final-newline: 3.0.1
       remark-lint-hard-break-spaces: 4.1.1
       remark-lint-list-item-bullet-indent: 5.0.1
-      remark-lint-list-item-indent: 4.0.0
+      remark-lint-list-item-indent: 4.0.1
       remark-lint-no-blockquote-without-marker: 6.0.1
       remark-lint-no-duplicate-definitions: 4.0.1
       remark-lint-no-heading-content-indent: 5.0.1
@@ -13218,13 +13215,6 @@ snapshots:
       trough: 2.2.0
       unified: 10.1.2
       vfile: 5.3.7
-
-  unified-lint-rule@3.0.0:
-    dependencies:
-      '@types/unist': 3.0.3
-      trough: 2.2.0
-      unified: 11.0.5
-      vfile: 6.0.3
 
   unified-lint-rule@3.0.1:
     dependencies:

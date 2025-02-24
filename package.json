@@ -83,7 +83,7 @@
     "remark-gfm": "4.0.0",
     "remark-lint-frontmatter-schema": "3.15.4",
     "remark-lint-heading-style": "4.0.1",
-    "remark-lint-list-item-indent": "4.0.0",
+    "remark-lint-list-item-indent": "4.0.1",
     "remark-lint-table-cell-padding": "5.1.1",
     "remark-lint-table-pipe-alignment": "4.1.1",
     "remark-lint-table-pipes": "5.0.1",
