@@ -31,7 +31,7 @@ export async function isNetworkAdded(network: NetworkType): Promise<boolean> {
   if (!(window as any).ethereum) return false;
 
   try {
-    const chainId = await (window as any as any).ethereum.request({
+    const chainId = await (window as any).ethereum.request({
       method: "eth_chainId",
     });
     return (
