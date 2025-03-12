@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 interface SidebarTitleComponentProps {
   title: string;
-  type: string;
+  type: "separator" | "otherType";
   route: string;
 }
 
