@@ -11,10 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: volta-cli/action@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
-          version: 9.12.3
           run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: "pnpm"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Add pnpm store path to env var
@@ -80,6 +83,11 @@ jobs:
         name: Base Setup
       - name: Building app
         run: pnpm run build
+      - name: Cache build
+        uses: actions/cache/save@v4
+        with:
+          path: .next
+          key: ${{ runner.os }}-build-store-${{ hashFiles('.next') }}
 
   docker-publish:
     if: github.ref == 'refs/heads/main'

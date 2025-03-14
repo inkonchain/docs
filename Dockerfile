@@ -1,8 +1,8 @@
-FROM node:20.11.0
+FROM node:22-alpine
+RUN corepack enable && corepack prepare pnpm@9.12.3 --activate
 WORKDIR /app
-RUN npm install -g pnpm
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm run build
 RUN adduser --system --uid 1001 docs-user
