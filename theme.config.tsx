@@ -64,7 +64,7 @@ const config: DocsThemeConfig = {
     key: "docs-wip",
     text: (
       <a
-        className="!text-white hover:!text-white/80"
+        className="text-white! hover:text-white/80!"
         href="/"
         target="_blank"
         rel="noopener noreferrer"

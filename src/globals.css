@@ -1,6 +1,47 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.5rem;
+  --radius-6xl: 3rem;
+
+  --color-magic-purple: #7132f5;
+  --color-magic-semi-deep-purple: #855bfb;
+  --color-magic-deep-purple: #2b1463;
+  --color-magic-black: #101114;
+  --color-magic-white: #f0efff;
+  --color-magic-soft-pink: #f7d2fe;
+  --color-magic-link-purple: #b794ff;
+
+  --color-ink-grey-100: #f3f4f6;
+  --color-ink-grey-400: #6b7280;
+  --color-ink-grey-700: #374151;
+
+  --font-sans:
+    var(--font-plus-jakarta-sans), var(--font-inter), -apple-system,
+    BlinkMacSystemFont, Segoe UI, Helvetica, Apple Color Emoji, Arial,
+    sans-serif, Segoe UI Emoji, Segoe UI Symbol;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 @layer utilities {
   body {
@@ -26,19 +67,19 @@
   h2,
   h3,
   h4 {
-    @apply !text-magic-deep-purple dark:!text-magic-white;
+    @apply text-magic-deep-purple! dark:text-magic-white!;
   }
 
   a:not(.nextra-sidebar-container a):not(nav a):not(.toc-link) {
-    @apply !text-magic-purple dark:!text-magic-soft-pink !underline hover:!text-magic-purple/80 dark:hover:!text-magic-soft-pink/80;
+    @apply text-magic-purple! dark:text-magic-soft-pink! underline! hover:text-magic-purple/80! dark:hover:text-magic-soft-pink/80!;
   }
 
   nav > a {
-    @apply !text-ink-grey-400 dark:!text-magic-white dark:hover:!text-ink-grey-400 hover:!text-ink-grey-700 !no-underline;
+    @apply text-ink-grey-400! dark:text-magic-white! dark:hover:text-ink-grey-400! hover:text-ink-grey-700! no-underline!;
   }
 
   nav > a > svg {
-    @apply !fill-magic-black dark:!fill-magic-white;
+    @apply fill-magic-black! dark:fill-magic-white!;
   }
 
   nav {
@@ -46,11 +87,11 @@
   }
 
   pre {
-    @apply !bg-magic-semi-deep-purple/15;
+    @apply bg-magic-semi-deep-purple/15!;
   }
 
   .toc-link {
-    @apply cursor-pointer !text-ink-grey-400 dark:!text-magic-white group-hover:!text-ink-grey-700 dark:group-hover:!text-ink-grey-700;
+    @apply cursor-pointer text-ink-grey-400! dark:text-magic-white! group-hover:text-ink-grey-700! dark:group-hover:text-ink-grey-700!;
   }
 
   /* We need to override the underline for nav links and sidebar items */
@@ -74,20 +115,20 @@ a:has(div.ink-sidebar-item) {
 
 /* Target both the banner container and its text */
 .nextra-banner-container {
-  @apply text-white !important;
+  @apply text-white!;
 }
 
 .nextra-banner-container a {
-  @apply text-white hover:text-white/80 no-underline !important;
+  @apply text-white! hover:text-white/80! no-underline!;
 }
 
 /* Override the purple link styles specifically for the banner */
 .nextra-banner-container
   a:not(.nextra-sidebar-container a):not(nav a):not(.toc-link) {
-  @apply text-white hover:text-white/80 underline !important;
+  @apply text-white! hover:text-white/80! underline!;
 }
 
 /* Ensure all text in banner is white, not just links */
 .nextra-banner-container {
-  @apply text-white !important;
+  @apply text-white!;
 }
