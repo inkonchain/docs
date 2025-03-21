@@ -1,8 +1,40 @@
 # Deploying a SuperchainERC20
 
-This guide will walk you through deploying your own ERC20 token across the OP Superchain using the SuperchainERC20 starter kit.
+<Callout type="info">
+The SuperchainERC20 standard is ready for production deployments. Please note that the OP Stack interoperability upgrade, required for crosschain messaging, is currently in active development.
+</Callout>
 
-## 🚀 Getting Started
+Welcome to the SuperchainERC20 quickstart guide! In this guide, we'll cover how the token works and the deployment process using the SuperchainERC20 starter kit. Whether you're a seasoned developer or just starting out, this guide has got you covered.
+
+## What is SuperchainERC20?
+
+SuperchainERC20 provides a standardized token implementation enabling seamless token transfers across the Superchain. 
+
+SuperchainERC20 extends the standard ERC-20 token with cross-chain mint and burn capabilities, enabling seamless interoperability across the [Superchain interop cluster](https://docs.optimism.io/stack/interop/explainer#superchain-interop-cluster). This token standard implements the [ERC-7802](https://eips.ethereum.org/EIPS/eip-7802) interface to enable 1-block latency cross-chain mint/burn functionality.
+
+## How does SuperchainERC20 work?
+
+[SuperchainERC20](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/SuperchainERC20.sol) and [SuperchainTokenBridge](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/SuperchainTokenBridge.sol) work together to allow ERC-20 tokens to be transferred from one chain to the other.
+
+SuperchainERC20 cross-chain transfers require two transactions:
+
+1. **Initiate Transaction**: On the source chain, tokens are burned and a cross-chain message is emitted
+2. **Execute Transaction**: The message is relayed to the destination chain, triggering token minting
+
+This flow ensures tokens maintain consistent total supply across the entire Superchain ecosystem and eliminates the need for liquidity pools or wrapped tokens. 
+
+## Why SuperchainERC20 matters for users, token issuers, and apps on Ink
+
+Superchain interop provides Ink with essential cross-chain capabilities that enhance the network's interoperability. When token issuers use SuperchainERC20 over a typical ER-C20 deployment it gives token issuers access to the broader Superchain network effects, ensuring your tokens can seamlessly be used by apps and users across the Superchain. 
+
+SuperchainERC20 deployment creates opportunities for:
+
+- **Enhanced Liquidity**: Unified token representation across chains improves capital efficiency
+- **Simplified Developer Experience**: Consistent API for projects building on Ink
+- **Reduced Fragmentation**: Improved capital efficiency for DeFi applications across the Superchain ecosystem - one chain to rule them all
+
+
+## 🚀 Deploying SuperchainERC20 - Quickstart
 
 ### Prerequisites
 
@@ -62,8 +94,25 @@ First, you'll need to install Foundry, as the project requires `anvil`. Follow t
    pnpm contracts:deploy:token
    ```
 
+## Security considerations
+
+<Callout type="info">
+To ensure security, you must either design the deployer to allow only a specific trusted ERC-20 contract, such as SuperchainERC20, to be deployed through it, or call CREATE2 to deploy the contract directly from an EOA you control.
+
+This precaution is critical because if an unauthorized ERC-20 contract is deployed at the same address on any Superchain network, it could allow malicious actors to mint unlimited tokens and bridge them to the network where the original ERC-20 contract resides.
+</Callout>
+
+For production deployments, ensure that:
+
+1. Grant permissions to the `SuperchainTokenBridge`(address `0x4200000000000000000000000000000000000028`) to call `crosschainMint` and `crosschainBurn`.
+2. Deploy the `SuperchainERC20` at the same address on every chain in the Superchain where you want your token to be available. If you do not deploy the contract to a specific destination chain, users will be unable to successfully move their tokens to that chain.
+
+
 ## What's Next?
+SuperchainERC20 enables token issuers to seamlessly access Superchain network effects. By leveraging SuperchainERC20 and Superchain interop, developers can focus on building features rather than solving complex cross-chain challenges.
 
-After successful deployment, your token will be live on the specified chains in your deploy config. You can verify your token on block explorers and start interacting with it!
+- For troubleshooting or questions, join our [Discord community](http://discord.gg/inkonchain)
+- Use Supersim, a local development tool, to [deploy a SuperchainERC20 or build an interop-enabled app](https://docs.optimism.io/app-developers/get-started)
+- Learn more about the [technical architecture of Superchain interop](https://docs.optimism.io/stack/interop/explainer)
+- Learn about how [other token standards can benefit from Superchain interop](https://docs.optimism.io/stack/interop/compatible-tokens)
 
-For troubleshooting or questions, join our [Discord community](http://discord.gg/inkonchain) or check the [SuperchainERC20 Starter Kit repository](https://github.com/ethereum-optimism/superchainerc20-starter).
