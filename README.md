@@ -2,6 +2,10 @@
 
 An advanced, streamlined documentation platform built with Next.js and Nextra for InkChain.
 
+## 🔗 Live Documentation
+
+Visit our [live documentation site](https://docs.inkchain.xyz) to see the latest published version.
+
 ## 🚀 Build & Run
 
 1. **Build Docker image**:
@@ -27,6 +31,10 @@ This is a documentation application powered by [Nextra](https://nextra.site/) an
 To get started with local development:
 
 1. **Clone the repository**
+   ```bash
+   git clone https://github.com/inkchain/docs.git
+   cd docs
+   ```
 2. **Install dependencies**:
    ```bash
    pnpm install
@@ -35,6 +43,7 @@ To get started with local development:
    ```bash
    pnpm run dev
    ```
+4. **Open your browser** at http://localhost:3000
 
 ## 🛠 Tooling
 
@@ -62,3 +71,18 @@ For every new PR, our CI/CD pipeline deploys a temporary environment via **AWS A
 ## 🚀 Production Deployment
 
 The `main` branch is configured for automatic continuous deployment via **AWS Amplify**. Every merge triggers a new build and deployment, ensuring that the latest version of the documentation is available to users without manual intervention.
+
+## 👥 How to Contribute
+
+We welcome contributions from the community! To contribute to this documentation:
+
+1. **Fork the repository** and create your feature branch
+2. **Make your changes** following our code style guidelines
+3. **Run tests locally** to ensure everything works properly:
+   ```bash
+   pnpm run lint
+   pnpm run spell-check
+   ```
+4. **Submit a pull request** with a clear description of your changes
+
+Please refer to our [Contribution Guidelines](CONTRIBUTING.md) for more detailed information.
