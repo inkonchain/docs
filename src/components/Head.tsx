@@ -4,15 +4,15 @@ import { useConfig } from "nextra-theme-docs";
 export const Head = () => {
   const { asPath, defaultLocale, locale } = useRouter();
   const { frontMatter } = useConfig();
-  const baseUrl = "https://docs.inkonchain.com";
+  const baseUrl = "https://docs.inkonchain.com/";
   const url =
     baseUrl + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
-  const title =
-    frontMatter.title || "Ink Docs - The Official Developer Guide for Ink";
+  const title = frontMatter.title || "The Official Developer Guide for Ink";
   const description =
-    frontMatter.description ||
-    "Comprehensive documentation for Ink, a cutting-edge Layer 2 (L2) blockchain built on Optimism's Superchain. Learn how to build, integrate, and leverage Ink's DeFi capabilities.";
-  const ogImage = frontMatter.image || `${baseUrl}/logo/build-the-future.png`;
+    frontMatter.description || "Comprehensive documentation for Ink.";
+  const ogImage =
+    frontMatter.image ||
+    `${baseUrl}/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}&type=${encodeURIComponent(frontMatter.type || "default")}`;
 
   return (
     <>
@@ -26,8 +26,8 @@ export const Head = () => {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:image:width" content="1080" />
-      <meta property="og:image:height" content="1080" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:site_name" content="Ink Documentation" />
 
       {/* Twitter */}
