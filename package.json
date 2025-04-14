@@ -69,7 +69,7 @@
     "cspell": "8.18.1",
     "eslint": "8.57.1",
     "eslint-config-next": "15.3.0",
-    "eslint-config-prettier": "10.1.1",
+    "eslint-config-prettier": "10.1.2",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-mdx": "3.4.0",
     "eslint-plugin-simple-import-sort": "12.1.1",
