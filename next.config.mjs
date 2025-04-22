@@ -1,39 +1,36 @@
-import nextra from 'nextra'
-import path from 'path'
-import remarkCodeImport from 'remark-code-import'
-import { fileURLToPath } from 'url'
+import nextra from "nextra";
+import path from "path";
+import remarkCodeImport from "remark-code-import";
+import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const withNextra = nextra({
-  theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.tsx',
+  theme: "nextra-theme-docs",
+  themeConfig: "./theme.config.tsx",
   defaultShowCopyCode: true,
   mdxOptions: {
-    remarkPlugins: [
-      remarkCodeImport,
-    ]
-  }
-})
+    remarkPlugins: [remarkCodeImport],
+  },
+});
 
 const config = withNextra({
   eslint: {
     ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true
+    unoptimized: true,
   },
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@': path.join(__dirname, 'src'),
-    }
-    return config
+      "@": path.join(__dirname, "src"),
+    };
+    return config;
   },
-  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   experimental: {
     mdxRs: true,
   },
-})
+});
 
-export default config
+export default config;
