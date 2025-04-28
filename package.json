@@ -51,7 +51,7 @@
     ]
   },
   "dependencies": {
-    "@cookbookdev/docsbot": "4.25.7",
+    "@cookbookdev/docsbot": "4.25.8",
     "clsx": "2.1.1",
     "next": "15.3.1",
     "next-sitemap": "4.2.3",
