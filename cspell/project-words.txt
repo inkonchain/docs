@@ -85,7 +85,7 @@ nextra
 Gelato
 QuickNode
 Superchain
-Seplia
+Sepolia
 userbase
 synergizing
 vewy

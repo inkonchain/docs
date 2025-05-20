@@ -1,3 +1,5 @@
+[![Twitter](https://img.shields.io/twitter/follow/inkonchain)](https://x.com/inkonchain)
+
 # InkChain Documentation App
 
 An advanced, streamlined documentation platform built with Next.js and Nextra for InkChain.

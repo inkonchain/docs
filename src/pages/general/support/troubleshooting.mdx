@@ -1,5 +1,5 @@
 import { Callout } from "nextra/components";
-import CopyableCode from '@/components/CopyableCode'
+import CopyableCode from "@/components/CopyableCode";
 
 # Troubleshooting Guide
 
@@ -14,18 +14,21 @@ If you encounter JSON-RPC internal errors or transactions getting stuck, your wa
 #### For MetaMask Users:
 
 1. Enable custom nonce in MetaMask:
+
    - Go to Settings > Advanced
    - Enable "Customize transaction nonce"
 
 2. Find your next valid nonce using either method A or B:
 
    **Method A: Using Block Explorer**
+
    - Go to <CopyableCode code="https://explorer.inkonchain.com/address/YOUR_ADDRESS" /> (replace YOUR_ADDRESS with your address)
    - Find your most recent transaction where you were the sender (FROM address)
    - Click the transaction and then "View details"
    - Find the nonce value and add 1 to it - this is your next valid nonce
 
    **Method B: Using Command Line**
+
    ```bash
    curl -s -X POST -H "Content-Type: application/json" --data '{
      "jsonrpc":"2.0",
@@ -34,9 +37,11 @@ If you encounter JSON-RPC internal errors or transactions getting stuck, your wa
      "id":1
    }' https://rpc-gel.inkonchain.com | python3 -c "import sys, json; print(int(json.load(sys.stdin)['result'], 16))"
    ```
+
    Replace `YOUR_ADDRESS` with your wallet address. The number returned is your next valid nonce.
 
 3. Send a recovery transaction:
+
    - Send a 0 ETH transaction to yourself
    - When prompted for the nonce, use the exact number you got from either method above
    - Increase the gas price slightly (tap + once in the Network Fee section)
@@ -52,6 +57,5 @@ If you encounter JSON-RPC internal errors or transactions getting stuck, your wa
 
 If you're still experiencing issues:
 
-1. Join our [Discord](http://discord.gg/inkonchain) for community support
-2. Check the [Network Status Page](https://status.inkonchain.com/) for any ongoing incidents
-3. Submit a detailed bug report on our [GitHub](https://github.com/inkonchain/docs/issues)
+1. Check the [Network Status Page](https://status.inkonchain.com/) for any ongoing incidents
+2. Submit a detailed bug report on our [GitHub](https://github.com/inkonchain/docs/issues)

@@ -51,9 +51,9 @@
     ]
   },
   "dependencies": {
-    "@cookbookdev/docsbot": "4.24.14",
+    "@cookbookdev/docsbot": "4.25.10",
     "clsx": "2.1.1",
-    "next": "15.2.4",
+    "next": "15.3.2",
     "next-sitemap": "4.2.3",
     "next-themes": "0.4.6",
     "nextra": "2.13.4",
@@ -62,16 +62,18 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@types/node": "22.13.8",
+    "@eslint/eslintrc": "3.3.1",
+    "@eslint/js": "9.27.0",
+    "@types/node": "22.15.19",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "autoprefixer": "10.4.21",
-    "cspell": "8.17.3",
-    "eslint": "8.57.1",
-    "eslint-config-next": "15.2.0",
-    "eslint-config-prettier": "10.1.1",
+    "cspell": "9.0.1",
+    "eslint": "9.27.0",
+    "eslint-config-next": "15.3.2",
+    "eslint-config-prettier": "10.1.5",
     "eslint-plugin-import": "2.31.0",
-    "eslint-plugin-mdx": "3.1.5",
+    "eslint-plugin-mdx": "3.4.2",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "mdx": "0.3.1",
     "postcss": "8.5.3",
@@ -92,6 +94,6 @@
     "remark-preset-lint-consistent": "6.0.1",
     "remark-preset-lint-recommended": "7.0.1",
     "tailwindcss": "3.4.17",
-    "typescript": "5.7.3"
+    "typescript": "5.8.3"
   }
 }

@@ -36,14 +36,6 @@ export const Toc: React.FC<TocProps> = ({ headings }) => {
       )}
       <div className="flex flex-col gap-2">
         <Link
-          href={URLS.discordUrl}
-          className="group text-xs flex items-center gap-1"
-        >
-          <ThumbUpIcon className="size-4 toc-link" />
-          <span className="toc-link">Give feedback on Discord</span>
-        </Link>
-
-        <Link
           href={URLS.editDocsOnGithub}
           className="group text-xs flex items-center gap-1"
         >

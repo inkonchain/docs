@@ -3,7 +3,6 @@ export const URLS = {
   statusPageUrl: "https://status.inkonchain.com/",
   faucetUrl: "https://app.optimism.io/faucet",
   inkubatorUrl: "https://inkonchain.com/inkubator",
-  discordUrl: "http://discord.gg/inkonchain",
   repositoryUrl: "https://github.com/inkonchain/docs",
   developerWaitlistUrl: "https://inkonchain.com",
   feedbackUrl: "https://inkonchain.com",

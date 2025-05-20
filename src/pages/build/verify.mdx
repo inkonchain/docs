@@ -1,0 +1,135 @@
+---
+title: Kraken Verify
+description: Solidity contracts for Kraken Verify - EAS attestation utilities enabling access control for verified Kraken users through onchain attestations.
+---
+
+# Kraken Verify
+
+Kraken Verify is a service that allows users to create an onchain attestation linking their wallet address to their verified Kraken account. This creates a trusted connection between a user's Kraken identity and their blockchain activity, enabling access to exclusive features across the Ink ecosystem.
+
+Kraken Verify uses the [Ethereum Attestation Service (EAS)](https://attest.org/) on Ink to issue onchain attestations. These attestations only store the wallet address and verification confirmation - no personal information is published onchain. Gas fees are covered by Kraken, making verification free for users.
+
+Users can verify one address at a time, with the ability to revoke and re-verify with a new address as needed. To prevent abuse, users can perform up to 20 verifications per year. These verifications are non-transferable and provide a secure way to access verified-only features.
+
+## Installation
+
+```bash
+  # Using npm
+  npm install @krakenfx/verify
+
+  # Using yarn
+  yarn add @krakenfx/verify
+
+  # Using pnpm
+  pnpm add @krakenfx/verify
+```
+
+## Setup
+
+### Remappings
+
+Generate remappings for Foundry:
+
+```bash
+  forge remappings > remappings.txt
+```
+
+You might need to add this extra one manually if you're using pnpm:
+
+```txt
+  @ethereum-attestation-service/=node_modules/.pnpm/@ethereum-attestation-service+eas-contracts@1.8.0/node_modules/@ethereum-attestation-service
+```
+
+### IDE Configuration
+
+Update your IDE to support remappings. For VS Code:
+
+```json
+// .vscode/settings.json
+{
+  "solidity.remappings": ["...=node_modules/..."]
+}
+```
+
+## Usage
+
+### Solidity
+
+```solidity
+  // SPDX-License-Identifier: MIT
+  pragma solidity 0.8.24;
+
+  import { KrakenVerifyAccessControl } from "@krakenfx/verify/src/abstracts/KrakenVerifyAccessControl.sol";
+
+  contract MyContract is KrakenVerifyAccessControl {
+      // Only users with valid Kraken Verify attestations can call this function
+      function verifiedUserFunction() external onlyVerified {
+          // Your implementation
+      }
+  }
+```
+
+### JavaScript / TypeScript Client
+
+The package also provides a client for checking address verification status directly from JavaScript or TypeScript applications. This can be useful for frontend applications that need to verify user addresses before displaying certain features or content.
+
+#### ESM / TypeScript
+
+```typescript
+// ES Modules / TypeScript
+import { VerifyClient } from "@krakenfx/verify";
+
+const verifyClient = new VerifyClient();
+const yourAddress = "0x2193981f2d65149644C039c9071f2bE8b5938F0B";
+
+// Check if an address is verified
+const isVerified = await verifyClient.isAddressVerified(yourAddress);
+
+console.log(`Result: ${isVerified ? "✅ Verified" : "❌ Not verified"}`);
+```
+
+#### CommonJS
+
+```javascript
+// CommonJS
+const { VerifyClient } = require("@krakenfx/verify");
+
+const verifyClient = new VerifyClient();
+const yourAddress = "0x2193981f2d65149644C039c9071f2bE8b5938F0B";
+
+// Check if an address is verified
+async function checkVerification() {
+  const isVerified = await verifyClient.isAddressVerified(yourAddress);
+  console.log(`Result: ${isVerified ? "✅ Verified" : "❌ Not verified"}`);
+}
+
+checkVerification();
+```
+
+#### Configuration Options
+
+You can customize the client by passing options to the constructor:
+
+```typescript
+const verifyClient = new VerifyClient({
+  rpcUrl: "https://your-rpc-endpoint.com", // Custom RPC URL
+  verbose: true, // Enable verbose logging
+});
+```
+
+## What's Included
+
+This package provides access control for verified Kraken users through EAS attestations:
+
+- `KrakenVerifyAccessControl.sol`: Abstract contract with the `onlyVerified` modifier
+- Supporting libraries and interfaces for attestation verification
+- JavaScript/TypeScript client for checking address verification status
+
+## Requirements
+
+- Solidity 0.8.24
+- Node.js 16+ (for client usage)
+
+## License
+
+MIT
