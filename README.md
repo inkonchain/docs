@@ -4,7 +4,7 @@ An advanced, streamlined documentation platform built with Next.js and Nextra fo
 
 ## 🔗 Live Documentation
 
-Visit our [live documentation site](https://docs.inkchain.xyz) to see the latest published version.
+Visit our [live documentation site](https://docs.inkonchain.com) to see the latest published version.
 
 ## 🚀 Build & Run
 
