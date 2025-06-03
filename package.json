@@ -70,7 +70,7 @@
     "autoprefixer": "10.4.21",
     "cspell": "9.0.2",
     "eslint": "9.27.0",
-    "eslint-config-next": "15.3.2",
+    "eslint-config-next": "15.3.3",
     "eslint-config-prettier": "10.1.5",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-mdx": "3.4.2",
