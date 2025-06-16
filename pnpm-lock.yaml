@@ -43,8 +43,8 @@ importers:
         specifier: 9.29.0
         version: 9.29.0
       '@types/node':
-        specifier: 22.15.30
-        version: 22.15.30
+        specifier: 24.0.3
+        version: 24.0.3
       '@types/react':
         specifier: 18.3.12
         version: 18.3.12
@@ -1812,6 +1812,9 @@ packages:
 
   '@types/node@22.15.30':
     resolution: {integrity: sha512-6Q7lr06bEHdlfplU6YRbgG1SFBdlsfNC4/lX+SkhiTs0cpJkOElmWls8PxDFv4yY/xKb8Y6SO0OmSX4wgqTZbA==}
+
+  '@types/node@24.0.3':
+    resolution: {integrity: sha512-R4I/kzCYAdRLzfiCabn9hxWfbuHS573x+r0dJMkkzThEa7pbrcDWK+9zu3e7aBOouf+rQAciqPFMnxwr0aWgKg==}
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
@@ -5526,6 +5529,9 @@ packages:
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
+  undici-types@7.8.0:
+    resolution: {integrity: sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw==}
+
   unified-args@11.0.1:
     resolution: {integrity: sha512-WEQghE91+0s3xPVs0YW6a5zUduNLjmANswX7YbBfksHNDGMjHxaWCql4SR7c9q0yov/XiIEdk6r/LqfPjaYGcw==}
 
@@ -6447,7 +6453,7 @@ snapshots:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 22.15.30
+      '@types/node': 24.0.3
       '@types/yargs': 17.0.33
       chalk: 4.1.2
 
@@ -7569,7 +7575,7 @@ snapshots:
 
   '@types/concat-stream@2.0.3':
     dependencies:
-      '@types/node': 22.15.30
+      '@types/node': 24.0.3
 
   '@types/d3-array@3.2.1': {}
 
@@ -7656,6 +7662,10 @@ snapshots:
   '@types/node@22.15.30':
     dependencies:
       undici-types: 6.21.0
+
+  '@types/node@24.0.3':
+    dependencies:
+      undici-types: 7.8.0
 
   '@types/parse-json@4.0.2': {}
 
@@ -12804,6 +12814,8 @@ snapshots:
       which-boxed-primitive: 1.1.1
 
   undici-types@6.21.0: {}
+
+  undici-types@7.8.0: {}
 
   unified-args@11.0.1:
     dependencies:
