@@ -82,8 +82,8 @@ importers:
         specifier: 8.5.6
         version: 8.5.6
       prettier:
-        specifier: 3.6.0
-        version: 3.6.0
+        specifier: 3.6.2
+        version: 3.6.2
       remark:
         specifier: 15.0.1
         version: 15.0.1
@@ -4655,8 +4655,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier@3.6.0:
-    resolution: {integrity: sha512-ujSB9uXHJKzM/2GBuE0hBOUgC77CN3Bnpqa+g80bkv3T3A93wL/xlzDATHhnhkzifz/UE2SNOvmbTz5hSkDlHw==}
+  prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -11459,7 +11459,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier@3.6.0: {}
+  prettier@3.6.2: {}
 
   pretty-format@29.7.0:
     dependencies:
