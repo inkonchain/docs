@@ -6,7 +6,11 @@ on:
       - main
 
 jobs:
+  securesdlc:
+    uses: inkonchain/.github/.github/workflows/securesdlc.yml@main
+
   install_modules:
+    needs: securesdlc
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
