@@ -1,3 +1,4 @@
+[![Telegram](https://img.shields.io/badge/Chat-Telegram-blue?logo=Telegram)](https://t.me/inkonchain)
 [![Twitter](https://img.shields.io/twitter/follow/inkonchain)](https://x.com/inkonchain)
 
 # InkChain Documentation App
