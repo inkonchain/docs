@@ -1,14 +1,9 @@
-name: Nautilus SecureSDLC
-run-name: "[Nautilus SecureSDLC] Ref:${{ github.ref_name }} Event:${{ github.event_name }}"
+name: Nautilus SecureSDLC Reusable
+run-name: "[Nautilus SecureSDLC Reusable] Ref:${{ github.ref_name }} Event:${{ github.event_name }}"
 
 on:
   workflow_dispatch: {}
-  workflow_call:
-    secrets:
-      SEMGREP_APP_URL:
-        required: true
-      SEMGREP_APP_TOKEN:
-        required: true
+  workflow_call: {}
   push:
     branches: [ main ]
 
@@ -22,3 +17,4 @@ jobs:
     secrets:
       SEMGREP_APP_URL: ${{ secrets.SEMGREP_APP_URL }}
       SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+      SDLC_SLACK_NOTIFICATIONS: ${{ secrets.SDLC_SLACK_NOTIFICATIONS }}
