@@ -8,9 +8,7 @@ on:
 jobs:
   securesdlc:
     uses: inkonchain/.github/.github/workflows/securesdlc.yml@main
-    secrets:
-      SEMGREP_APP_URL: ${{ secrets.SEMGREP_APP_URL }}
-      SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+    secrets: inherit
 
   install_modules:
     needs: securesdlc
