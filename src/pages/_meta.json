@@ -65,6 +65,18 @@
     "title": "Build on Ink",
     "display": "children"
   },
+  "+++ Ink Builder Program": {
+    "title": "",
+    "type": "separator"
+  },
+  "--- Ink Builder Program": {
+    "title": "Ink Builder Program",
+    "type": "separator"
+  },
+  "ink-builder-program": {
+    "title": "Ink Builder Program",
+    "display": "children"
+  },
   "+++ Tools": {
     "title": "",
     "type": "separator"
