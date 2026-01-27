@@ -53,7 +53,7 @@
   "dependencies": {
     "@cookbookdev/docsbot": "4.25.11",
     "clsx": "2.1.1",
-    "next": "15.5.9",
+    "next": "15.5.10",
     "next-sitemap": "4.2.3",
     "next-themes": "0.4.6",
     "nextra": "2.13.4",
@@ -70,7 +70,7 @@
     "autoprefixer": "10.4.21",
     "cspell": "9.2.0",
     "eslint": "9.32.0",
-    "eslint-config-next": "15.5.9",
+    "eslint-config-next": "15.5.10",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-mdx": "3.6.2",
