@@ -70,7 +70,7 @@ export function useNetwork(network: NetworkType): UseNetworkResponse {
             chainId.toLowerCase() ===
             networkParams[network].chainId.toLowerCase();
           setIsSelected(isCurrentNetwork);
-          setIsAdded(isCurrentNetwork || isAdded); // If we're on the network, it must be added
+          setIsAdded(prev => isCurrentNetwork || prev); // If we're on the network, it must be added
         } catch (error) {
           console.error("Error checking network:", error);
         }
@@ -87,7 +87,7 @@ export function useNetwork(network: NetworkType): UseNetworkResponse {
         window.ethereum.removeListener("chainChanged", checkNetwork);
       };
     }
-  }, [network, isAdded]);
+  }, [network]);
 
   async function addNetwork(): Promise<void> {
     if (!window.ethereum) return;
