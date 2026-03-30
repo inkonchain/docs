@@ -120,7 +120,6 @@ forge test
 ```env
 PRIVATE_KEY=your_private_key_here
 RPC_URL=https://rpc-gel-sepolia.inkonchain.com/
-BLOCKSCOUT_API_KEY=your_blockscout_api_key_here
 ```
 
 2. Create a deployment script in <CopyableCode code="script/Deploy.s.sol" />:
@@ -148,20 +147,29 @@ contract DeployScript is Script {
 
 ```bash
 # Load environment variables
+set -a
 source .env
+set +a
 
 # Deploy to InkSepolia Testnet
-forge script script/Deploy.s.sol:DeployScript --rpc-url $RPC_URL --broadcast --verify
+forge script script/Deploy.s.sol:DeployScript \
+    --rpc-url $RPC_URL \
+    --broadcast \
+    --verify \
+    --verifier blockscout \
+    --verifier-url https://explorer-sepolia.inkonchain.com/api/
 ```
 
 ## Verifying Your Contract
 
-If you want to verify your contract on Etherscan:
+If you want to verify your contract on Blockscout:
 
 ```bash
 forge verify-contract <DEPLOYED_CONTRACT_ADDRESS> src/InkContract.sol:InkContract \
+    --rpc-url $RPC_URL \
     --chain-id 763373 \
-    --etherscan-api-key $BLOCKSCOUT_API_KEY
+    --verifier blockscout \
+    --verifier-url https://explorer-sepolia.inkonchain.com/api/
 ```
 
 ## Additional Configuration
