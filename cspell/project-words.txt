@@ -147,3 +147,7 @@ Hypernative
 Hypernative's
 predeterministic
 sfrx
+GaslessForwarder
+ecrecover
+signTypedData
+ForwardRequest
