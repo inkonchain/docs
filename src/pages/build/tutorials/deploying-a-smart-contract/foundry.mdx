@@ -119,7 +119,7 @@ forge test
 
 ```env
 PRIVATE_KEY=your_private_key_here
-RPC_URL=https://rpc-gel-sepolia.inkonchain.com/
+INKSEPOLIA_RPC_URL=https://rpc-gel-sepolia.inkonchain.com/
 BLOCKSCOUT_API_KEY=your_blockscout_api_key_here
 ```
 
@@ -150,19 +150,25 @@ contract DeployScript is Script {
 # Load environment variables
 source .env
 
-# Deploy to InkSepolia Testnet
-forge script script/Deploy.s.sol:DeployScript --rpc-url $RPC_URL --broadcast --verify
+# Deploy to Ink Sepolia Testnet
+forge script script/Deploy.s.sol:DeployScript --rpc-url $INKSEPOLIA_RPC_URL --broadcast --verify
 ```
 
 ## Verifying Your Contract
 
-If you want to verify your contract on Etherscan:
+Ink uses [Blockscout](https://explorer-sepolia.inkonchain.com) as its block explorer — not Etherscan.
+To verify your contract after deployment, use the `--verifier blockscout` flag:
 
 ```bash
 forge verify-contract <DEPLOYED_CONTRACT_ADDRESS> src/InkContract.sol:InkContract \
     --chain-id 763373 \
-    --etherscan-api-key $BLOCKSCOUT_API_KEY
+    --verifier blockscout \
+    --verifier-url https://explorer-sepolia.inkonchain.com/api \
+    --verifier-api-key $BLOCKSCOUT_API_KEY
 ```
+
+> **Note:** `BLOCKSCOUT_API_KEY` can be obtained from the [Ink Blockscout explorer](https://explorer-sepolia.inkonchain.com).
+> Using `--etherscan-api-key` here will fail with an "unsupported chain" error.
 
 ## Additional Configuration
 
