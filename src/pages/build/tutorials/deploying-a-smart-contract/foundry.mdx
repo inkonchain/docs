@@ -161,7 +161,9 @@ If you want to verify your contract on Etherscan:
 ```bash
 forge verify-contract <DEPLOYED_CONTRACT_ADDRESS> src/InkContract.sol:InkContract \
     --chain-id 763373 \
-    --etherscan-api-key $BLOCKSCOUT_API_KEY
+    --verifier blockscout \
+    --verifier-url https://explorer-sepolia.inkonchain.com/api \
+    --verifier-api-key $BLOCKSCOUT_API_KEY
 ```
 
 ## Additional Configuration
