@@ -1,0 +1,538 @@
+# Gasless transactions with a custom EIP-712 relayer
+
+Most DeFi applications require users to hold ETH before they can do anything.
+A gasless relayer removes that requirement: a backend service submits
+transactions on behalf of users while the application stays non-custodial. The
+user signs a typed message; the relayer pays the gas; the contract verifies the
+signature and executes the intent.
+
+This guide builds a production-ready gasless relayer on Ink using
+[EIP-712](https://eips.ethereum.org/EIPS/eip-712) typed structured data
+signatures. It requires no smart account infrastructure, and the relayer never
+holds user funds.
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+  Change `chainId` and `RPC_URL` in the `.env` examples to switch between Ink
+  Sepolia and Ink mainnet.
+</Callout>
+
+## How it works
+
+Three participants are involved: the user, the relayer server, and the on-chain
+contract.
+
+1. The user constructs a typed payload describing their intent — for example,
+   "transfer 100 USDC to address X" — and signs it with `eth_signTypedData_v4`.
+   No ETH is spent at this point.
+2. The signed payload is sent to the relayer's HTTP endpoint.
+3. The relayer validates the signature off-chain, then submits the transaction
+   and pays the gas fee in ETH.
+4. The contract recovers the signer from the EIP-712 signature, checks the
+   nonce to prevent replays, and executes the intent.
+
+The user never loses custody of their assets. The relayer cannot alter the
+payload because the signature covers the full typed struct.
+
+## Why not ERC-4337
+
+ERC-4337 is the right choice when you need full account programmability: session
+keys, multi-sig recovery, and so on. It introduces a `UserOperation` mempool, a
+global `EntryPoint` contract, and requires users to own a smart contract wallet.
+
+A custom EIP-712 relayer is narrower. It works with any EOA, has no dependency
+on the `EntryPoint`, and is straightforward to audit — the trust surface is one
+verifier contract and a nonce mapping. On Ink, where gas is already cheap, the
+relayer's per-transaction cost is low enough that this model is financially
+viable without bundling.
+
+## Prerequisites
+
+- [Foundry](https://book.getfoundry.sh/getting-started/installation)
+- Node.js 20.11.0 or higher
+- An Ink Sepolia RPC URL (see [RPC](/tools/rpc))
+- A funded relayer wallet (see [Faucets](/tools/faucets))
+
+## Step 1: The verifier contract
+
+Create a new Foundry project:
+
+```bash
+forge init gasless-ink
+cd gasless-ink
+rm -rf src/Counter.sol test/Counter.t.sol script/Counter.s.sol
+```
+
+Create `src/GaslessForwarder.sol`:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
+
+/// @title GaslessForwarder
+/// @notice Accepts EIP-712-signed requests and executes them on behalf of users.
+contract GaslessForwarder {
+    bytes32 public constant DOMAIN_TYPEHASH =
+        keccak256(
+            "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"
+        );
+
+    bytes32 public constant REQUEST_TYPEHASH =
+        keccak256(
+            "ForwardRequest(address from,address to,uint256 value,uint256 gas,uint256 nonce,bytes data)"
+        );
+
+    bytes32 public immutable DOMAIN_SEPARATOR;
+
+    mapping(address => uint256) public nonces;
+
+    event RequestExecuted(address indexed from, address indexed to, bool success);
+
+    constructor() {
+        DOMAIN_SEPARATOR = keccak256(
+            abi.encode(
+                DOMAIN_TYPEHASH,
+                keccak256(bytes("GaslessForwarder")),
+                keccak256(bytes("1")),
+                block.chainid,
+                address(this)
+            )
+        );
+    }
+
+    struct ForwardRequest {
+        address from;
+        address to;
+        uint256 value;
+        uint256 gas;
+        uint256 nonce;
+        bytes data;
+    }
+
+    /// @notice Verifies the EIP-712 signature and executes the call.
+    function execute(
+        ForwardRequest calldata req,
+        bytes calldata signature
+    ) external payable returns (bool success, bytes memory returndata) {
+        require(nonces[req.from] == req.nonce, "GaslessForwarder: invalid nonce");
+        require(verify(req, signature), "GaslessForwarder: invalid signature");
+
+        nonces[req.from]++;
+
+        (success, returndata) = req.to.call{value: req.value, gas: req.gas}(
+            abi.encodePacked(req.data, req.from)
+        );
+
+        emit RequestExecuted(req.from, req.to, success);
+    }
+
+    /// @notice Returns true if the signature is a valid EIP-712 signature over `req` by `req.from`.
+    function verify(
+        ForwardRequest calldata req,
+        bytes calldata signature
+    ) public view returns (bool) {
+        bytes32 digest = keccak256(
+            abi.encodePacked(
+                "\x19\x01",
+                DOMAIN_SEPARATOR,
+                keccak256(
+                    abi.encode(
+                        REQUEST_TYPEHASH,
+                        req.from,
+                        req.to,
+                        req.value,
+                        req.gas,
+                        req.nonce,
+                        keccak256(req.data)
+                    )
+                )
+            )
+        );
+
+        (bytes32 r, bytes32 s, uint8 v) = splitSignature(signature);
+        return ecrecover(digest, v, r, s) == req.from;
+    }
+
+    function splitSignature(
+        bytes memory sig
+    ) internal pure returns (bytes32 r, bytes32 s, uint8 v) {
+        require(sig.length == 65, "GaslessForwarder: bad signature length");
+        assembly {
+            r := mload(add(sig, 32))
+            s := mload(add(sig, 64))
+            v := byte(0, mload(add(sig, 96)))
+        }
+    }
+}
+```
+
+The contract appends `req.from` to calldata before forwarding. Target contracts
+that need to identify the original signer should read the last 20 bytes of
+`msg.data` rather than using `msg.sender` directly.
+
+## Step 2: Tests
+
+Create `test/GaslessForwarder.t.sol`:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
+
+import {Test} from "forge-std/Test.sol";
+import {GaslessForwarder} from "../src/GaslessForwarder.sol";
+
+contract MockTarget {
+    address public lastSender;
+    uint256 public value;
+
+    function store(uint256 _value) external {
+        address originalSender;
+        assembly {
+            originalSender := shr(96, calldataload(sub(calldatasize(), 20)))
+        }
+        lastSender = originalSender;
+        value = _value;
+    }
+}
+
+contract GaslessForwarderTest is Test {
+    GaslessForwarder public forwarder;
+    MockTarget public target;
+
+    uint256 internal signerKey = 0xA11CE;
+    address internal signer;
+
+    function setUp() public {
+        forwarder = new GaslessForwarder();
+        target = new MockTarget();
+        signer = vm.addr(signerKey);
+    }
+
+    function _buildRequest(uint256 nonce)
+        internal
+        view
+        returns (GaslessForwarder.ForwardRequest memory req)
+    {
+        req = GaslessForwarder.ForwardRequest({
+            from: signer,
+            to: address(target),
+            value: 0,
+            gas: 100_000,
+            nonce: nonce,
+            data: abi.encodeWithSelector(MockTarget.store.selector, 42)
+        });
+    }
+
+    function _sign(GaslessForwarder.ForwardRequest memory req)
+        internal
+        view
+        returns (bytes memory)
+    {
+        bytes32 digest = keccak256(
+            abi.encodePacked(
+                "\x19\x01",
+                forwarder.DOMAIN_SEPARATOR(),
+                keccak256(
+                    abi.encode(
+                        forwarder.REQUEST_TYPEHASH(),
+                        req.from,
+                        req.to,
+                        req.value,
+                        req.gas,
+                        req.nonce,
+                        keccak256(req.data)
+                    )
+                )
+            )
+        );
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(signerKey, digest);
+        return abi.encodePacked(r, s, v);
+    }
+
+    function test_ExecutesAndRecordsOriginalSender() public {
+        GaslessForwarder.ForwardRequest memory req = _buildRequest(0);
+        bytes memory sig = _sign(req);
+
+        (bool success, ) = forwarder.execute(req, sig);
+        assertTrue(success);
+        assertEq(target.lastSender(), signer);
+        assertEq(target.value(), 42);
+    }
+
+    function test_IncrementsNonce() public {
+        GaslessForwarder.ForwardRequest memory req = _buildRequest(0);
+        forwarder.execute(req, _sign(req));
+        assertEq(forwarder.nonces(signer), 1);
+    }
+
+    function test_RejectsReplay() public {
+        GaslessForwarder.ForwardRequest memory req = _buildRequest(0);
+        bytes memory sig = _sign(req);
+        forwarder.execute(req, sig);
+
+        vm.expectRevert("GaslessForwarder: invalid nonce");
+        forwarder.execute(req, sig);
+    }
+
+    function test_RejectsTamperedPayload() public {
+        GaslessForwarder.ForwardRequest memory req = _buildRequest(0);
+        bytes memory sig = _sign(req);
+
+        req.to = address(0xDEAD);
+
+        vm.expectRevert("GaslessForwarder: invalid signature");
+        forwarder.execute(req, sig);
+    }
+}
+```
+
+Run:
+
+```bash
+forge test -vv
+```
+
+## Step 3: Deploy
+
+Create a `.env` file:
+
+```bash
+PRIVATE_KEY=your_relayer_private_key
+RPC_URL=https://rpc-gel-sepolia.inkonchain.com/
+BLOCKSCOUT_API_KEY=your_blockscout_api_key
+```
+
+Create `script/Deploy.s.sol`:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
+
+import "forge-std/Script.sol";
+import "../src/GaslessForwarder.sol";
+
+contract DeployScript is Script {
+    function run() external {
+        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+        vm.startBroadcast(deployerPrivateKey);
+        new GaslessForwarder();
+        vm.stopBroadcast();
+    }
+}
+```
+
+Deploy and verify:
+
+```bash
+source .env
+
+forge script script/Deploy.s.sol:DeployScript \
+  --rpc-url $RPC_URL \
+  --broadcast \
+  --verify
+```
+
+Note the deployed contract address — you will need it in the relayer server.
+
+## Step 4: The relayer server
+
+The relayer is a Node.js HTTP server. It receives signed requests, validates the
+signature off-chain, and submits the transaction to Ink.
+
+```bash
+mkdir relayer && cd relayer
+npm init -y
+npm install ethers express dotenv
+```
+
+Create `.env` inside the `relayer` directory:
+
+```bash
+RELAYER_PRIVATE_KEY=your_relayer_private_key
+RPC_URL=https://rpc-gel-sepolia.inkonchain.com/
+FORWARDER_ADDRESS=0xYourDeployedForwarderAddress
+```
+
+Create `relayer/index.js`:
+
+```js
+import "dotenv/config";
+import express from "express";
+import { ethers } from "ethers";
+
+const app = express();
+app.use(express.json());
+
+const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
+const relayerWallet = new ethers.Wallet(process.env.RELAYER_PRIVATE_KEY, provider);
+
+const FORWARDER_ABI = [
+  "function nonces(address) view returns (uint256)",
+  "function verify((address from,address to,uint256 value,uint256 gas,uint256 nonce,bytes data) req, bytes signature) view returns (bool)",
+  "function execute((address from,address to,uint256 value,uint256 gas,uint256 nonce,bytes data) req, bytes signature) payable returns (bool success, bytes returndata)",
+];
+
+const forwarder = new ethers.Contract(
+  process.env.FORWARDER_ADDRESS,
+  FORWARDER_ABI,
+  relayerWallet
+);
+
+app.post("/relay", async (req, res) => {
+  const { request, signature } = req.body;
+
+  if (!request || !signature) {
+    return res.status(400).json({ error: "Missing request or signature" });
+  }
+
+  try {
+    const valid = await forwarder.verify(request, signature);
+    if (!valid) {
+      return res.status(400).json({ error: "Invalid signature" });
+    }
+
+    const tx = await forwarder.execute(request, signature, {
+      gasLimit: BigInt(request.gas) + 50_000n,
+    });
+
+    const receipt = await tx.wait();
+    return res.json({ txHash: receipt.hash });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+app.listen(3000, () => console.log("Relayer listening on port 3000"));
+```
+
+Start the server:
+
+```bash
+node index.js
+```
+
+<Callout type="warning">
+  The relayer wallet pays all gas fees. Monitor its ETH balance and set up
+  alerts before deploying to mainnet. On Ink Sepolia you can refill from the
+  [faucet](/tools/faucets).
+</Callout>
+
+## Step 5: The client
+
+The user signs the request with `eth_signTypedData_v4` and posts it to the
+relayer. This example uses ethers.js v6.
+
+```js
+import { ethers } from "ethers";
+
+const FORWARDER_ADDRESS = "0xYourDeployedForwarderAddress";
+const CHAIN_ID = 763373; // Ink Sepolia; use 57073 for mainnet
+
+async function sendGasless(provider, targetAddress, encodedData) {
+  const signer = await provider.getSigner();
+  const userAddress = await signer.getAddress();
+
+  const forwarderAbi = ["function nonces(address) view returns (uint256)"];
+  const forwarder = new ethers.Contract(FORWARDER_ADDRESS, forwarderAbi, provider);
+  const nonce = await forwarder.nonces(userAddress);
+
+  const request = {
+    from: userAddress,
+    to: targetAddress,
+    value: 0,
+    gas: 100000,
+    nonce: nonce.toString(),
+    data: encodedData,
+  };
+
+  const domain = {
+    name: "GaslessForwarder",
+    version: "1",
+    chainId: CHAIN_ID,
+    verifyingContract: FORWARDER_ADDRESS,
+  };
+
+  const types = {
+    ForwardRequest: [
+      { name: "from",  type: "address" },
+      { name: "to",    type: "address" },
+      { name: "value", type: "uint256" },
+      { name: "gas",   type: "uint256" },
+      { name: "nonce", type: "uint256" },
+      { name: "data",  type: "bytes"   },
+    ],
+  };
+
+  const signature = await signer.signTypedData(domain, types, request);
+
+  const response = await fetch("http://localhost:3000/relay", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ request, signature }),
+  });
+
+  const { txHash, error } = await response.json();
+  if (error) throw new Error(error);
+  return txHash;
+}
+```
+
+## Recovering the original sender in target contracts
+
+Because `GaslessForwarder` appends `req.from` to calldata, target contracts
+cannot use `msg.sender` to identify users — `msg.sender` is the forwarder's
+address. Read the appended address from the tail of `msg.data` instead:
+
+```solidity
+function _msgSender() internal view returns (address sender) {
+    if (msg.sender == address(forwarder) && msg.data.length >= 20) {
+        assembly {
+            sender := shr(96, calldataload(sub(calldatasize(), 20)))
+        }
+    } else {
+        sender = msg.sender;
+    }
+}
+```
+
+This pattern is compatible with OpenZeppelin's `ERC2771Context`.
+
+## Security
+
+**Nonce ordering.** The implementation uses a sequential nonce, so a second
+transaction cannot execute until the first is confirmed. For concurrent requests
+from the same user, consider a 2D nonce scheme similar to
+[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612).
+
+**Gas limit.** The user sets `req.gas` in the signed payload. The relayer adds
+50,000 gas to cover forwarder overhead. If the inner call runs out of gas,
+`execute` returns `success = false` rather than reverting — handle this in your
+application.
+
+**Relayer key management.** Store `RELAYER_PRIVATE_KEY` in a secrets manager
+(AWS Secrets Manager, HashiCorp Vault, or similar) before going to mainnet.
+Never commit it to a repository.
+
+**Rate limiting.** The example server has no rate limiting. Add a per-IP or
+per-user limit before exposing the endpoint publicly.
+
+**Signature malleability.** `ecrecover` is not protected against signature
+malleability. If your application requires strict uniqueness of signatures
+rather than nonces, use
+[OpenZeppelin's `ECDSA` library](https://docs.openzeppelin.com/contracts/5.x/api/utils#ECDSA).
+
+<Callout type="info">
+  This guide uses Ink Sepolia (chain ID 763373). For mainnet, use chain ID
+  57073 and RPC URL `https://rpc-gel.inkonchain.com/`.
+</Callout>
+
+## Next steps
+
+- [Transaction fees](/build/transaction-fees) — understand how L1 data fees
+  affect your relayer's cost model
+- [Account abstraction](/tools/account-abstraction) — ZeroDev and Safe both
+  support Ink mainnet for full smart account features
+- [Verifying a smart contract](/build/tutorials/verify-smart-contract) —
+  verify `GaslessForwarder` on Blockscout after deployment
