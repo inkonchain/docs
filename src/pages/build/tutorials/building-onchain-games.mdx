@@ -1,0 +1,196 @@
+# Building Onchain Games on Ink (Phaser 3 + wagmi)
+
+Ink is an EVM-equivalent OP Stack L2 with low fees and fast confirmations, which makes it a great fit for onchain games: cheap in-game transactions, instant feedback, and full compatibility with the tools JavaScript developers already know.
+
+This guide shows how to connect a [Phaser 3](https://phaser.io/) game to a smart contract deployed on Ink using [wagmi](https://wagmi.sh/) and [viem](https://viem.sh/). By the end you will have a game that lets players connect a wallet and submit their high score onchain.
+
+## What you'll build
+
+A minimal arcade-style game where:
+
+- players connect an EVM wallet (MetaMask or any injected wallet),
+- the final score is written onchain via a `ScoreBoard` contract,
+- a simple leaderboard reads the best score back from the chain.
+
+## Prerequisites
+
+- Node.js v20.11.0+ and a package manager (`pnpm`, `npm`, or `yarn`)
+- Basic familiarity with JavaScript/TypeScript and React
+- A wallet with Ink Sepolia test ETH — grab some from the [Ink faucets](https://docs.inkonchain.com/general/faucets)
+- Foundry installed for the contract step — see [Deploying a Smart Contract with Foundry](https://docs.inkonchain.com/build/tutorials/deploying-a-smart-contract/foundry)
+
+## Architecture
+
+There are three layers:
+
+1. Game layer (Phaser 3) — renders the game and emits events (e.g. `game-over` with a score).
+2. Web3 layer (wagmi + viem) — manages wallet connection and reads/writes to the contract.
+3. Contract layer (Solidity on Ink) — stores scores and exposes a leaderboard.
+
+Because Phaser runs imperatively and wagmi's React hooks run in the component tree, the cleanest bridge is to call `@wagmi/core` actions (which work outside React) from a small service module that your Phaser scene imports.
+
+## Step 1 — Scaffold the project
+
+```bash
+pnpm create wagmi@latest onchain-game
+cd onchain-game
+pnpm add phaser @wagmi/core
+pnpm install
+```
+
+This gives you a wagmi + viem project. We'll add Phaser as the game engine and use `@wagmi/core` for framework-agnostic contract calls.
+
+## Step 2 — Write and deploy the contract
+
+Create a simple score contract:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract ScoreBoard {
+    struct Entry {
+        address player;
+        uint256 score;
+        uint256 timestamp;
+    }
+
+    Entry[] public entries;
+    mapping(address => uint256) public bestScore;
+
+    event ScoreSubmitted(address indexed player, uint256 score);
+
+    function submitScore(uint256 score) external {
+        entries.push(Entry(msg.sender, score, block.timestamp));
+        if (score > bestScore[msg.sender]) {
+            bestScore[msg.sender] = score;
+        }
+        emit ScoreSubmitted(msg.sender, score);
+    }
+
+    function totalEntries() external view returns (uint256) {
+        return entries.length;
+    }
+}
+```
+
+Deploy it to Ink Sepolia with Foundry (full walkthrough in the [Foundry tutorial](https://docs.inkonchain.com/build/tutorials/deploying-a-smart-contract/foundry)):
+
+```bash
+forge create src/ScoreBoard.sol:ScoreBoard \
+  --rpc-url https://rpc-gel-sepolia.inkonchain.com \
+  --private-key $PRIVATE_KEY \
+  --broadcast
+```
+
+Save the deployed contract address — you'll need it in Step 4.
+
+## Step 3 — Configure wagmi for Ink
+
+```ts
+// src/wagmi.ts
+import { http, createConfig } from '@wagmi/core'
+import { ink, inkSepolia } from 'viem/chains'
+import { injected } from '@wagmi/connectors'
+
+export const config = createConfig({
+  chains: [ink, inkSepolia],
+  connectors: [injected()],
+  transports: {
+    [ink.id]: http('https://rpc-gel.inkonchain.com'),
+    [inkSepolia.id]: http('https://rpc-gel-sepolia.inkonchain.com'),
+  },
+})
+```
+
+> Note: `ink` (chain ID 57073) and `inkSepolia` (chain ID 763373) ship with viem, so you don't need to hardcode chain metadata.
+
+## Step 4 — Bridge Phaser and the contract
+
+Create a small service the game can import:
+
+```ts
+// src/chain.ts
+import {
+  writeContract,
+  readContract,
+  waitForTransactionReceipt,
+  connect,
+} from '@wagmi/core'
+import { injected } from '@wagmi/connectors'
+import { config } from './wagmi'
+import { scoreBoardAbi } from './abi'
+
+const CONTRACT = '0xYourDeployedAddress' as const
+
+export async function connectWallet() {
+  return connect(config, { connector: injected() })
+}
+
+export async function submitScore(score: number) {
+  const hash = await writeContract(config, {
+    abi: scoreBoardAbi,
+    address: CONTRACT,
+    functionName: 'submitScore',
+    args: [BigInt(score)],
+  })
+  await waitForTransactionReceipt(config, { hash })
+  return hash
+}
+
+export async function getBestScore(player: `0x${string}`) {
+  return readContract(config, {
+    abi: scoreBoardAbi,
+    address: CONTRACT,
+    functionName: 'bestScore',
+    args: [player],
+  })
+}
+```
+
+Export the ABI as a typed const in `src/abi.ts` (copy it from your Foundry `out/ScoreBoard.sol/ScoreBoard.json`).
+
+## Step 5 — Call it from your Phaser scene
+
+```ts
+// src/scenes/GameScene.ts
+import Phaser from 'phaser'
+import { submitScore } from '../chain'
+
+export class GameScene extends Phaser.Scene {
+  private score = 0
+
+  constructor() {
+    super('GameScene')
+  }
+
+  async endGame() {
+    // ...game over logic...
+    try {
+      const hash = await submitScore(this.score)
+      console.log('Score submitted onchain:', hash)
+    } catch (err) {
+      console.error('Failed to submit score', err)
+    }
+  }
+}
+```
+
+## Step 6 — Transaction UX for games
+
+- Show the tx immediately. Display a "submitting…" state and link to the explorer (`https://explorer.inkonchain.com/tx/<hash>`) so players never stare at a frozen screen.
+- Keep gameplay responsive. Never block the render loop on a transaction — fire it asynchronously and update the UI on resolution.
+- Lean on low fees. Ink's low gas cost makes per-action microtransactions (power-ups, moves, mints) economically viable — but batch where you can to keep UX smooth.
+
+## Ink-specific tips
+
+- Mainnet: RPC `https://rpc-gel.inkonchain.com`, Chain ID 57073, explorer `https://explorer.inkonchain.com`.
+- Testnet (Ink Sepolia): RPC `https://rpc-gel-sepolia.inkonchain.com`, Chain ID 763373. Fund your wallet from the [faucets](https://docs.inkonchain.com/general/faucets).
+- Wallets: any EVM/injected wallet works; see [Connect Wallet](https://docs.inkonchain.com/general/connect-wallet).
+- Develop and test on Ink Sepolia before deploying your contract to mainnet.
+
+## Next steps
+
+- Mint an NFT on a game milestone using an ERC-721 contract.
+- Add a public leaderboard UI that indexes `ScoreSubmitted` events.
+- Explore SuperchainERC20 for cross-chain in-game assets: [Deploying a SuperchainERC20](https://docs.inkonchain.com/build/tutorials/deploying-a-superchainerc20).
