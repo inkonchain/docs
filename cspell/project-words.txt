@@ -136,6 +136,11 @@ cypherpunk
 predeploy
 DYOR
 subsecond
+Tydro
+Nado
+CLOB
+perps
+waitlists
 microgrants
 Microgrants
 Inkubator
