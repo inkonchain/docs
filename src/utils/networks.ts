@@ -56,8 +56,6 @@ export function useNetwork(network: NetworkType): UseNetworkResponse {
   const [isAdded, setIsAdded] = useState<boolean>(false);
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
-  console.log(`${network} is added: ${isAdded}`);
-
   // Check if network is added and selected on mount and when network changes
   useEffect(() => {
     const checkNetwork = async () => {
