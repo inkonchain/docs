@@ -67,7 +67,7 @@ jobs:
       - uses: ./.github/actions/base-setup
         name: Base Setup
       - name: Run formatting
-        run: pnpm run format:js
+        run: pnpm run format:js:check
 
   # spell-check:
   #   needs: install_modules
