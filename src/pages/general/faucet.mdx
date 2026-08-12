@@ -1,3 +1,12 @@
-# Faucets
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-## TODO
+export default function Redirect() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/tools/faucets");
+  }, [router]);
+
+  return null;
+}
