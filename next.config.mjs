@@ -14,10 +14,9 @@ const withNextra = nextra({
   },
 });
 
+// SECURITY FIX: The vulnerable `ignoreDuringBuilds: true` bypass has been removed 
+// from the ESLint configuration, ensuring production builds enforce repository linting rules.
 const config = withNextra({
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   images: {
     unoptimized: true,
   },
