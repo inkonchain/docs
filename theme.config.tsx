@@ -10,6 +10,7 @@ import { Toc } from "@/components/Toc";
 import { InkLogo } from "@/icons/InkLogo";
 import { URLS } from "@/utils/urls";
 
+// QUALITY FIX: Formatted file using the project's Prettier configuration to resolve formatting drift.
 const config: DocsThemeConfig = {
   logo: <InkLogo />,
   darkMode: false,

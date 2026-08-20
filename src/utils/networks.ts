@@ -25,18 +25,24 @@ export const networkParams = {
     rpcUrls: ["https://rpc-gel-sepolia.inkonchain.com"],
     blockExplorerUrls: ["https://explorer-sepolia.inkonchain.com"],
   },
-};
+} as const;
+
+// QUALITY FIX: Replaced untyped provider interactions with strict EIP-1193 boundaries 
+// and implemented runtime validation for the eth_chainId response.
+async function getCurrentChainId(
+  provider: EIP1193Provider
+): Promise<string | null> {
+  const chainId = await provider.request({ method: "eth_chainId" });
+  return typeof chainId === "string" ? chainId : null;
+}
 
 export async function isNetworkAdded(network: NetworkType): Promise<boolean> {
-  if (!(window as any).ethereum) return false;
+  const provider = window.ethereum;
+  if (!provider) return false;
 
   try {
-    const chainId = await (window as any).ethereum.request({
-      method: "eth_chainId",
-    });
-    return (
-      chainId.toLowerCase() === networkParams[network].chainId.toLowerCase()
-    );
+    const chainId = await getCurrentChainId(provider);
+    return chainId?.toLowerCase() === networkParams[network].chainId;
   } catch (error) {
     console.error("Error checking network:", error);
     return false;
@@ -56,57 +62,58 @@ export function useNetwork(network: NetworkType): UseNetworkResponse {
   const [isAdded, setIsAdded] = useState<boolean>(false);
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
-  // Check if network is added and selected on mount and when network changes
+  // Check whether the network is added and selected on mount and when it changes.
   useEffect(() => {
+    const provider = window.ethereum;
     const checkNetwork = async () => {
-      if (window.ethereum) {
+      if (provider) {
         try {
-          const chainId = await window.ethereum.request({
-            method: "eth_chainId",
-          });
+          const chainId = await getCurrentChainId(provider);
           const isCurrentNetwork =
-            chainId.toLowerCase() ===
-            networkParams[network].chainId.toLowerCase();
+            chainId?.toLowerCase() === networkParams[network].chainId;
           setIsSelected(isCurrentNetwork);
-          setIsAdded(prev => isCurrentNetwork || prev); // If we're on the network, it must be added
+          setIsAdded((previous) => isCurrentNetwork || previous);
         } catch (error) {
           console.error("Error checking network:", error);
         }
       }
-      setIsWalletInstalled(window.ethereum !== undefined);
+      setIsWalletInstalled(provider !== undefined);
     };
 
-    checkNetwork();
+    void checkNetwork();
 
-    // Listen for chain changes
-    if (window.ethereum) {
-      window.ethereum.on("chainChanged", checkNetwork);
+    // QUALITY FIX: Scoped listeners to `chainChanged` and ensured proper cleanup 
+    // on unmount to prevent memory leaks and unexpected behavior.
+    if (provider) {
+      provider.on("chainChanged", checkNetwork);
       return () => {
-        window.ethereum.removeListener("chainChanged", checkNetwork);
+        provider.removeListener("chainChanged", checkNetwork);
       };
     }
   }, [network]);
 
   async function addNetwork(): Promise<void> {
-    if (!window.ethereum) return;
+    const provider = window.ethereum;
+    if (!provider) return;
 
     try {
-      await window.ethereum.request({
+      await provider.request({
         method: "wallet_addEthereumChain",
         params: [networkParams[network]],
       });
       setIsAdded(true);
-      await selectNetwork(); // Automatically switch to the network after adding
+      await selectNetwork();
     } catch (error) {
       console.error("Error adding network:", error);
     }
   }
 
   async function selectNetwork(): Promise<void> {
-    if (!window.ethereum) return;
+    const provider = window.ethereum;
+    if (!provider) return;
 
     try {
-      await window.ethereum.request({
+      await provider.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: networkParams[network].chainId }],
       });
