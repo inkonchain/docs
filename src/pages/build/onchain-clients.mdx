@@ -30,14 +30,14 @@ To connect to Ink by instantiating a new `ethers.js` `JsonRpcProvider` object wi
 3. **Using the Provider**: You can now use the `provider` to interact with Ink's testnet. For example, you can fetch the current block number or interact with smart contracts deployed on the testnet.
 
    ```javascript
-   // previous code
+   import { ethers } from 'ethers';
+
+   const rpcUrl = 'https://rpc-gel-sepolia.inkonchain.com';
+   const provider = new ethers.JsonRpcProvider(rpcUrl, 763373);
+
    const blockNumber = await provider.getBlockNumber();
-   console.log(blockNumber);
+   console.log('Current block number:', blockNumber);
    ```
-
-### Example: Fetching the Current Block Number
-
-The following code snippet demonstrates how to fetch and print the current block number from Ink's testnet:
 
 ## Viem - Instructions for Connecting to Ink
 
