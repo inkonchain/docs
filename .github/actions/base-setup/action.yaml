@@ -4,12 +4,12 @@ runs:
   using: "composite"
   steps:
     - name: Setup pnpm
-      uses: pnpm/action-setup@v2
+      uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1
       with:
         run_install: false
 
     - name: Setup Node 22
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
       with:
         node-version: "22.x"
         cache: "pnpm"
@@ -20,7 +20,7 @@ runs:
       run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
     - name: Restore Cache
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
       with:
         path: |
           ${{ steps.pnpm-cache.outputs.STORE_PATH }}
