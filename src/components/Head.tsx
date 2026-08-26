@@ -26,7 +26,9 @@ export const Head = () => {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:image:width" content="1080" />
+      {/* Must match public/logo/build-the-future.png, which is 1920x1080.
+          Scrapers size the card from these before fetching the image. */}
+      <meta property="og:image:width" content="1920" />
       <meta property="og:image:height" content="1080" />
       <meta property="og:site_name" content="Ink Documentation" />
 
