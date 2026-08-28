@@ -18,6 +18,9 @@ const config = withNextra({
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // Keep plain .ts out of pageExtensions so Next 15's route-export validation
+  // doesn't treat Nextra's _meta.ts files as pages (Nextra discovers them itself).
+  pageExtensions: ["tsx"],
   images: {
     unoptimized: true,
   },

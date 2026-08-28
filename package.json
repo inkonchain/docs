@@ -55,8 +55,8 @@
     "next": "15.5.24",
     "next-sitemap": "4.2.3",
     "next-themes": "0.4.6",
-    "nextra": "2.13.4",
-    "nextra-theme-docs": "2.13.4",
+    "nextra": "3.3.1",
+    "nextra-theme-docs": "3.3.1",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
