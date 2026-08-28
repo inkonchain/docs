@@ -1,20 +1,16 @@
 import Link from "next/link";
+import type { Heading } from "nextra";
 
 import { PencilIcon } from "@/icons/Pencil";
 import { ThumbUpIcon } from "@/icons/ThumbUp";
 import { URLS } from "@/utils/urls";
 
-interface Heading {
-  id: string;
-  depth: number;
-  value: string;
-}
-
 interface TocProps {
-  headings: Heading[];
+  toc: Heading[];
+  filePath: string;
 }
 
-export const Toc: React.FC<TocProps> = ({ headings }) => {
+export const Toc: React.FC<TocProps> = ({ toc: headings }) => {
   return (
     <div className="flex flex-col items-start justify-start py-5 sticky top-14">
       {headings.length > 0 && (
