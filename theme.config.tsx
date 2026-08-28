@@ -1,10 +1,8 @@
 import { clsx } from "clsx";
-import { useRouter } from "next/router";
 import { DocsThemeConfig } from "nextra-theme-docs";
 
 import { Footer } from "@/components/Footer";
 import { Head } from "@/components/Head";
-import { SidebarTitleComponent } from "@/components/SidebarTitleComponent";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Toc } from "@/components/Toc";
 import { InkLogo } from "@/icons/InkLogo";
@@ -13,6 +11,10 @@ import { URLS } from "@/utils/urls";
 const config: DocsThemeConfig = {
   logo: <InkLogo />,
   darkMode: false,
+  color: {
+    hue: { light: 259, dark: 290 },
+    saturation: { light: 91, dark: 96 },
+  },
   project: {
     link: URLS.githubOrgUrl,
   },
@@ -45,7 +47,6 @@ const config: DocsThemeConfig = {
   sidebar: {
     defaultMenuCollapseLevel: 1,
     autoCollapse: true,
-    titleComponent: SidebarTitleComponent,
   },
   navbar: {
     extraContent: ThemeToggle,
@@ -59,7 +60,7 @@ const config: DocsThemeConfig = {
   },
   banner: {
     key: "docs-wip",
-    text: (
+    content: (
       <a
         className="!text-white hover:!text-white/80"
         href="/"
@@ -70,15 +71,6 @@ const config: DocsThemeConfig = {
         🎉 Mainnet is LIVE! 🎉
       </a>
     ),
-  },
-  useNextSeoProps() {
-    const { asPath } = useRouter();
-    return {
-      titleTemplate:
-        asPath === "/"
-          ? "Ink Docs - The Official Developer Guide for Ink"
-          : "%s | Ink Docs",
-    };
   },
 };
 
