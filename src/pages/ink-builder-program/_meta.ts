@@ -1,0 +1,12 @@
+export default {
+  overview: "Overview",
+  inkworks: {
+    title: "Inkworks ↗",
+    href: "https://ink.works",
+    newWindow: true,
+  },
+  "spark-program": "Spark Program",
+  "forge-program": "Forge Program",
+  "echo-program": "Echo Program",
+  "office-hours": "Office Hours",
+};

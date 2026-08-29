@@ -4,7 +4,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup pnpm
-      uses: pnpm/action-setup@v2
+      uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
       with:
         run_install: false
 
@@ -25,7 +25,13 @@ runs:
         path: |
           ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           **/node_modules
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-pnpm-store-v2-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: |
-          ${{ runner.os }}-pnpm-store-
+          ${{ runner.os }}-pnpm-store-v2-
+
+    # Always reconcile node_modules with the lockfile: a restore-keys fallback
+    # can hand us modules from an older lockfile, which pnpm repairs quickly here.
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
 
