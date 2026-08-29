@@ -1,9 +1,12 @@
-import { ThemeProvider } from "next-themes";
+import type { AppProps } from "next/app";
 import Script from "next/script";
+import { ThemeProvider } from "next-themes";
+
 import { inter, plus_jakarta_sans } from "../fonts";
+
 import "../globals.css";
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider attribute="class">
       <Script
