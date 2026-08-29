@@ -55,7 +55,6 @@
 
   /* We need to override the underline for nav links and sidebar items */
   nav > a,
-  a:has(div.ink-sidebar-item),
   .toc-link {
     @apply no-underline;
   }
@@ -64,12 +63,6 @@
 /* Some custom hacks to override some issues with Nextra */
 .nextra-nav-container-blur {
   display: none !important ;
-}
-
-/* Remove the padding from the sidebar link, so that we can pply our own style */
-a:has(div.ink-sidebar-item) {
-  padding: 0 !important;
-  background-color: transparent !important;
 }
 
 /* Target both the banner container and its text */

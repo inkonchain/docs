@@ -1,0 +1,8 @@
+export default {
+  about: "About Ink",
+  "network-information": "Network Information",
+  "connect-wallet": "Connect Wallet",
+  bridge: { title: "Bridge", href: "/tools/bridges" },
+  faucet: { title: "Faucet", href: "/tools/faucets" },
+  support: "Support",
+};

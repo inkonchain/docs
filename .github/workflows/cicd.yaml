@@ -16,28 +16,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: volta-cli/action@v4
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
         with:
           run_install: false
       - uses: actions/setup-node@v4
         with:
           node-version: "22.x"
           cache: "pnpm"
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
       - name: Add pnpm store path to env var
         id: pnpm-cache
         shell: bash
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      # Restore the cache BEFORE installing: restoring afterwards can extract a
+      # stale node_modules (via restore-keys) on top of a fresh install and then
+      # save that poisoned state under the new lockfile's cache key.
       - name: Cache node modules
         uses: actions/cache@v4
         with:
           path: |
             ${{ steps.pnpm-cache.outputs.STORE_PATH }}
             **/node_modules
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-v2-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-pnpm-store-v2-
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
   js-lint:
     needs: install_modules

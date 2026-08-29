@@ -3,10 +3,14 @@ import { useConfig } from "nextra-theme-docs";
 
 export const Head = () => {
   const { asPath, defaultLocale, locale } = useRouter();
-  const { frontMatter } = useConfig();
+  const { frontMatter, title: pageTitle } = useConfig();
   const baseUrl = "https://docs.inkonchain.com";
   const url =
     baseUrl + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
+  const documentTitle =
+    asPath === "/"
+      ? "Ink Docs - The Official Developer Guide for Ink"
+      : `${pageTitle} | Ink Docs`;
   const title =
     frontMatter.title || "Ink Docs - The Official Developer Guide for Ink";
   const description =
@@ -16,6 +20,8 @@ export const Head = () => {
 
   return (
     <>
+      <title>{documentTitle}</title>
+
       {/* Basic Meta Tags */}
       <meta name="title" content={title} />
       <meta name="description" content={description} />
