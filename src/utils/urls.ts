@@ -6,5 +6,5 @@ export const URLS = {
   repositoryUrl: "https://github.com/inkonchain/docs",
   developerWaitlistUrl: "https://inkonchain.com",
   feedbackUrl: "https://inkonchain.com",
-  editDocsOnGithub: "https://github.com/inkonchain",
+  editDocsOnGithubBase: "https://github.com/inkonchain/docs/edit/main",
 };
