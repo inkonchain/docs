@@ -1,8 +1,0 @@
-node_modules
-.github
-.next
-dist
-.env*
-*.log 
-.git
-.gitignore
