@@ -8,6 +8,5 @@ export default {
   },
   "transaction-fees": "Transaction Fees",
   "ink-kit": "Ink Kit (archived)",
-  verify: "Kraken Verify",
   tutorials: "Tutorials",
 };
