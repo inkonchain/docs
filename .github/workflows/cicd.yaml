@@ -97,6 +97,44 @@ jobs:
           path: .next
           key: ${{ runner.os }}-build-store-${{ hashFiles('.next') }}
 
+  # Deploys to the foundation-owned Vercel team using a token (no Vercel GitHub
+  # App install needed on this org). Preview deploys only run for branches in
+  # this repo, since fork PRs can't access secrets.
+  vercel-preview:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+    env:
+      VERCEL_ORG_ID: team_EiiXT7xNqKi1zE7Mqbq4JYAO
+      VERCEL_PROJECT_ID: prj_65DDk6laQQj9MHWKaPNBDxDxviDp
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Deploy preview to Vercel
+        run: |
+          URL=$(npx vercel@latest deploy --yes --token=${{ secrets.VERCEL_TOKEN }})
+          echo "### Vercel preview" >> $GITHUB_STEP_SUMMARY
+          echo "$URL" >> $GITHUB_STEP_SUMMARY
+
+  vercel-deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+    env:
+      VERCEL_ORG_ID: team_EiiXT7xNqKi1zE7Mqbq4JYAO
+      VERCEL_PROJECT_ID: prj_65DDk6laQQj9MHWKaPNBDxDxviDp
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Deploy to Vercel (production)
+        run: npx vercel@latest deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+
   docker-publish:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
