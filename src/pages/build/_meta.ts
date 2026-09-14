@@ -13,6 +13,5 @@ export default {
     newWindow: true,
   },
   "ink-kit": "Ink Kit (archived)",
-  verify: "Kraken Verify",
   tutorials: "Tutorials",
 };
