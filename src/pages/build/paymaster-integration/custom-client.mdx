@@ -1,0 +1,57 @@
+# Custom Account Clients
+
+Use the low-level client when your account library already constructs and signs
+EntryPoint v0.7 UserOperations. Most applications should use the Viem adapter
+shown in [Pay Gas with Stablecoins](./prepaid).
+
+```ts
+import { createInkPublicPaymasterClient } from "@hellomoon/ink-paymaster";
+
+const paymaster = createInkPublicPaymasterClient();
+const prepared = await paymaster.prepareUserOperation({
+  userOperation: operationWithCorrectlySizedStubSignature,
+  token: "USDC",
+  maxTokenCost: 100_000n,
+  idempotencyKey: "checkout-order-123",
+});
+
+// Sign after the quote and estimated gas fields have been applied.
+const signed = await account.signUserOperation(prepared.userOperation);
+const hash = await paymaster.sendUserOperation(signed);
+const receipt = await paymaster.waitForUserOperationReceipt({ hash });
+if (!receipt.success) throw new Error("prepaid operation reverted");
+```
+
+## Required ordering
+
+1. Construct a complete v0.7 UserOperation with the correct sender, nonce,
+   account `callData`, fees, and a stub signature with the same size as the
+   final signature.
+2. Call `prepareUserOperation` to obtain and attach the signed quote and final
+   gas estimates.
+3. Sign the resulting operation.
+4. Submit that exact signed operation with `sendUserOperation`.
+5. Wait for its receipt and check `receipt.success`.
+
+Do not change quote-bound fields after preparation. A changed sender, nonce,
+factory, account call, token, reimbursement ceiling, or validity window
+invalidates the quote signature.
+
+## UserOperation format
+
+The default `INK_PUBLIC_PAYMASTER` deployment accepts EntryPoint v0.7 fields
+such as `factory` and `factoryData`. It rejects the v0.6 `initCode` shape and
+EIP-7702 operations. Use `INK_PUBLIC_PAYMASTER_V08` and the v0.8
+`eip7702Auth` shape for a custom EIP-7702 client. Represent numeric JSON-RPC
+fields as hexadecimal quantities.
+
+The stub signature supplied before estimation must have the same byte length as
+the final signature. A differently sized signature changes
+`preVerificationGas` and can invalidate the final estimate.
+
+## Idempotency
+
+Reuse one key for transport retries of the same logical operation. Generate a
+new key after changing the sender, nonce, factory, account call, token, or
+reimbursement ceiling. Keys must contain 8–128 letters, numbers, dots,
+underscores, colons, or hyphens.

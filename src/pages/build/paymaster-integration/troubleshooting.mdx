@@ -1,0 +1,70 @@
+# Troubleshooting
+
+## Error types
+
+Errors from the low-level prepaid client extend `InkPaymasterError`.
+
+| Error | Meaning |
+| --- | --- |
+| `InkPaymasterValidationError` | Local input or remote response failed SDK validation |
+| `InkPaymasterHttpError` | The quote or health endpoint returned a non-success status |
+| `InkPaymasterRpcError` | The public bundler returned a JSON-RPC error |
+
+```ts
+try {
+  await bundlerClient.sendUserOperation({ calls });
+} catch (error) {
+  if (error instanceof InkPaymasterHttpError) {
+    console.error(error.status, error.body);
+  }
+}
+```
+
+## Retry rules
+
+- Reuse the same idempotency key when retrying the same logical operation.
+- After a timeout or ambiguous submission, query the UserOperation receipt
+  before rebuilding it.
+- Use exponential backoff with jitter for temporary transport failures, `429`,
+  and `503` responses.
+- Do not blindly retry validation, insufficient balance, or insufficient
+  allowance errors.
+- Create a new operation and idempotency key when a quote-bound field changes.
+
+## Common failures
+
+### Insufficient token balance or allowance
+
+Call `getPublicPaymasterAccountState` and confirm both values cover
+`maxTokenCost`. Amounts use the selected token's base units. USDC, USD₮0, and
+USDG currently use six decimals.
+
+### Unsupported account or EntryPoint
+
+The account, UserOperation encoding, Viem client, paymaster, and bundler must
+all use the same EntryPoint version. Use `INK_PUBLIC_PAYMASTER` for v0.7 or
+`INK_PUBLIC_PAYMASTER_V08` for EIP-7702 on v0.8. The SDK rejects v0.6-style
+`initCode` operations and mixed-version configurations.
+
+### Expired quote
+
+Build a new operation with a new idempotency key. Never attach old paymaster
+data to a changed or newly signed UserOperation.
+
+### Included transaction, failed application call
+
+Always check `receipt.success`. An EntryPoint transaction can land while the
+inner smart-account call reverts.
+
+### `429` response
+
+The public route has reached a quota or rate limit. Apply backoff and retry with
+the same idempotency key.
+
+### `503` response
+
+Pricing, RPC state, or paymaster readiness is unavailable. Stop submitting new
+operations until health recovers.
+
+For additional SDK internals and response schemas, see the
+[SDK API reference](https://ink-paymaster-sdk-docs.pages.dev/api/).
