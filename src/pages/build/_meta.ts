@@ -7,11 +7,7 @@ export default {
     newWindow: true,
   },
   "transaction-fees": "Transaction Fees",
-  "paymaster-integration": {
-    title: "Paymaster Integration ↗",
-    href: "https://ink-paymaster-sdk-docs.pages.dev/",
-    newWindow: true,
-  },
+  "paymaster-integration": "Paymaster Integration",
   "ink-kit": "Ink Kit (archived)",
   tutorials: "Tutorials",
 };

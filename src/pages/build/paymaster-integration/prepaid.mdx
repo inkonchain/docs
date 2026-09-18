@@ -1,0 +1,201 @@
+# Pay Gas with Stablecoins
+
+This guide transfers an ERC-20 from an EntryPoint v0.7 smart account while the
+public Ink paymaster supplies native gas. The smart account separately
+reimburses the paymaster in USDC, USD₮0, or USDG.
+
+## 1. Create a compatible account
+
+Install the SDK and Viem:
+
+```bash
+pnpm add @hellomoon/ink-paymaster@^0.2.3 viem
+```
+
+You need an EntryPoint v0.7-compatible Viem `SmartAccount`. Account creation
+and signing depend on your wallet provider. Keep the signer in the same trusted
+environment used for other wallet operations.
+
+## 2. Choose a reimbursement token
+
+```ts
+import { INK_PAYMENT_TOKENS } from "@hellomoon/ink-paymaster";
+
+const token = INK_PAYMENT_TOKENS.USDC;
+// const token = INK_PAYMENT_TOKENS.USDT0;
+// const token = INK_PAYMENT_TOKENS.USDG;
+```
+
+Use SDK deployment metadata instead of copying token or paymaster addresses
+into application code.
+
+## 3. Fund the smart account
+
+Before its first prepaid operation, the smart account needs:
+
+- enough of the selected token for the application call and maximum
+  reimbursement; and
+- enough ETH for one owner-paid approval UserOperation.
+
+The approval must come from the smart account that owns the tokens. An approval
+from its owner EOA does not establish the smart account's allowance. The public
+paymaster cannot pay for its own approval.
+
+## 4. Create the Ink clients
+
+```ts
+import { createPublicClient, defineChain, http } from "viem";
+import { createBundlerClient } from "viem/account-abstraction";
+import {
+  createInkPublicPaymasterClient,
+  createInkViemPaymaster,
+  INK_PUBLIC_PAYMASTER,
+} from "@hellomoon/ink-paymaster";
+
+const inkRpcUrl = process.env.INK_RPC_URL!;
+const ink = defineChain({
+  id: INK_PUBLIC_PAYMASTER.chainId,
+  name: INK_PUBLIC_PAYMASTER.chainName,
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: { default: { http: [inkRpcUrl] } },
+});
+
+const publicClient = createPublicClient({
+  chain: ink,
+  transport: http(inkRpcUrl),
+});
+const service = createInkPublicPaymasterClient();
+```
+
+`service.bundlerUrl` points to Alto. Alto submits UserOperations to EntryPoint;
+the separate paymaster contract supplies native gas.
+
+## 5. Check balance and allowance
+
+```ts
+import {
+  getPublicPaymasterAccountState,
+  INK_PUBLIC_PAYMASTER,
+} from "@hellomoon/ink-paymaster";
+
+const maxTokenCost = 100_000n; // 0.1 token for current six-decimal tokens
+const state = await getPublicPaymasterAccountState(
+  publicClient,
+  account.address,
+  INK_PUBLIC_PAYMASTER,
+  token.symbol,
+);
+
+console.log({
+  balance: state.tokenBalance,
+  allowance: state.paymasterAllowance,
+  refundCredit: state.refundCredit,
+});
+```
+
+The balance and allowance must cover `maxTokenCost`. If the operation transfers
+the selected token, its balance must cover both the transfer and reimbursement
+ceiling.
+
+## 6. Approve once, owner-paid
+
+Skip this step when `state.paymasterAllowance >= maxTokenCost`. Otherwise, send
+a finite approval without attaching a paymaster:
+
+```ts
+import { encodePublicPaymasterApproval } from "@hellomoon/ink-paymaster";
+
+const ownerPaidClient = createBundlerClient({
+  account,
+  chain: ink,
+  client: publicClient,
+  transport: http(service.bundlerUrl),
+  // No paymaster: the smart account pays ETH for this operation.
+});
+
+const approvalHash = await ownerPaidClient.sendUserOperation({
+  calls: [
+    {
+      to: token.address,
+      value: 0n,
+      data: encodePublicPaymasterApproval(10_000_000n),
+    },
+  ],
+});
+
+const approvalReceipt = await ownerPaidClient.waitForUserOperationReceipt({
+  hash: approvalHash,
+});
+if (!approvalReceipt.success) throw new Error("paymaster approval reverted");
+```
+
+Allowances are independent for each token. Repeat the owner-paid approval when
+selecting a token that has not approved the paymaster or whose allowance is too
+low.
+
+## 7. Send a prepaid transfer
+
+This example transfers `1.25` units of the selected token. Viem converts the
+call into smart-account calldata, asks the paymaster for a quote, signs the
+UserOperation, and submits it through Alto.
+
+```ts
+import { encodeFunctionData, parseUnits } from "viem";
+
+const erc20Abi = [
+  {
+    type: "function",
+    name: "transfer",
+    stateMutability: "nonpayable",
+    inputs: [
+      { name: "recipient", type: "address" },
+      { name: "amount", type: "uint256" },
+    ],
+    outputs: [{ type: "bool" }],
+  },
+] as const;
+
+const bundlerClient = createBundlerClient({
+  account,
+  chain: ink,
+  client: publicClient,
+  transport: http(service.bundlerUrl),
+  paymaster: createInkViemPaymaster(service),
+  paymasterContext: {
+    token: token.symbol,
+    maxTokenCost,
+    idempotencyKey: "transfer-order-123",
+  },
+});
+
+const userOperationHash = await bundlerClient.sendUserOperation({
+  calls: [
+    {
+      to: token.address,
+      value: 0n,
+      data: encodeFunctionData({
+        abi: erc20Abi,
+        functionName: "transfer",
+        args: [recipient, parseUnits("1.25", token.decimals)],
+      }),
+    },
+  ],
+});
+
+const receipt = await bundlerClient.waitForUserOperationReceipt({
+  hash: userOperationHash,
+});
+if (!receipt.success) throw new Error("prepaid transfer reverted");
+
+console.log({
+  userOperationHash,
+  transactionHash: receipt.receipt.transactionHash,
+});
+```
+
+Reuse the same idempotency key when retrying this exact logical operation.
+Generate a new key if the sender, nonce, calls, token, or reimbursement ceiling
+changes.
+
+See [Troubleshooting](./troubleshooting) for response-specific handling and
+[Payment Tokens](./payment-tokens) for token addresses and selection.
