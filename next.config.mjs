@@ -15,6 +15,17 @@ const withNextra = nextra({
 });
 
 const config = withNextra({
+  async redirects() {
+    return [
+      {
+        // Kraken Verify is no longer available. Temporary redirect so the
+        // published URL keeps resolving instead of 404ing.
+        source: "/build/verify",
+        destination: "/",
+        permanent: false,
+      },
+    ];
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
