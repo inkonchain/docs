@@ -35,7 +35,7 @@ export default {
     },
   },
   header_status: {
-    title: "Status Page",
+    title: "Status Page ↗",
     type: "page",
     href: "https://status.inkonchain.com/",
     newWindow: true,
@@ -123,7 +123,7 @@ export default {
     title: "FAQ",
   },
   status: {
-    title: "Status Page",
+    title: "Status Page ↗",
     href: "https://status.inkonchain.com/",
     newWindow: true,
     theme: {
