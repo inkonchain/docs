@@ -3,8 +3,9 @@
 The public v0.7 paymaster accepts USDC, USD₮0, or USDG for reimbursement. USDC
 is the default; select another token explicitly by symbol, alias, or address.
 
-The EIP-7702 v0.8 deployment currently accepts USDC only. Always use the
-selected deployment's `tokens` list as the authority for enabled tokens.
+The EIP-7702 v0.8 deployment currently accepts USDC only and supports an
+atomic EIP-2612 permit. Always use the selected deployment's `tokens` list as
+the authority for enabled tokens.
 
 ```ts
 const { quote } = await paymasterClient.quoteUserOperation({
@@ -29,17 +30,17 @@ metadata rather than assuming that future tokens will do the same.
 
 ## Canonical Ink addresses
 
-| Symbol | Address | Decimals |
-| --- | --- | --- |
-| USDC | `0x2D270e6886d130D724215A266106e6832161EAEd` | 6 |
-| USD₮0 | `0x0200C29006150606B650577BBE7B6248F58470c1` | 6 |
-| USDG | `0xe343167631d89B6Ffc58B88d6b7fB0228795491D` | 6 |
+| Symbol | Address                                      | Decimals |
+| ------ | -------------------------------------------- | -------- |
+| USDC   | `0x2D270e6886d130D724215A266106e6832161EAEd` | 6        |
+| USD₮0  | `0x0200C29006150606B650577BBE7B6248F58470c1` | 6        |
+| USDG   | `0xe343167631d89B6Ffc58B88d6b7fB0228795491D` | 6        |
 
 Token presence in `INK_PAYMENT_TOKENS` identifies its canonical address. The
 active deployment's `tokens` list remains the authority for what the live
 paymaster has enabled.
 
-## Approvals are per token
+## Approvals are per token in prepaid mode
 
 Each token has a separate ERC-20 allowance. Before requesting a quote, the
 smart account must execute `approve(paymaster, finiteAllowance)` on the token it
@@ -69,6 +70,12 @@ const approvalCall = {
 
 The public paymaster does not pay for this approval. Approve from the smart
 account using an owner-paid UserOperation.
+
+The v0.8 USDC deployment also supports permit mode. In permit mode, the EOA
+signs a bounded EIP-2612 authorization and includes it with the quote request.
+The paymaster applies the permit and collects its precharge during the same
+UserOperation, so no prior allowance or owner-paid ETH transaction is required.
+See [EIP-7702](/build/paymaster-integration/eip-7702) for the complete flow.
 
 ## Charging and refunds
 
