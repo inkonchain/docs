@@ -4,11 +4,11 @@
 
 Errors from the low-level prepaid client extend `InkPaymasterError`.
 
-| Error | Meaning |
-| --- | --- |
-| `InkPaymasterValidationError` | Local input or remote response failed SDK validation |
-| `InkPaymasterHttpError` | The quote or health endpoint returned a non-success status |
-| `InkPaymasterRpcError` | The public bundler returned a JSON-RPC error |
+| Error                         | Meaning                                                    |
+| ----------------------------- | ---------------------------------------------------------- |
+| `InkPaymasterValidationError` | Local input or remote response failed SDK validation       |
+| `InkPaymasterHttpError`       | The quote or health endpoint returned a non-success status |
+| `InkPaymasterRpcError`        | The public bundler returned a JSON-RPC error               |
 
 ```ts
 try {
@@ -22,14 +22,14 @@ try {
 
 ## Retry rules
 
-- Reuse the same idempotency key when retrying the same logical operation.
-- After a timeout or ambiguous submission, query the UserOperation receipt
+* Reuse the same idempotency key when retrying the same logical operation.
+* After a timeout or ambiguous submission, query the UserOperation receipt
   before rebuilding it.
-- Use exponential backoff with jitter for temporary transport failures, `429`,
+* Use exponential backoff with jitter for temporary transport failures, `429`,
   and `503` responses.
-- Do not blindly retry validation, insufficient balance, or insufficient
+* Do not blindly retry validation, insufficient balance, or insufficient
   allowance errors.
-- Create a new operation and idempotency key when a quote-bound field changes.
+* Create a new operation and idempotency key when a quote-bound field changes.
 
 ## Common failures
 
@@ -38,6 +38,18 @@ try {
 Call `getPublicPaymasterAccountState` and confirm both values cover
 `maxTokenCost`. Amounts use the selected token's base units. USDC, USD₮0, and
 USDG currently use six decimals.
+
+For v0.8 permit mode, a prior allowance is not required, but the token balance
+must still cover `maxTokenCost`. Confirm that `sponsorshipMode` is `"permit"`,
+the permit value equals `maxTokenCost`, and the permit has not expired.
+
+### Invalid EIP-2612 permit
+
+Build the permit with `createEip2612PermitAuthorization` and the token metadata
+from `INK_PUBLIC_PAYMASTER_V08`. Read the current token nonce immediately before
+signing. Do not hardcode the EIP-712 name: Ink USDC uses `USDC`, version `2`.
+Build a new permit and idempotency key after the permit expires or its nonce is
+consumed.
 
 ### Unsupported account or EntryPoint
 

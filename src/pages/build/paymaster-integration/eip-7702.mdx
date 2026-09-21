@@ -11,16 +11,16 @@ token.
 
 ## Live deployment
 
-| Field | Value |
-| --- | --- |
-| Network | Ink Mainnet (`57073`) |
-| SDK | `@hellomoon/ink-paymaster` v0.2.3 or later |
-| SDK deployment | `INK_PUBLIC_PAYMASTER_V08` |
-| EntryPoint v0.8 | `0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108` |
-| Paymaster | `0xE361E63515109BFDC4c32EfC4d2e0ede4d4744D8` |
+| Field               | Value                                        |
+| ------------------- | -------------------------------------------- |
+| Network             | Ink Mainnet (`57073`)                        |
+| SDK                 | `@hellomoon/ink-paymaster` v0.3.0 or later   |
+| SDK deployment      | `INK_PUBLIC_PAYMASTER_V08`                   |
+| EntryPoint v0.8     | `0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108` |
+| Paymaster           | `0xFd1Ee688E0aC5905c28a0b99316E451beEc650d0` |
 | Simple7702 delegate | `0xe6Cae83BdE06E4c305530e199D7217f42808555B` |
-| Reimbursement token | USDC |
-| Quote version | 3 |
+| Reimbursement token | USDC                                         |
+| Quote version       | 4                                            |
 
 Use the exported constants instead of copying these addresses into application
 code.
@@ -29,12 +29,13 @@ code.
 
 The EOA must:
 
-1. hold enough native ETH to establish its USDC approval;
-2. hold enough USDC for the application call and gas reimbursement; and
-3. approve `INK_PUBLIC_PAYMASTER_V08.paymaster` to spend a finite USDC amount.
+1. hold enough USDC for the application call and `maxTokenCost`;
+2. sign an EIP-2612 permit for `INK_PUBLIC_PAYMASTER_V08.paymaster`; and
+3. sign its EIP-7702 authorization and UserOperation.
 
-The public paymaster cannot pay for its own approval. Send that approval with
-ordinary gas before requesting a prepaid operation.
+The EOA does not need ETH and does not need a prior approval transaction. The
+paymaster applies the permit, precharges USDC, and supplies native gas during
+the same UserOperation.
 
 ## Create the EIP-7702 account
 
@@ -46,8 +47,10 @@ import {
   toSimple7702SmartAccount,
 } from "viem/account-abstraction";
 import {
+  createEip2612PermitAuthorization,
   createInkPublicPaymasterClient,
   createInkViemPaymaster,
+  eip2612NonceAbi,
   INK_PUBLIC_PAYMASTER_V08,
   INK_SIMPLE_7702_DELEGATE,
 } from "@hellomoon/ink-paymaster";
@@ -79,14 +82,31 @@ const service = createInkPublicPaymasterClient({
 Alto is the ERC-4337 bundler; the separate paymaster contract supplies native
 gas through EntryPoint.
 
-## Send the first prepaid operation
+## Send an operation with an atomic permit
 
 Viem does not pass its EIP-7702 authorization into the paymaster hook. Supply
-the delegate in `paymasterContext`, then sign and pass the authorization to
-`sendUserOperation` explicitly.
+the delegate and signed permit in `paymasterContext`, then sign and pass the
+EIP-7702 authorization to `sendUserOperation` explicitly.
 
 ```ts
 const maxTokenCost = 100_000n;
+const permitDeadline = BigInt(Math.floor(Date.now() / 1000) + 120);
+const permit = await createEip2612PermitAuthorization({
+  chainId: ink.id,
+  token: INK_PUBLIC_PAYMASTER_V08.token,
+  owner: owner.address,
+  spender: INK_PUBLIC_PAYMASTER_V08.paymaster,
+  value: maxTokenCost,
+  nonce: await publicClient.readContract({
+    address: INK_PUBLIC_PAYMASTER_V08.token.address,
+    abi: eip2612NonceAbi,
+    functionName: "nonces",
+    args: [owner.address],
+  }),
+  deadline: permitDeadline,
+  signTypedData: (typedData) => owner.signTypedData(typedData),
+});
+
 const bundler = createBundlerClient({
   account,
   chain: ink,
@@ -98,6 +118,8 @@ const bundler = createBundlerClient({
     maxTokenCost,
     idempotencyKey: "checkout-order-123",
     eip7702Delegate: INK_SIMPLE_7702_DELEGATE,
+    sponsorshipMode: "permit",
+    permit,
   },
 });
 
@@ -124,15 +146,23 @@ For an already delegated EOA, keep supplying `eip7702Delegate` in
 `paymasterContext`. The quote remains bound to the delegate installed on the
 sender even when a new authorization is unnecessary.
 
+`maxTokenCost` is a ceiling, not the final charge. The permit grants that
+finite allowance, the paymaster collects its precharge, and unused precharge
+becomes pull-based refund credit. A small residual allowance can remain when
+the precharge is below the signed ceiling.
+
 ## Safety checks
 
-Quote version 3 signs the expected delegate address. The paymaster verifies the
-sender's EIP-7702 code designator onchain. The SDK also rejects:
+Quote version 4 binds the expected delegate, permit value, deadline, and permit
+signature into the signed quote. The paymaster verifies the sender's EIP-7702
+code designator onchain. The SDK also rejects:
 
-- an EIP-7702 marker without `paymasterContext.eip7702Delegate`;
-- an EIP-7702 operation configured against EntryPoint v0.7;
-- a v0.8 deployment that reports quote version 2; and
-- a quote whose delegate differs from the requested or installed delegate.
+* an EIP-7702 marker without `paymasterContext.eip7702Delegate`;
+* an EIP-7702 operation configured against EntryPoint v0.7;
+* permit mode without reviewed EIP-2612 token metadata;
+* a permit whose value differs from `maxTokenCost`;
+* a v0.8 deployment that reports a quote version other than 3 or 4; and
+* a quote whose delegate differs from the requested or installed delegate.
 
 Keep the account, UserOperation encoding, SDK deployment, paymaster, Alto, and
 EntryPoint on the same version.
