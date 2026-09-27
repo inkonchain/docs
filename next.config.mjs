@@ -32,6 +32,15 @@ const config = withNextra({
         destination: "/",
         permanent: false,
       },
+      {
+        // /status was a client-side stub that opened the status page via
+        // window.open (blocked by popup blockers) and then navigated back.
+        // Redirect server-side instead; the sidebar already links out via
+        // _meta, so the stub page is removed.
+        source: "/status",
+        destination: "https://status.inkonchain.com/",
+        permanent: false,
+      },
     ];
   },
   eslint: {
