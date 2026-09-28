@@ -15,7 +15,7 @@ export const InkHero = () => {
   // React 18 passes `className` through to custom elements verbatim (it never
   // becomes `class`), so the layout styles live on a wrapper div instead.
   return (
-    <div className="relative mt-8 aspect-[12/5] w-full overflow-hidden rounded-3xl border border-outline-subtle">
+    <div className="relative mt-8 aspect-[4/3] w-full sm:aspect-[12/5] overflow-hidden rounded-3xl border border-outline-subtle">
       <interactive-ink
         style={{ display: "block", width: "100%", height: "100%" }}
         value="3"

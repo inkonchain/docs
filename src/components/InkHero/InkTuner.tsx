@@ -4,6 +4,7 @@ import {
   applyTune,
   clampTune,
   inkValueFor,
+  inkZoomFor,
   readStoredTune,
   storeTune,
   TUNE_STEP,
@@ -55,9 +56,9 @@ export const InkTuner = () => {
     applyTune(next);
     // Via the attribute, not the `value` property: the custom element may not
     // be upgraded yet, and an own property would shadow its setter
-    document
-      .querySelector<HTMLElement>("interactive-ink")
-      ?.setAttribute("value", String(inkValueFor(next)));
+    const ink = document.querySelector<HTMLElement>("interactive-ink");
+    ink?.setAttribute("value", String(inkValueFor(next)));
+    ink?.setAttribute("zoom", String(inkZoomFor(next)));
   }, []);
 
   const stopSpring = () => {

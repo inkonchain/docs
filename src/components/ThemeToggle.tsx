@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import { useTheme } from "nextra-theme-docs";
 
 import { MoonIcon } from "../icons/Moon";
@@ -8,12 +9,37 @@ export const ThemeToggle = () => {
   const { resolvedTheme, setTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
+  // Like inkonchain.com: the new theme wipes in from the bottom (View
+  // Transitions, styled in globals.css), with a plain colour fade elsewhere.
   const onToggleTheme = () => {
-    if (resolvedTheme == "dark") {
-      setTheme("light");
-    } else {
-      setTheme("dark");
+    const next = resolvedTheme === "dark" ? "light" : "dark";
+    const root = document.documentElement;
+
+    // The new snapshot is taken when this returns, so apply the theme now:
+    // next-themes only sets the class in an effect.
+    const apply = () => {
+      flushSync(() => setTheme(next));
+      root.classList.toggle("dark", next === "dark");
+      root.classList.toggle("light", next === "light");
+      root.style.colorScheme = next;
+    };
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      apply();
+      return;
     }
+
+    if (document.startViewTransition) {
+      document.startViewTransition(apply);
+      return;
+    }
+
+    root.classList.add("theme-fallback-transition");
+    apply();
+    window.setTimeout(
+      () => root.classList.remove("theme-fallback-transition"),
+      460
+    );
   };
 
   /**

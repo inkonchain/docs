@@ -23,11 +23,12 @@ const externalLinks = [
 ];
 
 // Mirrors the INK token website footer: two link columns, the coin rising
-// from the bottom edge, and the mark + copyright underneath.
+// from the bottom edge, and the mark + copyright underneath (on mobile,
+// above the coin).
 export const Footer = () => {
   return (
     <footer className="ink-footer relative mt-24 overflow-hidden md:mt-32">
-      <div className="mx-auto grid max-w-[var(--layout-width)] grid-cols-2 px-6 lg:px-10 pb-40 md:pb-48">
+      <div className="mx-auto grid max-w-[var(--layout-width)] grid-cols-2 px-6 pb-8 md:pb-48 lg:px-10">
         <div className="col-span-2 mb-10 border-t border-outline-subtle" />
         <ul className="space-y-2.5">
           {docsLinks.map(({ label, href }) => (
@@ -75,6 +76,9 @@ export const Footer = () => {
           © Ink {new Date().getFullYear()}
         </span>
       </div>
+
+      {/* Mobile: the mark and © sit above the coin, which gets the bottom */}
+      <div className="h-44 md:hidden" aria-hidden="true" />
     </footer>
   );
 };

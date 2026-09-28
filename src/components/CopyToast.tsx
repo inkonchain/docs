@@ -51,7 +51,7 @@ export const CopyToast = () => {
         visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
       )}
     >
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/75 px-3 py-1.5 text-xs font-semibold text-background shadow-lg ring-1 ring-white/10 backdrop-blur-md">
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#050506]/80 px-3 py-1.5 text-xs font-semibold text-white shadow-lg ring-1 ring-white/10 backdrop-blur-md dark:bg-container-2/80 dark:ring-white/15">
         <CheckIcon className="size-3.5 text-positive" />
         Copied
       </span>

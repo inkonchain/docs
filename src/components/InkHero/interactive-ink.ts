@@ -2,6 +2,8 @@
 // Ported as-is from inkfoundation/ink-web-app (feat/homepage-redesign):
 // src/app/[locale]/_components/HomeBoard/interactive-ink.ts
 // Keep the two copies in sync when the shader changes.
+// Docs-only addition: a `zoom` attribute (uZoom), driven by the home tuner,
+// so the ink fills our wide hero as it thickens (the homepage panel is tall).
 const vertexShader = `
 attribute vec2 position;
 void main() { gl_Position = vec4(position, 0.0, 1.0); }
@@ -16,6 +18,7 @@ uniform float uValue;
 uniform float uHover;
 uniform float uInteraction;
 uniform float uEdge;
+uniform float uZoom;
 uniform vec4 uRipples[24];
 
 float hash(vec2 p) {
@@ -61,6 +64,7 @@ void main() {
   float swing = level - .5;
   float t = uTime * .205 + swing * 1.25;
   p *= 1.0 - swing * .28;
+  p /= uZoom;
 
   float flow = fbm(p * (1.475 + swing * .55) + vec2(t * .22, -t * .15));
   float detail = fbm(p * 3.1 - vec2(t * .31, t * .19) + flow);
@@ -156,6 +160,7 @@ class InteractiveInk extends HTMLElementBase {
     "edge",
     "blur",
     "phase",
+    "zoom",
   ];
 
   constructor() {
@@ -296,6 +301,13 @@ class InteractiveInk extends HTMLElementBase {
       String(Math.max(0, Math.min(18, Number(next) || 0)))
     );
   }
+  // Docs-only: magnifies the ink around the centre (1 = homepage framing)
+  get zoom() {
+    const value = Number(this.getAttribute("zoom"));
+    return this.hasAttribute("zoom") && Number.isFinite(value)
+      ? Math.max(0.25, Math.min(4, value))
+      : 1;
+  }
   // Animation seconds to seed the clock with, so the first frame is a chosen pose
   // rather than always the t = 0 one. Setting it later re-seeks the animation.
   get phase() {
@@ -357,6 +369,7 @@ class InteractiveInk extends HTMLElementBase {
         "uHover",
         "uInteraction",
         "uEdge",
+        "uZoom",
       ].map((name) => [name, gl.getUniformLocation(program, name)])
     );
     this.uniforms.uRipples = gl.getUniformLocation(program, "uRipples[0]");
@@ -465,6 +478,7 @@ class InteractiveInk extends HTMLElementBase {
     gl.uniform1f(this.uniforms.uHover, this.hover);
     gl.uniform1f(this.uniforms.uInteraction, this.interaction);
     gl.uniform1f(this.uniforms.uEdge, this.edge);
+    gl.uniform1f(this.uniforms.uZoom, this.zoom);
     this.rippleData.fill(0);
     this.ripples = this.ripples.filter(
       (ripple) => this.waterTime - ripple.time < 5

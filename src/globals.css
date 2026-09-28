@@ -22,6 +22,10 @@
     --positive-bg: 233 248 229;
     --warning: 231 139 25;
     --warning-bg: 252 241 228;
+    /* Read by the ASCII animation (components/NotFound); it needs
+       comma-separated rgb() */
+    --surface-page: rgb(255, 255, 255);
+    --text-primary: rgb(0, 0, 0);
   }
 
   .dark {
@@ -39,6 +43,8 @@
     --positive-bg: 18 37 12;
     --warning: 231 139 25;
     --warning-bg: 42 28 13;
+    --surface-page: rgb(5, 5, 6);
+    --text-primary: rgb(245, 245, 247);
   }
 }
 
@@ -209,85 +215,104 @@ html[data-scrolled] .nextra-nav-container {
   mask: var(--search-icon) center / contain no-repeat;
 }
 
-@media (min-width: 768px) {
-  /* Collapsed: 36px dark circle */
-  .nextra-nav-container div:has(> input[type="search"]) {
-    @apply size-9;
+/* Every screen size (Nextra hides the navbar search on mobile and puts an
+   input in the menu instead; here it's the same round button everywhere) */
+.nextra-nav-container nav > div:has(> input[type="search"]) {
+  display: flex !important;
+}
+
+.nextra-sidebar-container > div:has(input[type="search"]) {
+  @apply hidden;
+}
+
+/* Mobile order: … theme, search, menu */
+@media (max-width: 767px) {
+  .nextra-nav-container nav > div:has(> input[type="search"]) {
+    @apply order-1;
   }
 
-  .nextra-nav-container div:has(> input[type="search"])::before {
-    @apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+  .nextra-nav-container .nextra-hamburger {
+    @apply order-2;
   }
+}
 
-  .nextra-nav-container div:has(> input[type="search"]) input {
-    @apply !size-9 cursor-pointer !rounded-full !bg-primary !p-0 !text-transparent transition-opacity placeholder:!text-transparent hover:opacity-85;
-  }
+/* Collapsed: 36px dark circle */
+.nextra-nav-container div:has(> input[type="search"]) {
+  @apply size-9;
+}
 
-  .nextra-nav-container div:has(> input[type="search"]) kbd {
-    @apply hidden;
-  }
+.nextra-nav-container div:has(> input[type="search"])::before {
+  @apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+}
 
-  /* Open: centred modal */
-  .nextra-nav-container div:has(> input[type="search"]):focus-within {
-    @apply fixed inset-x-0 z-50 mx-auto;
-    top: var(--search-top);
-    width: var(--search-width);
-    height: var(--search-height);
-  }
+.nextra-nav-container div:has(> input[type="search"]) input {
+  @apply !size-9 cursor-pointer !rounded-full !bg-primary !p-0 !text-transparent transition-opacity placeholder:!text-transparent hover:opacity-85;
+}
 
-  .nextra-nav-container div:has(> input[type="search"]):focus-within::before {
-    @apply left-5 translate-x-0 bg-secondary;
-  }
+.nextra-nav-container div:has(> input[type="search"]) kbd {
+  @apply hidden;
+}
 
-  /* Backdrop */
-  .nextra-nav-container div:has(> input[type="search"]):focus-within::after {
-    content: "";
-    @apply fixed inset-0 -z-10 bg-black/40 backdrop-blur-sm;
-  }
+/* Open: centred modal */
+.nextra-nav-container div:has(> input[type="search"]):focus-within {
+  @apply fixed inset-x-0 z-50 mx-auto;
+  top: var(--search-top);
+  width: var(--search-width);
+  height: var(--search-height);
+}
 
-  .nextra-nav-container div:has(> input[type="search"]):focus-within input {
-    @apply !h-full !w-full cursor-text !rounded-2xl border border-outline-subtle !bg-background !pl-12 !pr-14 text-base font-medium !text-primary !outline-none placeholder:!text-secondary hover:opacity-100;
-    /* Replaces Nextra's violet focus ring (drawn with box-shadow) */
-    box-shadow: var(--search-shadow) !important;
-  }
+.nextra-nav-container div:has(> input[type="search"]):focus-within::before {
+  @apply left-5 translate-x-0 bg-secondary;
+}
 
-  /* With results open, the input becomes the header of one joined card */
-  html:has(.nextra-search-results:not(:empty))
-    .nextra-nav-container
-    div:has(> input[type="search"]):focus-within
-    input {
-    @apply !rounded-b-none !border-b-outline-subtle;
-  }
+/* Backdrop */
+.nextra-nav-container div:has(> input[type="search"]):focus-within::after {
+  content: "";
+  @apply fixed inset-0 -z-10 bg-black/40 backdrop-blur-sm;
+}
 
-  /* Close (✕) — see NavbarActions; shown only while the modal is open */
-  .ink-search-close {
-    @apply fixed z-[55] hidden size-8 items-center justify-center rounded-full text-secondary transition-colors hover:bg-container hover:text-primary;
-    top: calc(var(--search-top) + (var(--search-height) - 2rem) / 2);
-    right: calc((100% - var(--search-width)) / 2 + 0.75rem);
-  }
+.nextra-nav-container div:has(> input[type="search"]):focus-within input {
+  @apply !h-full !w-full cursor-text !rounded-2xl border border-outline-subtle !bg-background !pl-12 !pr-14 text-base font-medium !text-primary !outline-none placeholder:!text-secondary hover:opacity-100;
+  /* Replaces Nextra's violet focus ring (drawn with box-shadow) */
+  box-shadow: var(--search-shadow) !important;
+}
 
-  html:has(.nextra-nav-container input[type="search"]:focus) .ink-search-close {
-    @apply flex;
-  }
+/* With results open, the input becomes the header of one joined card */
+html:has(.nextra-search-results:not(:empty))
+  .nextra-nav-container
+  div:has(> input[type="search"]):focus-within
+  input {
+  @apply !rounded-b-none !border-b-outline-subtle;
+}
 
-  /* A blurred ancestor would become the containing block for the fixed modal */
-  /* (`:has()` can't be nested, so this matches the focused input directly) */
-  html:has(.nextra-nav-container input[type="search"]:focus)
-    .nextra-nav-container {
-    @apply !backdrop-filter-none;
-  }
+/* Close (✕) — see NavbarActions; shown only while the modal is open */
+.ink-search-close {
+  @apply fixed z-[55] hidden size-8 items-center justify-center rounded-full text-secondary transition-colors hover:bg-container hover:text-primary;
+  top: calc(var(--search-top) + (var(--search-height) - 2rem) / 2);
+  right: calc((100% - var(--search-width)) / 2 + 0.75rem);
+}
 
-  /* Results sit right under the modal input (overrides headlessui's inline
+html:has(.nextra-nav-container input[type="search"]:focus) .ink-search-close {
+  @apply flex;
+}
+
+/* A blurred ancestor would become the containing block for the fixed modal */
+/* (`:has()` can't be nested, so this matches the focused input directly) */
+html:has(.nextra-nav-container input[type="search"]:focus)
+  .nextra-nav-container {
+  @apply !backdrop-filter-none;
+}
+
+/* Results sit right under the modal input (overrides headlessui's inline
      anchor position) */
-  .nextra-search-results {
-    position: fixed !important;
-    top: calc(var(--search-top) + var(--search-height) - 1px) !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: var(--search-width) !important;
-    @apply !z-[60] mx-auto !rounded-t-none !border-t-0;
-    box-shadow: var(--search-shadow) !important;
-  }
+.nextra-search-results {
+  position: fixed !important;
+  top: calc(var(--search-top) + var(--search-height) - 1px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: var(--search-width) !important;
+  @apply !z-[60] mx-auto !rounded-t-none !border-t-0;
+  box-shadow: var(--search-shadow) !important;
 }
 
 .nextra-search-results {
@@ -759,5 +784,93 @@ html[data-scrolled] .nextra-nav-container {
 @media (prefers-reduced-motion: reduce) {
   .ink-sidebar-indicator {
     transition: opacity 150ms ease;
+  }
+}
+
+/* After "Last updated", pagination keeps the same 32px rhythm as the edit
+   link below it */
+.nextra-content main div._mt-12._mb-8._block + div:has(> a[title] > svg) {
+  @apply !mt-8;
+}
+
+/*
+ * Task-list checkboxes (`- [ ]` in MDX) — tokens instead of the browser's
+ * greyed-out disabled box. They're decorative, so no pointer cursor.
+ */
+.nextra-content main input[type="checkbox"] {
+  @apply relative mr-2.5 inline-block size-4 shrink-0 appearance-none border border-outline bg-background align-[-0.2em] opacity-100;
+  border-radius: min(calc(0.25rem * var(--round, 1)), 0.5rem);
+}
+
+.nextra-content main input[type="checkbox"]:checked {
+  @apply border-ink bg-ink dark:border-ink-light dark:bg-ink-light;
+}
+
+.nextra-content main input[type="checkbox"]:checked::after {
+  content: "";
+  @apply absolute inset-0 bg-white;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 8.5 2.5 2.5L12 5.5'/%3E%3C/svg%3E")
+    center / 12px no-repeat;
+}
+
+/* Content images — one fixed radius (not tied to the tuner) and a hairline
+   so white screenshots don't bleed into the page */
+.nextra-content main img {
+  @apply border border-outline-subtle;
+  border-radius: 1rem;
+}
+
+/*
+ * Theme switch (ThemeToggle) — the new theme wipes up from the bottom with a
+ * soft leading edge, as on inkonchain.com.
+ */
+@property --theme-wipe {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: theme-wipe 760ms cubic-bezier(0.32, 0.72, 0, 1) both;
+  mask-image: linear-gradient(
+    0deg,
+    rgb(0 0 0 / 1) var(--theme-wipe),
+    rgb(0 0 0 / 0.72) calc(var(--theme-wipe) + 6%),
+    rgb(0 0 0 / 0.24) calc(var(--theme-wipe) + 13%),
+    rgb(0 0 0 / 0) calc(var(--theme-wipe) + 22%)
+  );
+}
+
+@keyframes theme-wipe {
+  from {
+    --theme-wipe: -24%;
+  }
+  to {
+    --theme-wipe: 100%;
+  }
+}
+
+/* Browsers without View Transitions: a quick colour fade */
+html.theme-fallback-transition,
+html.theme-fallback-transition *,
+html.theme-fallback-transition *::before,
+html.theme-fallback-transition *::after {
+  transition-property:
+    background-color, border-color, color, box-shadow, fill, stroke !important;
+  transition-duration: 420ms !important;
+  transition-timing-function: ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mask-image: none;
   }
 }

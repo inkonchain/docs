@@ -16,10 +16,11 @@ export default {
     theme: {
       layout: "full",
       breadcrumb: false,
-      footer: true,
-      sidebar: true,
+      footer: false,
+      sidebar: false,
       toc: false,
       pagination: false,
+      timestamp: false,
     },
   },
   "500": {
@@ -28,10 +29,11 @@ export default {
     theme: {
       layout: "full",
       breadcrumb: false,
-      footer: true,
-      sidebar: true,
+      footer: false,
+      sidebar: false,
       toc: false,
       pagination: false,
+      timestamp: false,
     },
   },
   header_status: {

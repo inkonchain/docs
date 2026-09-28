@@ -24,6 +24,17 @@ export const inkValueFor = (tune: number) => {
 };
 
 /**
+ * Ink `zoom` (docs-only shader attribute): pulls back a little towards the
+ * left and fills the wide hero towards the right, so the thicker ink reads.
+ */
+export const inkZoomFor = (tune: number) => {
+  const position = clampTune(tune);
+  return position <= TUNE_REST
+    ? 0.85 + (position / TUNE_REST) * 0.15
+    : 1 + ((position - TUNE_REST) / (1 - TUNE_REST)) * 0.9;
+};
+
+/**
  * `--round` at the far right: where the largest card radius (2xl, 16px →
  * 40px cap in tailwind.config.js) tops out, so the whole slider stays useful.
  */
