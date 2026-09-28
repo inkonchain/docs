@@ -133,7 +133,8 @@ html[data-scrolled] .nextra-nav-container {
 /* Narrower layout with roomier side gutters (like aave.com/docs). Nextra caps
    the navbar, page and its footer at 90rem; our Footer uses the same var. */
 :root {
-  --layout-width: 64rem;
+  /* 64rem on laptops, growing with the viewport on big displays */
+  --layout-width: clamp(64rem, 60vw, 80rem);
 }
 
 ._max-w-\[90rem\] {
