@@ -46,7 +46,13 @@ export const Head = () => {
       <meta property="twitter:creator" content="@inkonchain" />
 
       {/* Favicon */}
-      <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon" />
+      <link
+        rel="icon"
+        href="/img/icons/favicon.ico"
+        sizes="256x256"
+        type="image/x-icon"
+      />
+      <link rel="icon" href="/img/icons/ink-icon.svg" type="image/svg+xml" />
     </>
   );
 };

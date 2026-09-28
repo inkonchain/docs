@@ -1,9 +1,10 @@
-import { clsx } from "clsx";
 import { DocsThemeConfig } from "nextra-theme-docs";
 
 import { Footer } from "@/components/Footer";
 import { Head } from "@/components/Head";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { NavbarActions } from "@/components/NavbarActions";
+import { PageMain } from "@/components/PageMain";
+import { PageTitle } from "@/components/PageTitle";
 import { Toc } from "@/components/Toc";
 import { InkLogo } from "@/icons/InkLogo";
 import { URLS } from "@/utils/urls";
@@ -11,16 +12,24 @@ import { URLS } from "@/utils/urls";
 const config: DocsThemeConfig = {
   logo: <InkLogo />,
   darkMode: false,
+  // ink #7132f5 (light) / ink-light #9e70ff (dark)
   color: {
-    hue: { light: 259, dark: 290 },
-    saturation: { light: 91, dark: 96 },
+    hue: 259,
+    saturation: { light: 91, dark: 100 },
+    lightness: { light: 58, dark: 72 },
   },
-  project: {
-    link: URLS.githubOrgUrl,
+  // background token (see src/globals.css)
+  backgroundColor: {
+    light: "255,255,255",
+    dark: "5,5,6",
   },
   docsRepositoryBase: URLS.repositoryUrl,
   head: Head,
+  main: PageMain,
   components: {
+    h1: PageTitle,
+    // Link colours live in globals.css; this only opens external links in a
+    // new tab.
     a(props: { href?: string }) {
       const isExternal = props.href?.startsWith("http");
       return (
@@ -29,17 +38,6 @@ const config: DocsThemeConfig = {
           {...(isExternal
             ? { target: "_blank", rel: "noopener noreferrer" }
             : {})}
-          className="text-magic-purple underline decoration-1 transition-all hover:text-magic-purple/80 dark:text-magic-soft-pink dark:hover:text-magic-soft-pink/80"
-        />
-      );
-    },
-    code(props) {
-      return (
-        <code
-          {...props}
-          className={clsx(
-            "bg-magic-semi-deep-purple/15 text-magic-purple dark:text-magic-white text-sm rounded-md px-2 py-0.5"
-          )}
         />
       );
     },
@@ -47,9 +45,10 @@ const config: DocsThemeConfig = {
   sidebar: {
     defaultMenuCollapseLevel: 1,
     autoCollapse: true,
+    toggleButton: false,
   },
   navbar: {
-    extraContent: ThemeToggle,
+    extraContent: NavbarActions,
   },
   footer: {
     component: Footer,
@@ -68,7 +67,7 @@ const config: DocsThemeConfig = {
         rel="noopener noreferrer"
         aria-label="Documentation Status"
       >
-        🎉 Mainnet is LIVE! 🎉
+        Mainnet is LIVE!
       </a>
     ),
   },

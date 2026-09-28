@@ -2,7 +2,7 @@ export default {
   "getting-started": "Getting Started",
   "onchain-clients": "Onchain Clients",
   "run-an-ink-node": {
-    title: "Running Ink Nodes ↗",
+    title: "Running Ink Nodes",
     href: "https://github.com/inkonchain/node",
     newWindow: true,
   },

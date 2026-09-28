@@ -1,14 +1,32 @@
+import { useEffect } from "react";
 import type { AppProps } from "next/app";
 import Script from "next/script";
 import { ThemeProvider } from "next-themes";
 
-import { inter, plus_jakarta_sans } from "../fonts";
+import { CopyToast } from "../components/CopyToast";
+import { applyTune, readStoredTune } from "../components/InkHero/tune";
+import { ScrollState } from "../components/ScrollState";
+import { SidebarIndicator } from "../components/SidebarIndicator";
+import { departureMono, satoshi } from "../fonts";
 
 import "../globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
+  // Portaled UI (search results, dropdowns) renders outside the wrapper div
+  // below, so expose the font variables on <html> as well.
+  useEffect(() => {
+    document.documentElement.classList.add(
+      satoshi.variable,
+      departureMono.variable
+    );
+    // Corner roundness picked with the home page's ink tuner
+    applyTune(readStoredTune());
+  }, []);
+
   return (
     <ThemeProvider attribute="class">
+      <ScrollState />
+      <SidebarIndicator />
       <Script
         id="schema-markup"
         type="application/ld+json"
@@ -35,10 +53,11 @@ export default function App({ Component, pageProps }: AppProps) {
         }}
       />
       <div
-        className={`${inter.variable} ${plus_jakarta_sans.variable} font-sans`}
+        className={`${satoshi.variable} ${departureMono.variable} font-sans`}
       >
-        <div className="bg-white dark:bg-magic-black">
+        <div className="bg-background">
           <Component {...pageProps} />
+          <CopyToast />
         </div>
       </div>
     </ThemeProvider>

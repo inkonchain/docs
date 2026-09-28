@@ -25,15 +25,21 @@ export const ThemeToggle = () => {
   }, [setIsMounted]);
 
   if (!isMounted) {
-    return null;
+    // Same footprint as the button so the navbar doesn't shift on mount
+    return <span className="inline-block size-9" aria-hidden="true" />;
   }
 
   return (
-    <button className="w-6 h-6 ml-2" type="button" onClick={onToggleTheme}>
+    <button
+      className="inline-flex size-9 items-center justify-center rounded-full bg-container text-primary transition-colors hover:bg-container-2"
+      type="button"
+      aria-label="Toggle theme"
+      onClick={onToggleTheme}
+    >
       {resolvedTheme === "light" ? (
-        <SunIcon className="w-6 h-6 text-magic-black" />
+        <SunIcon className="size-[18px]" />
       ) : (
-        <MoonIcon className="w-6 h-6 text-white" />
+        <MoonIcon className="size-[18px]" />
       )}
     </button>
   );
