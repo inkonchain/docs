@@ -1,3 +1,4 @@
+import { isValidElement, type ReactNode } from "react";
 import Link from "next/link";
 import type { Heading } from "nextra";
 
@@ -9,6 +10,17 @@ interface TocProps {
   toc: Heading[];
   filePath: string;
 }
+
+// Nextra types heading values as strings, but at runtime they can be React nodes
+// (e.g. a heading written as a link). Flatten to text so the TOC link never
+// wraps another <a>, which breaks hydration.
+const toText = (node: ReactNode): string => {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(toText).join("");
+  if (isValidElement<{ children?: ReactNode }>(node))
+    return toText(node.props.children);
+  return "";
+};
 
 export const Toc: React.FC<TocProps> = ({ toc: headings }) => {
   return (
@@ -23,7 +35,7 @@ export const Toc: React.FC<TocProps> = ({ toc: headings }) => {
             {headings.map(({ id, value }) => (
               <li key={id} className="group mb-2">
                 <Link className="text-sm toc-link" href={`#${id}`}>
-                  {value}
+                  {toText(value)}
                 </Link>
               </li>
             ))}
