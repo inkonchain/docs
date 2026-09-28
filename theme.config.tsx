@@ -1,5 +1,6 @@
 import { DocsThemeConfig } from "nextra-theme-docs";
 
+import { BannerTyper } from "@/components/BannerTyper";
 import { Footer } from "@/components/Footer";
 import { Head } from "@/components/Head";
 import { NavbarActions } from "@/components/NavbarActions";
@@ -65,9 +66,8 @@ const config: DocsThemeConfig = {
         href="/"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Documentation Status"
       >
-        Mainnet is LIVE!
+        <BannerTyper text="Mainnet is LIVE!" />
       </a>
     ),
   },

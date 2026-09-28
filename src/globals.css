@@ -874,3 +874,39 @@ html.theme-fallback-transition *::after {
     mask-image: none;
   }
 }
+
+/* Banner typed out like a terminal (components/BannerTyper) */
+.ink-banner-typer {
+  font-family:
+    var(--font-departure-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  @apply text-[13px] tracking-normal;
+}
+
+.ink-banner-typer__prompt {
+  color: #969696;
+}
+
+.ink-banner-typer__caret {
+  @apply ml-0.5 inline-block h-[13px] w-[7px] translate-y-[2px];
+  background: #969696;
+  animation: ink-caret 1.06s steps(1) infinite;
+}
+
+@keyframes ink-caret {
+  50% {
+    background: rgb(150 150 150 / 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ink-banner-typer__caret {
+    animation: none;
+  }
+}
+
+/* No underline on the typed banner link; the caret is enough of a cue */
+/* (doubled selectors to outrank the banner underline rule above) */
+.nextra-banner-container.nextra-banner-container
+  a:has(.ink-banner-typer):not(nav a):not(.toc-link):not(.ink-footer a) {
+  @apply !no-underline hover:!text-white/80;
+}
