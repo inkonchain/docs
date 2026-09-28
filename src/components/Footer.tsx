@@ -8,12 +8,12 @@ export const Footer = () => {
           Made with 💜 by the Ink team
         </div>
         <div className="text-sm text-gray-600">
-          <a href="https://inkonchain.com/en-US/privacy" target="_blank">
+          <a href="https://inkonchain.com/en-US/privacy" target="_blank" rel="noopener noreferrer">
             Privacy Notice
           </a>
         </div>
         <div className="text-sm text-gray-600">
-          <a href="https://inkonchain.com/en-US/terms" target="_blank">
+          <a href="https://inkonchain.com/en-US/terms" target="_blank" rel="noopener noreferrer">
             Terms of Service
           </a>
         </div>
@@ -22,3 +22,4 @@ export const Footer = () => {
     </div>
   );
 };
+
