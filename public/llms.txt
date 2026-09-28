@@ -1,0 +1,92 @@
+# Ink
+
+> Ink is an Ethereum Layer 2 built on the OP Stack, part of the Optimism Superchain. Positioned as "the house of DeFi for the Superchain," backed by Kraken. 1-second block times, EVM-compatible — deploy any Solidity contract without modification.
+
+Ink provides a unified fiat-to-DeFi journey leveraging Kraken's infrastructure, with sequencer-level exploit protection, sub-second block times planned, and native Superchain interoperability.
+
+## Key Facts
+
+- Chain ID: 57073 (mainnet), 763373 (Ink Sepolia testnet)
+- Gas Token: ETH
+- Stack: OP Stack (Optimism Superchain)
+- Block Time: 1 second (sub-second planned)
+- RaaS Provider: Gelato
+- First Superchain network with multiple challengers at launch (permissionless fault proofs)
+- Minimum ETH for deployment: 0.01 ETH
+
+## Docs
+
+- [About Ink](https://docs.inkonchain.com/general/about): What Ink is, DeFi-first positioning, Kraken backing, core value props
+- [Network Information](https://docs.inkonchain.com/general/network-information): Chain IDs, RPC endpoints, block explorers for mainnet and testnet
+- [Connect Wallet](https://docs.inkonchain.com/general/connect-wallet): Wallet setup — Kraken Wallet (native), Rainbow (native), MetaMask (manual config)
+
+## Build on Ink
+
+- [Getting Started](https://docs.inkonchain.com/build/getting-started): IDE setup, wallet, ETH requirements, framework options (Foundry, Hardhat, Remix)
+- [Onchain Clients](https://docs.inkonchain.com/build/onchain-clients): Client libraries — ethers.js v6 and viem (both with Ink chain configs)
+- [Transaction Fees](https://docs.inkonchain.com/build/transaction-fees): Two-component fee model — L2 execution fee + L1 security fee
+- [Running Ink Nodes](https://docs.inkonchain.com/build/running-ink-nodes): Node operation (external)
+
+## Tutorials
+
+- [Deploy with Foundry](https://docs.inkonchain.com/build/tutorials/deploying-a-smart-contract/foundry): Smart contract deployment using Foundry
+- [Deploy with Hardhat](https://docs.inkonchain.com/build/tutorials/deploying-a-smart-contract/hardhat): Smart contract deployment using Hardhat
+- [Deploy with Remix](https://docs.inkonchain.com/build/tutorials/deploying-a-smart-contract/remix): Browser-based smart contract deployment
+- [Deploy SuperchainERC20](https://docs.inkonchain.com/build/tutorials/deploying-a-superchainerc20): Cross-chain token deployment on the Superchain
+- [Shipping on the Superchain](https://docs.inkonchain.com/build/tutorials/shipping-on-the-superchain): Multi-chain deployment patterns
+- [Verify Smart Contract](https://docs.inkonchain.com/build/tutorials/verify-smart-contract): Contract verification on Ink explorer
+
+## Contracts & Addresses
+
+- [Ink Token Contracts](https://docs.inkonchain.com/useful-information/ink-contracts): Token addresses on Ink — USDC.e, USDT0, WETH9, CRV, crvUSD, FXS, frxETH, sfrxETH, frxUSD, sfrxUSD, FPI
+- [Pre-installed Contracts](https://docs.inkonchain.com/useful-information/contracts): Utility contracts at deterministic addresses — Safe, Multicall3, Permit2, ERC-4337 EntryPoints (v0.6 + v0.7), Create2Deployer, CreateX, MultiSend
+
+## Tools & Infrastructure
+
+- [RPC Endpoints](https://docs.inkonchain.com/tools/rpc): Gelato (primary) and QuickNode (secondary) — HTTPS and WSS for mainnet and testnet
+- [Bridges](https://docs.inkonchain.com/tools/bridges): Bridging assets to/from Ink
+- [Block Explorers](https://docs.inkonchain.com/tools/block-explorers): Explorer URLs for mainnet and testnet
+- [Oracles](https://docs.inkonchain.com/tools/oracles): Price feed and data oracle integrations
+- [VRF](https://docs.inkonchain.com/tools/vrf): Verifiable random function providers
+- [Indexers](https://docs.inkonchain.com/tools/indexers): Data indexing solutions
+- [Security](https://docs.inkonchain.com/tools/security): Security tooling and audit resources
+- [Account Abstraction](https://docs.inkonchain.com/tools/account-abstraction): AA support — ERC-4337 v0.6 and v0.7 EntryPoints pre-deployed
+- [Crosschain](https://docs.inkonchain.com/tools/crosschain): Cross-chain messaging and interoperability
+- [Multisig](https://docs.inkonchain.com/tools/multisig): Safe multisig wallet support
+- [Faucets](https://docs.inkonchain.com/tools/faucets): Testnet ETH faucets for Ink Sepolia
+
+## Builder Program
+
+- [Program Overview](https://docs.inkonchain.com/ink-builder-program/overview): Three tracks for builder support
+- [Spark Program](https://docs.inkonchain.com/ink-builder-program/spark-program): Microgrants ($500-$5K) for early-stage tools, bots, mini dApps
+- [Forge Program](https://docs.inkonchain.com/ink-builder-program/forge-program): Milestone-based grants (up to $200K USDC) for products with live traction
+- [Echo Program](https://docs.inkonchain.com/ink-builder-program/echo-program): Retroactive grants recognizing early Ink builders (shipped before Nov 1, 2025)
+
+## Superchain
+
+- [The Superchain](https://docs.inkonchain.com/useful-information/the-superchain): Ink's role in the Optimism Superchain ecosystem, interoperability
+
+## RPC Endpoints (Quick Reference)
+
+Mainnet (Chain ID: 57073):
+- HTTPS: https://rpc-gel.inkonchain.com (primary), https://rpc-qnd.inkonchain.com (secondary)
+- WSS: wss://rpc-gel.inkonchain.com (primary), wss://rpc-qnd.inkonchain.com (secondary)
+- Explorer: https://explorer.inkonchain.com
+
+Testnet — Ink Sepolia (Chain ID: 763373):
+- HTTPS: https://rpc-gel-sepolia.inkonchain.com (primary), https://rpc-qnd-sepolia.inkonchain.com (secondary)
+- WSS: wss://rpc-gel-sepolia.inkonchain.com (primary), wss://rpc-qnd-sepolia.inkonchain.com (secondary)
+- Explorer: https://explorer-sepolia.inkonchain.com
+
+## Wallets
+
+Natively supported: Kraken Wallet (iOS/Android), Rainbow
+Manual config: MetaMask (add custom network with Chain ID 57073, RPC https://rpc-gel.inkonchain.com)
+
+## Optional
+
+- [Community](https://docs.inkonchain.com/work-with-ink/community): Discord, Twitter, Telegram
+- [Contributing](https://docs.inkonchain.com/work-with-ink/contributing): How to contribute to Ink docs
+- [Brand Kit](https://docs.inkonchain.com/work-with-ink/brand-kit): Logos and brand assets
+- [Support](https://docs.inkonchain.com/general/support): Telegram and Twitter support channels
+- [FAQ](https://docs.inkonchain.com/faq): Frequently asked questions
