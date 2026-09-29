@@ -24,9 +24,22 @@ export const SidebarIndicator = () => {
       return link && list?.parentElement?.closest("ul") ? link : null;
     };
 
+    // Nextra collapses a folder by shrinking its wrapper to 0px, leaving the
+    // links in the DOM, so check every ancestor up to the scroll container
+    const isShown = (link: HTMLElement) => {
+      for (
+        let node: HTMLElement | null = link;
+        node && node !== container;
+        node = node.parentElement
+      ) {
+        if (node.getBoundingClientRect().height < 1) return false;
+      }
+      return true;
+    };
+
     const place = (link: HTMLElement | null, animate = true) => {
       if (!container || !indicator) return;
-      if (!link) {
+      if (!link || !isShown(link)) {
         indicator.style.opacity = "0";
         return;
       }
@@ -91,6 +104,8 @@ export const SidebarIndicator = () => {
       indicator.setAttribute("aria-hidden", "true");
       container.appendChild(indicator);
       container.addEventListener("pointerover", onOver);
+      // Folders animate open/closed: settle once the transition ends
+      container.addEventListener("transitionend", refresh);
       container.addEventListener("pointerleave", onLeave);
       place(activeLink(), false);
     };
@@ -114,6 +129,7 @@ export const SidebarIndicator = () => {
       window.removeEventListener("resize", refresh);
       cancelAnimationFrame(frame);
       container?.removeEventListener("pointerover", onOver);
+      container?.removeEventListener("transitionend", refresh);
       container?.removeEventListener("pointerleave", onLeave);
       indicator?.remove();
     };
