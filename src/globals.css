@@ -929,3 +929,9 @@ html:has(.nextra-nav-container input[type="search"]:focus) .ink-search-bar {
 .nextra-nav-container div:has(> input[type="search"]):not(:focus-within) {
   @apply pointer-events-none absolute size-px overflow-hidden opacity-0;
 }
+
+/* Code blocks get the same breathing room below as above (Nextra only sets
+   the top margin, so a following list item sat almost flush) */
+.nextra-content main .nextra-code {
+  @apply !mb-6 last:!mb-0;
+}
