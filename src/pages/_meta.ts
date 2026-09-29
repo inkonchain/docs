@@ -6,7 +6,8 @@ export default {
       breadcrumb: false,
       footer: true,
       sidebar: true,
-      toc: true,
+      // The home page is cards; its TOC only took width from them
+      toc: false,
       pagination: false,
     },
   },
