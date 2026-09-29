@@ -17,7 +17,7 @@ const DAMPING = 8;
 const MASS = 1.2;
 const IMPULSE = 3.4;
 const BOUNCE = 0.4;
-const THUMB = 24;
+const THUMB = 16;
 
 const reduceMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -25,7 +25,7 @@ const reduceMotion = () =>
 const PlusMinus = ({ plus }: { plus?: boolean }) => (
   <svg
     viewBox="0 0 24 24"
-    className="size-4"
+    className="size-3.5"
     fill="none"
     stroke="currentColor"
     strokeWidth="2.25"
@@ -37,8 +37,8 @@ const PlusMinus = ({ plus }: { plus?: boolean }) => (
 );
 
 /**
- * − / slider / + under the home animation. Moves the ink and, through
- * `--round`, how rounded the whole site is.
+ * + / vertical slider / − on the right edge of the home animation. Moves the
+ * ink and, through `--round`, how rounded the whole site is.
  */
 export const InkTuner = () => {
   const [tune, setTune] = useState<number>();
@@ -139,9 +139,12 @@ export const InkTuner = () => {
     );
   };
 
-  const fromPointer = (clientX: number) => {
+  // Vertical: top is the far right of the scale (most ink)
+  const fromPointer = (clientY: number) => {
     const rect = track.current!.getBoundingClientRect();
-    return (clientX - rect.left - THUMB / 2) / Math.max(1, rect.width - THUMB);
+    return (
+      1 - (clientY - rect.top - THUMB / 2) / Math.max(1, rect.height - THUMB)
+    );
   };
 
   const onKeyDown = (event: React.KeyboardEvent) => {
@@ -160,26 +163,28 @@ export const InkTuner = () => {
     event.preventDefault();
   };
 
+  // Always light: the ink animation draws on a light surface in both themes
   const button =
-    "inline-flex size-9 items-center justify-center rounded-full border border-outline-subtle bg-background text-primary transition-[background-color,transform] hover:bg-container-2 active:scale-95";
+    "inline-flex size-7 items-center justify-center rounded-full border border-black/10 bg-white text-black transition-[background-color,transform] hover:bg-neutral-100 active:scale-95";
 
   return (
-    // Floats over the bottom of the animation, as a frosted bar
-    <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
-      <div className="pointer-events-auto flex items-center gap-4 rounded-full border border-white/40 bg-background/50 p-1.5 shadow-lg backdrop-blur-md">
+    // Floats on the right edge of the animation, as a small frosted bar
+    <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+      <div className="pointer-events-auto flex flex-col items-center gap-2 rounded-full border border-white/60 bg-white/50 p-1 shadow-lg backdrop-blur-md">
         <button
           type="button"
-          aria-label="Less ink"
+          aria-label="More ink"
           className={button}
-          onClick={() => nudge(-1)}
+          onClick={() => nudge(1)}
         >
-          <PlusMinus />
+          <PlusMinus plus />
         </button>
         <div
           ref={track}
           role="slider"
           tabIndex={0}
           aria-label="Ink and corner roundness"
+          aria-orientation="vertical"
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={Math.round((tune ?? 0) * 100)}
@@ -188,30 +193,30 @@ export const InkTuner = () => {
             if (event.button !== 0) return;
             dragging.current = true;
             event.currentTarget.setPointerCapture(event.pointerId);
-            apply(fromPointer(event.clientX));
+            apply(fromPointer(event.clientY));
           }}
           onPointerMove={(event) => {
-            if (dragging.current) apply(fromPointer(event.clientX));
+            if (dragging.current) apply(fromPointer(event.clientY));
           }}
           onPointerUp={() => (dragging.current = false)}
           onPointerCancel={() => (dragging.current = false)}
-          className="relative h-9 w-32 cursor-pointer touch-none rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ink-light sm:w-40"
+          className="relative h-24 w-7 cursor-pointer touch-none rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ink-light"
         >
-          <span className="absolute inset-x-3 top-1/2 h-px -translate-y-1/2 bg-primary/30" />
+          <span className="absolute inset-y-2 left-1/2 w-px -translate-x-1/2 bg-black/25" />
           {tune !== undefined && (
             <span
-              className="absolute top-1/2 size-6 -translate-y-1/2 rounded-full border border-outline-subtle bg-background shadow-sm"
-              style={{ left: `calc(${tune} * (100% - ${THUMB}px))` }}
+              className="absolute left-1/2 size-4 -translate-x-1/2 rounded-full border border-black/10 bg-white shadow-sm"
+              style={{ top: `calc(${1 - tune} * (100% - ${THUMB}px))` }}
             />
           )}
         </div>
         <button
           type="button"
-          aria-label="More ink"
+          aria-label="Less ink"
           className={button}
-          onClick={() => nudge(1)}
+          onClick={() => nudge(-1)}
         >
-          <PlusMinus plus />
+          <PlusMinus />
         </button>
       </div>
     </div>

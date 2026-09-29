@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 import { URLS } from "@/utils/urls";
 
@@ -7,20 +8,43 @@ import { ThemeToggle } from "./ThemeToggle";
 const pillClassName =
   "inline-flex items-center whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-semibold !no-underline transition-colors max-md:hidden";
 
+const blurSearch = () => {
+  const active = document.activeElement;
+  if (
+    active instanceof HTMLInputElement &&
+    active.type === "search" &&
+    active.closest(".nextra-nav-container")
+  ) {
+    active.blur();
+  }
+};
+
 export const NavbarActions = () => {
+  const router = useRouter();
+
+  // Picking a result navigates, but headlessui hands focus back to the input
+  // right after — which would keep the modal open. Close it once the
+  // navigation (or same-page #hash jump) completes.
+  useEffect(() => {
+    // Focus comes back a tick after the navigation settles, so blur again
+    // once the next frame has run
+    const closeAfterNavigation = () => {
+      blurSearch();
+      requestAnimationFrame(() => setTimeout(blurSearch, 50));
+    };
+    router.events.on("routeChangeComplete", closeAfterNavigation);
+    router.events.on("hashChangeComplete", closeAfterNavigation);
+    return () => {
+      router.events.off("routeChangeComplete", closeAfterNavigation);
+      router.events.off("hashChangeComplete", closeAfterNavigation);
+    };
+  }, [router.events]);
+
   // The search modal is the focused navbar search input (see globals.css), so
   // Esc closes it by blurring the input.
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      const active = document.activeElement;
-      if (
-        event.key === "Escape" &&
-        active instanceof HTMLInputElement &&
-        active.type === "search" &&
-        active.closest(".nextra-nav-container")
-      ) {
-        active.blur();
-      }
+      if (event.key === "Escape") blurSearch();
     };
 
     document.addEventListener("keydown", onKeyDown);

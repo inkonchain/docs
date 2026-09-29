@@ -1,19 +1,35 @@
-import { Callout } from "nextra/components";
 import { InkHero } from "@/components/InkHero/InkHero";
-import { URLS } from "@/utils/urls";
+import {
+  BuilderProgram,
+  BuildOnInk,
+  GetStarted,
+  Resources,
+  Tools,
+} from "@/components/Home/HomeSections";
 
 # Welcome to the Ink Docs
 
 <InkHero />
 
-Welcome to the documentation for Ink, Kraken's dedicated DeFi chain.
+Ink is an Ethereum OP Stack layer 2 built by Kraken to be the house of DeFi on
+the Superchain, with 1-second block times. These docs cover connecting to Ink,
+deploying contracts, gasless transactions with the Ink Paymaster, and the tools
+and programs that support builders.
 
-<Callout type="info" emoji="ℹ️">
-  New to Ink? [Learn more about Ink](/general/about)
-</Callout>
+## Get started
 
-###### Get started with developing on Ink!
+<GetStarted />
 
-- [Get connected to Ink](/general/connect-wallet)
-- [Get testnet funds](/tools/faucets) to send transactions and deploy contracts on Ink
-- Check out the [tutorials](/build/tutorials) (WIP) to start building on Ink
+## Build on Ink
+
+<BuildOnInk />
+
+## Tools and infrastructure
+
+<Tools />
+
+<BuilderProgram />
+
+## Resources
+
+<Resources />
