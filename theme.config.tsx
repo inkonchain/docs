@@ -1,12 +1,12 @@
 import { DocsThemeConfig } from "nextra-theme-docs";
 
-import { BannerTyper } from "@/components/BannerTyper";
 import { Footer } from "@/components/Footer";
 import { Head } from "@/components/Head";
 import { NavbarActions } from "@/components/NavbarActions";
 import { PageMain } from "@/components/PageMain";
 import { PageTitle } from "@/components/PageTitle";
 import { Toc } from "@/components/Toc";
+import { Typewriter } from "@/components/Typewriter";
 import { InkLogo } from "@/icons/InkLogo";
 import { URLS } from "@/utils/urls";
 
@@ -67,7 +67,11 @@ const config: DocsThemeConfig = {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <BannerTyper text="Mainnet is LIVE!" />
+        <Typewriter
+          text="Mainnet is LIVE!"
+          prompt
+          className="ink-banner-typer"
+        />
       </a>
     ),
   },

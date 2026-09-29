@@ -9,6 +9,8 @@ import Link from "next/link";
 import type {} from "@/components/NotFound/interactive-ascii";
 import { URLS } from "@/utils/urls";
 
+import { Typewriter } from "../Typewriter";
+
 import { IconName, icons } from "./icons";
 
 // Violet icon in a thin circle, as on inkonchain.com/builders
@@ -315,8 +317,8 @@ export const BuilderProgram = () => {
         />
       </div>
       <div className="relative max-w-md">
-        <div className="text-2xl font-semibold tracking-[-0.02em] !text-primary">
-          Ink Builder Program
+        <div className="text-2xl !text-primary">
+          <Typewriter text="Ink Builder Program" />
         </div>
         <div className="mt-2 text-sm font-medium !text-secondary">
           Funding, guidance and recognition for teams building on Ink, including

@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import { CopyToast } from "../components/CopyToast";
 import { applyTune, readStoredTune } from "../components/InkHero/tune";
 import { ScrollState } from "../components/ScrollState";
+import { SearchBar } from "../components/SearchBar";
 import { SidebarIndicator } from "../components/SidebarIndicator";
 import { departureMono, satoshi } from "../fonts";
 
@@ -58,6 +59,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <div className="bg-background">
           <Component {...pageProps} />
           <CopyToast />
+          <SearchBar />
         </div>
       </div>
     </ThemeProvider>

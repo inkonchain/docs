@@ -876,19 +876,24 @@ html.theme-fallback-transition *::after {
   }
 }
 
-/* Banner typed out like a terminal (components/BannerTyper) */
-.ink-banner-typer {
+/* Typed text in Departure Mono (components/Typewriter) */
+.ink-typer {
   font-family:
     var(--font-departure-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  @apply text-[13px] tracking-normal;
+  @apply tracking-normal;
 }
 
-.ink-banner-typer__prompt {
+.ink-banner-typer {
+  @apply text-[13px];
+}
+
+.ink-typer__prompt {
   color: #969696;
 }
 
-.ink-banner-typer__caret {
-  @apply ml-0.5 inline-block h-[13px] w-[7px] translate-y-[2px];
+/* Sized in em so it scales with the text */
+.ink-typer__caret {
+  @apply ml-[0.15em] inline-block h-[1em] w-[0.54em] translate-y-[0.15em];
   background: #969696;
   animation: ink-caret 1.06s steps(1) infinite;
 }
@@ -900,7 +905,7 @@ html.theme-fallback-transition *::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ink-banner-typer__caret {
+  .ink-typer__caret {
     animation: none;
   }
 }
@@ -910,4 +915,17 @@ html.theme-fallback-transition *::after {
 .nextra-banner-container.nextra-banner-container
   a:has(.ink-banner-typer):not(nav a):not(.toc-link):not(.ink-footer a) {
   @apply !no-underline hover:!text-white/80;
+}
+
+/* Bottom search pill (components/SearchBar) steps aside while the search
+   modal is open */
+html:has(.nextra-nav-container input[type="search"]:focus) .ink-search-bar {
+  @apply hidden;
+}
+
+/* The navbar search button is hidden: the bottom pill (SearchBar) and ⌘K
+   open search now. The input stays in the DOM (still focusable) because the
+   modal is built on it; it only takes space once focused. */
+.nextra-nav-container div:has(> input[type="search"]):not(:focus-within) {
+  @apply pointer-events-none absolute size-px overflow-hidden opacity-0;
 }

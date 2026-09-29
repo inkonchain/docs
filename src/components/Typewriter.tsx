@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
+import clsx from "clsx";
 
-interface BannerTyperProps {
+interface TypewriterProps {
   text: string;
+  /** Grey `$ ` before the text, as on the banner */
+  prompt?: boolean;
+  className?: string;
 }
 
 const START_DELAY = 400;
@@ -11,11 +15,15 @@ const ERASE_DELAY = 28;
 const PAUSE = 700;
 
 /**
- * Banner text typed out like the code panel on inkonchain.com: a `$` prompt,
- * the message character by character, and a blinking block caret. It holds,
- * erases and types again on a loop.
+ * Text typed out like the code panel on inkonchain.com, in Departure Mono:
+ * character by character with a blinking block caret, then it holds,
+ * erases and types again on a loop. Used for the banner and home titles.
  */
-export const BannerTyper = ({ text }: BannerTyperProps) => {
+export const Typewriter = ({
+  text,
+  prompt = false,
+  className,
+}: TypewriterProps) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -45,11 +53,11 @@ export const BannerTyper = ({ text }: BannerTyperProps) => {
   }, [text]);
 
   return (
-    <span className="ink-banner-typer" aria-label={text}>
+    <span className={clsx("ink-typer", className)} aria-label={text}>
       <span aria-hidden="true">
-        <span className="ink-banner-typer__prompt">$ </span>
+        {prompt && <span className="ink-typer__prompt">$ </span>}
         {text.slice(0, count)}
-        <span className="ink-banner-typer__caret" />
+        <span className="ink-typer__caret" />
       </span>
     </span>
   );
