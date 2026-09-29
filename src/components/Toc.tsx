@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { isValidElement, type ReactNode, useEffect, useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import type { Heading } from "nextra";
@@ -7,6 +7,17 @@ interface TocProps {
   toc: Heading[];
   filePath: string;
 }
+
+// Nextra types heading values as strings, but at runtime they can be React nodes
+// (e.g. a heading written as a link). Flatten to text so the TOC link never
+// wraps another <a>, which breaks hydration.
+const toText = (node: ReactNode): string => {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(toText).join("");
+  if (isValidElement<{ children?: ReactNode }>(node))
+    return toText(node.props.children);
+  return "";
+};
 
 // A heading counts as "current" once it has scrolled above this line
 // (navbar height + a little breathing room).
@@ -56,7 +67,7 @@ export const Toc: React.FC<TocProps> = ({ toc: headings }) => {
                 id === activeId && "!text-primary"
               )}
             >
-              {value}
+              {toText(value)}
             </Link>
           </li>
         ))}
