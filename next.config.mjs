@@ -3,7 +3,10 @@ import path from "path";
 import remarkCodeImport from "remark-code-import";
 import { fileURLToPath } from "url";
 
-import { inkShikiTheme } from "./src/utils/shiki-ink-theme.mjs";
+import {
+  inkShikiLightTheme,
+  inkShikiTheme,
+} from "./src/utils/shiki-ink-theme.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -14,7 +17,7 @@ const withNextra = nextra({
   mdxOptions: {
     remarkPlugins: [remarkCodeImport],
     rehypePrettyCodeOptions: {
-      theme: { light: inkShikiTheme, dark: inkShikiTheme },
+      theme: { light: inkShikiLightTheme, dark: inkShikiTheme },
     },
   },
 });

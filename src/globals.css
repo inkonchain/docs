@@ -628,14 +628,15 @@ html:has(.nextra-nav-container input[type="search"]:focus)
 }
 
 /*
- * Code blocks — the code panel from the inkonchain.com homepage: black
- * surface, hairline border, square corners, Departure Mono. Token colours
- * come from src/utils/shiki-ink-theme.mjs.
+ * Code blocks (like the Aave docs): a white card with a hairline border in
+ * light mode, the `container` surface in dark; line numbers; highlighted
+ * lines on an ink-soft band; Departure Mono. Token colours come from
+ * src/utils/shiki-ink-theme.mjs.
  */
 .nextra-code pre {
-  /* A real border instead of Nextra's inset ring: the black fill bled past
-     the anti-aliased ring on the rounded corners and looked jagged */
-  @apply !rounded-2xl border border-outline-subtle !bg-black !bg-clip-padding !py-5 !ring-0 dark:!bg-[#08070a];
+  /* A real border instead of Nextra's inset ring (the fill bled past the
+     anti-aliased ring on rounded corners and looked jagged) */
+  @apply !rounded-2xl border border-outline-subtle !bg-background !bg-clip-padding !py-4 !ring-0 dark:!bg-container;
 }
 
 .nextra-code pre,
@@ -648,18 +649,38 @@ html:has(.nextra-nav-container input[type="search"]:focus)
   font-feature-settings: normal !important;
 }
 
+/* Each line is inset so highlighted lines read as rounded bands */
 .nextra-code pre code > span {
-  @apply !px-5;
+  @apply !mx-3 rounded-lg !px-2;
+}
+
+.nextra-code pre code > span[data-highlighted-line] {
+  @apply !bg-ink-soft;
+  box-shadow: none !important;
+}
+
+/* Line numbers (not on one-line snippets like install commands) */
+.nextra-code pre code {
+  counter-reset: line;
+}
+
+.nextra-code pre code > span::before {
+  counter-increment: line;
+  content: counter(line);
+  @apply mr-4 inline-block w-5 text-right text-secondary/60;
+}
+
+.nextra-code pre code:has(> span:only-child) > span::before {
+  content: none;
 }
 
 .nextra-code pre ::selection {
-  @apply bg-ink-light/40 text-white;
+  @apply bg-ink-light/30;
 }
 
 /* Filename bar */
 .nextra-code > div:first-child:not(:last-child):has(+ pre) {
-  font-family: var(--font-departure-mono), ui-monospace, monospace;
-  @apply !rounded-none !rounded-t-2xl !border-outline-subtle !bg-black text-[11px] uppercase tracking-widest !text-white dark:!bg-[#08070a];
+  @apply !rounded-none !rounded-t-2xl !border-outline-subtle !bg-container/60 text-[13px] font-medium !text-secondary dark:!bg-container-2;
 }
 
 /* With a filename bar the two join into one rounded card */
@@ -669,7 +690,7 @@ html:has(.nextra-nav-container input[type="search"]:focus)
 
 /* Copy / word-wrap buttons */
 .nextra-code button {
-  @apply !rounded-none !border-0 !bg-transparent !text-white hover:!text-ink-light;
+  @apply !rounded-lg !border-0 !bg-transparent !text-secondary hover:!bg-container hover:!text-primary dark:hover:!bg-container-2;
 }
 
 /*

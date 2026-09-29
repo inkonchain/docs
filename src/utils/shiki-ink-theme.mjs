@@ -1,6 +1,6 @@
-// Shiki theme for code blocks, matching the code panel on the inkonchain.com
-// homepage: white text on black, violet keywords, green strings, grey
-// comments. Blocks are always dark, so the same theme is used for both modes.
+// Shiki themes for code blocks. Dark matches the code panel on the
+// inkonchain.com homepage (white on black, violet keywords, green strings,
+// grey comments); light is the same palette tuned for a white surface.
 const text = "#ffffff";
 const accent = "#9e70ff";
 const string = "#35df8d";
@@ -51,4 +51,30 @@ export const inkShikiTheme = {
       settings: { foreground: accent },
     },
   ],
+};
+
+const lightText = "#1f1f23";
+const lightAccent = "#7132f5";
+const lightString = "#1a7f37";
+const lightComment = "#8a8a8f";
+
+export const inkShikiLightTheme = {
+  ...inkShikiTheme,
+  name: "ink-light",
+  type: "light",
+  colors: {
+    "editor.background": "#ffffff",
+    "editor.foreground": lightText,
+  },
+  tokenColors: inkShikiTheme.tokenColors.map((rule) => ({
+    ...rule,
+    settings: {
+      foreground: {
+        [text]: lightText,
+        [accent]: lightAccent,
+        [string]: lightString,
+        [comment]: lightComment,
+      }[rule.settings.foreground],
+    },
+  })),
 };
