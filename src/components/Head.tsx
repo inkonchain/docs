@@ -16,7 +16,7 @@ export const Head = () => {
   const description =
     frontMatter.description ||
     "Comprehensive documentation for Ink, a cutting-edge Layer 2 (L2) blockchain built on Optimism's Superchain. Learn how to build, integrate, and leverage Ink's DeFi capabilities.";
-  const ogImage = frontMatter.image || `${baseUrl}/logo/build-the-future.png`;
+  const ogImage = frontMatter.image || `${baseUrl}/images/og-docs.jpg`;
 
   return (
     <>
@@ -32,8 +32,9 @@ export const Head = () => {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:image:width" content="1080" />
-      <meta property="og:image:height" content="1080" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="Ink Docs" />
       <meta property="og:site_name" content="Ink Documentation" />
 
       {/* Twitter */}
