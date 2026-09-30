@@ -22,7 +22,12 @@ const toText = (node: ReactNode): string => {
   return "";
 };
 
-export const Toc: React.FC<TocProps> = ({ toc: headings }) => {
+export const Toc: React.FC<TocProps> = ({ toc: headings, filePath }) => {
+  // filePath is relative to the repo root, e.g. "src/pages/general/rpc.mdx"
+  const editUrl = filePath
+    ? `${URLS.editDocsOnGithubBase}/${filePath}`
+    : URLS.repositoryUrl;
+
   return (
     <div className="flex flex-col items-start justify-start py-5 sticky top-14">
       {headings.length > 0 && (
@@ -43,10 +48,7 @@ export const Toc: React.FC<TocProps> = ({ toc: headings }) => {
         </div>
       )}
       <div className="flex flex-col gap-2">
-        <Link
-          href={URLS.editDocsOnGithub}
-          className="group text-xs flex items-center gap-1"
-        >
+        <Link href={editUrl} className="group text-xs flex items-center gap-1">
           <PencilIcon className="size-4 toc-link" />
           <span className="toc-link">Edit this page on GitHub</span>
         </Link>
