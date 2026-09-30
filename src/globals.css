@@ -115,11 +115,12 @@
  * tokens. Nextra ships its own `_`-prefixed utilities, so these override them.
  */
 
-/* Navbar — transparent at the top; border + blurred background once scrolled
-   (see components/ScrollState.tsx) */
+/* Navbar — a hairline always marks where it ends (at the very top the gap
+   to the content otherwise read as a missing margin); the blurred
+   background comes in once scrolled (see components/ScrollState.tsx) */
 /* Styled on the full-width container — the inner <nav> is capped at 90rem */
 .nextra-nav-container {
-  @apply border-b border-transparent !bg-transparent transition-colors;
+  @apply border-b border-outline-subtle !bg-transparent transition-colors;
 }
 
 .nextra-nav-container nav {
@@ -127,7 +128,7 @@
 }
 
 html[data-scrolled] .nextra-nav-container {
-  @apply border-outline-subtle !bg-background/80 backdrop-blur-md;
+  @apply !bg-background/80 backdrop-blur-md;
 }
 
 /* Narrower layout with roomier side gutters (like aave.com/docs). Nextra caps
@@ -462,6 +463,12 @@ html:has(.nextra-nav-container input[type="search"]:focus)
 /* Long titles wrap; the actions stay beside the first line */
 .nextra-content main .ink-page-title > h1 {
   @apply min-w-0 flex-1;
+}
+
+/* "Copy page" once per page: only on the first title, even if a page has a
+   stray second h1 */
+.nextra-content main .ink-page-title ~ .ink-page-title > .ink-page-actions {
+  @apply !hidden;
 }
 
 .nextra-content main .ink-page-title > .ink-page-actions {
@@ -955,4 +962,36 @@ html:has(.nextra-nav-container input[type="search"]:focus) .ink-search-bar {
    the top margin, so a following list item sat almost flush) */
 .nextra-content main .nextra-code {
   @apply !mb-6 last:!mb-0;
+}
+
+/*
+ * External-link icon for the sidebar and navbar, restoring what the "mark
+ * external nav links" change did with ↗ in the titles. Nextra
+ * opens external items in a new tab, so key off target="_blank": the icon
+ * appears automatically for any future external link too.
+ */
+:root {
+  --external-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3C/svg%3E");
+}
+
+.nextra-sidebar-container a[target="_blank"]::after,
+.nextra-sidebar-container a[href="/status"]::after,
+.nextra-nav-container nav a[aria-current][target="_blank"]::after {
+  content: "";
+  @apply inline-block size-3.5 shrink-0 bg-current opacity-60;
+  mask: var(--external-icon) center / contain no-repeat;
+}
+
+/* Sidebar: right-aligned like the folder chevrons (as on aave.com/docs) */
+.nextra-sidebar-container a[target="_blank"]::after,
+.nextra-sidebar-container a[href="/status"]::after {
+  @apply ml-auto self-center;
+}
+
+/* (/status is a local page that opens status.inkonchain.com in a new tab,
+   so it's external for the reader even though Nextra renders it as local) */
+
+/* Navbar: right after the label */
+.nextra-nav-container nav a[aria-current][target="_blank"] {
+  @apply inline-flex items-center gap-1;
 }

@@ -18,7 +18,9 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
       className={clsx(
         "font-semibold py-2.5 px-5 inline-flex items-center justify-center gap-1.5 transition-colors rounded-full text-sm cursor-pointer",
         {
-          "text-white bg-ink-light hover:bg-ink": variant === "primary",
+          // Same as the navbar's "Go to App": black on light, light on dark
+          // (white on ink-light was 3.4:1, failing WCAG AA)
+          "text-background bg-primary hover:opacity-85": variant === "primary",
           "text-primary bg-container hover:bg-container-2":
             variant === "secondary",
         },
