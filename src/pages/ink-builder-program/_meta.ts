@@ -1,7 +1,7 @@
 export default {
   overview: "Overview",
   inkworks: {
-    title: "Inkworks ↗",
+    title: "Inkworks",
     href: "https://ink.works",
     newWindow: true,
   },
