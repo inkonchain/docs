@@ -1,9 +1,15 @@
-import { Callout } from "nextra/components";
-import CopyableCode from "@/components/CopyableCode";
+---
+title: Troubleshooting Guide
+description: Solutions to common issues users and developers encounter on the Ink network.
+---
+
+import { Callout } from 'nextra/components'
 
 # Troubleshooting Guide
 
 This guide covers common issues developers and users might encounter when working with Ink, along with their solutions.
+
+---
 
 ## Transaction Issues
 
@@ -14,21 +20,18 @@ If you encounter JSON-RPC internal errors or transactions getting stuck, your wa
 #### For MetaMask Users:
 
 1. Enable custom nonce in MetaMask:
-
    - Go to Settings > Advanced
    - Enable "Customize transaction nonce"
 
 2. Find your next valid nonce using either method A or B:
 
    **Method A: Using Block Explorer**
-
-   - Go to <CopyableCode code="https://explorer.inkonchain.com/address/YOUR_ADDRESS" /> (replace YOUR_ADDRESS with your address)
+   - Go to `https://explorer.inkonchain.com/address/YOUR_ADDRESS` (replace YOUR_ADDRESS with your address)
    - Find your most recent transaction where you were the sender (FROM address)
    - Click the transaction and then "View details"
-   - Find the nonce value and add 1 to it - this is your next valid nonce
+   - Find the nonce value and add 1 to it — this is your next valid nonce
 
    **Method B: Using Command Line**
-
    ```bash
    curl -s -X POST -H "Content-Type: application/json" --data '{
      "jsonrpc":"2.0",
@@ -37,25 +40,148 @@ If you encounter JSON-RPC internal errors or transactions getting stuck, your wa
      "id":1
    }' https://rpc-gel.inkonchain.com | python3 -c "import sys, json; print(int(json.load(sys.stdin)['result'], 16))"
    ```
-
    Replace `YOUR_ADDRESS` with your wallet address. The number returned is your next valid nonce.
 
 3. Send a recovery transaction:
-
    - Send a 0 ETH transaction to yourself
    - When prompted for the nonce, use the exact number you got from either method above
    - Increase the gas price slightly (tap + once in the Network Fee section)
    - The transaction should go through
 
-4. Future transactions should now use the correct nonce
+4. Future transactions should now use the correct nonce.
+
+The recovery transaction typically costs around $0.05 in gas fees.
+
+---
+
+### Transaction Failed
+
+Failed transactions are usually caused by one of the following:
+
+**Insufficient gas**
+Increase your gas limit before confirming. In MetaMask, click "Edit" on the gas estimate screen and set a higher limit. Ink is an L2 with low fees, so small increases cost very little.
+
+**RPC connection issue**
+Your wallet may be connected to a slow or misconfigured RPC endpoint. Switch to an official Ink RPC:
+
+| Network | RPC URL | Chain ID |
+|---|---|---|
+| Ink Mainnet | `https://rpc-gel.inkonchain.com` | `57073` |
+| Ink Sepolia (Testnet) | `https://rpc-gel-sepolia.inkonchain.com` | `763373` |
+
+**Contract-level revert**
+Some failures are caused by the smart contract itself — for example, slippage set too low on a DEX, or an expired signature. Check the transaction on the [Ink Explorer](https://explorer.inkonchain.com) to see the revert reason.
+
+---
+
+### Sent ETH to the Wrong Network
+
+<Callout type="warning">
+  Do not attempt recovery by sending more funds. Assess the situation below first.
+</Callout>
+
+Ink is EVM-compatible, meaning the same wallet address exists across Ethereum, Optimism, Base, and Ink. Whether you can recover funds depends on where you sent them.
+
+**Sent between Ethereum ↔ Ink:**
+Use the [Ink Bridge](https://inkonchain.com/bridge) to move funds back. Your funds are safe — they just need to be bridged to the correct network.
+
+**Sent to another EVM network (e.g., Arbitrum, Base, Polygon):**
+Your funds are likely still accessible. Add that network to your wallet, switch to it, and you should see your balance there.
+
+**Sent to a non-EVM network (e.g., Solana, Bitcoin):**
+Recovery is generally not possible. Contact the receiving wallet's support team immediately — some have special recovery processes.
+
+---
+
+## Testnet
+
+### Testnet Tokens Not Arriving
+
+Ink Sepolia faucets are rate-limited to prevent abuse. Try the following in order:
+
+1. **Official Ink faucet** — Visit [docs.inkonchain.com/tools/faucets](https://docs.inkonchain.com/tools/faucets) and follow the instructions there.
+2. **Alchemy Sepolia faucet** — [sepoliafaucet.com](https://sepoliafaucet.com) (requires a free Alchemy account).
+3. **Wait 24 hours** — Most faucets enforce a per-address cooldown. Your request was likely registered and will arrive after the cooldown expires.
 
 <Callout type="info">
-  The recovery transaction typically costs around $0.05 in gas fees.
+  Make sure your wallet is connected to **Ink Sepolia** (Chain ID: `763373`), not Ethereum Sepolia, before checking your balance.
 </Callout>
+
+---
+
+## Node Issues
+
+### Node Out of Sync
+
+If your node is falling behind the chain tip, work through these steps:
+
+**1. Verify your containers are running**
+```bash
+docker compose ps
+```
+All services should show `Up`. If any show `Exited`, restart them:
+```bash
+docker compose up -d
+```
+
+**2. Check your sync status**
+```bash
+local_block=$(curl -s -X POST http://localhost:8545 \
+  -H "Content-Type: application/json" \
+  --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["finalized", false],"id":1}' \
+  | jq -r .result.number | sed 's/^0x//' | awk '{printf "%d\n", "0x" $0}')
+
+remote_block=$(curl -s -X POST https://rpc-gel.inkonchain.com \
+  -H "Content-Type: application/json" \
+  --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["finalized", false],"id":1}' \
+  | jq -r .result.number | sed 's/^0x//' | awk '{printf "%d\n", "0x" $0}')
+
+echo "Local: $local_block | Remote: $remote_block"
+```
+Your node is synced when both numbers match.
+
+**3. Check system resources**
+Ensure you have adequate resources, especially for archive nodes:
+- 500 GB+ free disk space (archive nodes grow over time)
+- At least 8 GB RAM
+- A stable, low-latency internet connection
+
+**4. Post-Ecotone upgrade stall**
+If you see `walking back L1Block with curr=0x0000...:0 next=0x0000...:0` in your logs, wait a few minutes — this typically resolves on its own.
+
+For full node setup instructions, see the [node repository](https://github.com/inkonchain/node).
+
+---
+
+## DeFi / Protocols
+
+### A Protocol Isn't Working on Ink
+
+Some DeFi protocols deploy separately on each chain. If a protocol's UI isn't behaving as expected:
+
+1. Confirm your wallet is connected to **Ink Mainnet** (Chain ID: `57073`).
+2. Check whether the protocol has officially announced Ink support — not all protocols are live on Ink yet.
+3. Visit the protocol's official documentation or Discord to confirm their Ink deployment status and contract addresses.
+
+---
+
+## Docs & Links
+
+### Page Not Found
+
+The Ink documentation is actively maintained and pages may move between updates. If you hit a 404:
+
+1. Try navigating from the [docs homepage](https://docs.inkonchain.com) to find the content manually.
+2. Use the search bar at the top of the page to look up the topic by keyword.
+3. [Open a GitHub issue](https://github.com/inkonchain/docs/issues/new) with the broken URL so maintainers can add a redirect.
+
+---
 
 ## Getting Help
 
-If you're still experiencing issues:
+If you're still experiencing issues after following the steps above:
 
-1. Check the [Network Status Page](https://status.inkonchain.com/) for any ongoing incidents
-2. Submit a detailed bug report on our [GitHub](https://github.com/inkonchain/docs/issues)
+1. Check the [Network Status Page](https://status.inkonchain.com/) for any ongoing incidents.
+2. Search existing issues on [GitHub](https://github.com/inkonchain/docs/issues) — someone may have already reported it.
+3. Submit a detailed bug report on [GitHub](https://github.com/inkonchain/docs/issues/new).
+4. Reach out to the community on [Telegram](https://t.me/inkonchain).
