@@ -32,6 +32,14 @@ const config = withNextra({
         destination: "/",
         permanent: false,
       },
+      {
+        // ink-token-contracts was a client-side stub redirecting to
+        // ink-contracts. Redirect server-side instead (mirrors #644 which
+        // does the same for the general/faucet stub).
+        source: "/useful-information/ink-token-contracts",
+        destination: "/useful-information/ink-contracts",
+        permanent: false,
+      },
     ];
   },
   eslint: {
