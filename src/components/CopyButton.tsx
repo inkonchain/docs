@@ -3,29 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 
 import { CheckIcon } from "@/icons/Check";
+import { copyText } from "@/utils/clipboard";
 
 import { notifyCopied } from "./CopyToast";
 
 interface CopyButtonProps {
   text: string;
   className?: string;
-}
-
-async function copyText(text: string): Promise<void> {
-  if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(text);
-    return;
-  }
-  // Fallback for contexts where navigator.clipboard is unavailable
-  // (non-secure origins, older browsers).
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-  textarea.style.position = "fixed";
-  textarea.style.opacity = "0";
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand("copy");
-  document.body.removeChild(textarea);
 }
 
 export default function CopyButton({ text, className = "" }: CopyButtonProps) {
