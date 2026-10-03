@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { CheckIcon } from "@/icons/Check";
+import { copyText } from "@/utils/clipboard";
 
 import { notifyCopied } from "./CopyToast";
 
@@ -13,13 +14,25 @@ interface CopyButtonProps {
 
 export default function CopyButton({ text, className = "" }: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
+    };
+  }, []);
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(text);
+      await copyText(text);
       setCopied(true);
       notifyCopied();
-      setTimeout(() => setCopied(false), 2000);
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
+      timer.current = setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy:", err);
     }
@@ -27,6 +40,7 @@ export default function CopyButton({ text, className = "" }: CopyButtonProps) {
 
   return (
     <button
+      type="button"
       onClick={handleCopy}
       className={`ml-2 p-1 rounded transition-colors h-[24px] min-w-[24px] flex items-center justify-center text-xs ${
         copied
@@ -50,7 +64,7 @@ export default function CopyButton({ text, className = "" }: CopyButtonProps) {
           strokeLinejoin="round"
         >
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path>
         </svg>
       )}
     </button>

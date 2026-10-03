@@ -15,6 +15,7 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
 }) => {
   return (
     <button
+      type="button"
       className={clsx(
         "font-semibold py-2.5 px-5 inline-flex items-center justify-center gap-1.5 transition-colors rounded-full text-sm cursor-pointer",
         {
