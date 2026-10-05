@@ -5,14 +5,19 @@ export const Head = () => {
   const { asPath, defaultLocale, locale } = useRouter();
   const { frontMatter, title: pageTitle } = useConfig();
   const baseUrl = "https://docs.inkonchain.com";
-  const url =
-    baseUrl + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
+  // Drop the query string and normalise a trailing slash so og:url and the
+  // canonical link both point at the single canonical form of this page.
+  const path = (defaultLocale === locale ? asPath : `/${locale}${asPath}`)
+    .split(/[?#]/)[0]
+    .replace(/\/+$/, "");
+  const url = baseUrl + path;
   const documentTitle =
-    asPath === "/"
+    path === ""
       ? "Ink Docs - The Official Developer Guide for Ink"
       : `${pageTitle} | Ink Docs`;
-  const title =
-    frontMatter.title || "Ink Docs - The Official Developer Guide for Ink";
+  // og:title / meta title should mirror <title>: the page's own title, not
+  // the site-wide default (front matter rarely sets `title`).
+  const title = frontMatter.title || documentTitle;
   const description =
     frontMatter.description ||
     "Comprehensive documentation for Ink, a cutting-edge Layer 2 (L2) blockchain built on Optimism's Superchain. Learn how to build, integrate, and leverage Ink's DeFi capabilities.";
@@ -45,6 +50,10 @@ export const Head = () => {
       <meta property="twitter:image" content={ogImage} />
       <meta property="twitter:site" content="@inkonchain" />
       <meta property="twitter:creator" content="@inkonchain" />
+
+      {/* Canonical URL — trailing-slash and query variants of a page resolve
+          here instead of competing as duplicate content. */}
+      <link rel="canonical" href={url} />
 
       {/* Favicon */}
       <link
