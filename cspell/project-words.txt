@@ -160,3 +160,5 @@ Stablecoins
 USDG
 subblocks
 Flashblocks
+Fontshare
+Satoshi
