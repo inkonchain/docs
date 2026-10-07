@@ -4,6 +4,8 @@ import clsx from "clsx";
 interface ButtonProps {
   variant: "primary" | "secondary";
   onClick?: () => void;
+  // Renders an external link styled as the button instead of a <button>
+  href?: string;
   className?: string;
 }
 
@@ -11,22 +13,36 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
   children,
   variant,
   onClick,
+  href,
   className,
 }) => {
+  const classes = clsx(
+    "font-semibold py-2.5 px-5 inline-flex items-center justify-center gap-1.5 transition-colors rounded-full text-sm cursor-pointer",
+    {
+      // Same as the navbar's "Go to App": black on light, light on dark
+      // (white on ink-light was 3.4:1, failing WCAG AA)
+      "text-background bg-primary hover:opacity-85": variant === "primary",
+      "text-primary bg-container hover:bg-container-2": variant === "secondary",
+    },
+    className
+  );
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        // `ink-button` opts out of the global content-link colors
+        className={clsx("ink-button !no-underline", classes)}
+      >
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <button
-      className={clsx(
-        "font-bold py-5 px-8 inline-flex items-center justify-center transition-all rounded-full text-xl backdrop-blur-[32px]",
-        {
-          "text-magic-white bg-magic-purple hover:opacity-90 shadow-[0px_3px_84px_-10px_rgba(63,107,175,0.5)]":
-            variant === "primary",
-          "text-magic-purple bg-magic-semi-deep-purple/15 shadow-[0px_3px_84px_-10px_rgba(63,107,175,0.5)]":
-            variant === "secondary",
-        },
-        className
-      )}
-      onClick={onClick}
-    >
+    <button className={classes} onClick={onClick}>
       {children}
     </button>
   );

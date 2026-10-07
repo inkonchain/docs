@@ -28,8 +28,8 @@ export const DownloadButton: React.FC<
     >
       <div className="flex items-center gap-2">
         <DownloadIcon />
-        <span className="text-sm sm:text-xl">{label}</span>
-        <span className="text-sm sm:text-xl text-magic-soft-pink">{size}</span>
+        <span>{label}</span>
+        <span className="text-background/70">{size}</span>
       </div>
     </Button>
   );
