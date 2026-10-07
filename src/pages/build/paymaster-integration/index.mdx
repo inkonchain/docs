@@ -10,13 +10,13 @@ the bundler.
 
 ## Architecture
 
-| Component | Responsibility |
-| --- | --- |
-| Smart account | Builds, authorizes, and signs the UserOperation |
-| Paymaster service | Applies policy and returns signed paymaster data |
-| Paymaster contract | Supplies native gas through its EntryPoint deposit |
-| Alto | Validates, bundles, and submits UserOperations to EntryPoint |
-| EntryPoint | Executes the operation and settles native gas |
+| Component          | Responsibility                                               |
+| ------------------ | ------------------------------------------------------------ |
+| Smart account      | Builds, authorizes, and signs the UserOperation              |
+| Paymaster service  | Applies policy and returns signed paymaster data             |
+| Paymaster contract | Supplies native gas through its EntryPoint deposit           |
+| Alto               | Validates, bundles, and submits UserOperations to EntryPoint |
+| EntryPoint         | Executes the operation and settles native gas                |
 
 Alto is the ERC-4337 bundler, not the paymaster. Keep the smart account,
 UserOperation encoding, SDK, paymaster, bundler, and EntryPoint on the same
@@ -24,22 +24,23 @@ EntryPoint version.
 
 ## Compatibility
 
-| Surface | EntryPoint v0.7 | EIP-7702 / EntryPoint v0.8 |
-| --- | --- | --- |
-| Network | Ink Mainnet (`57073`) | Ink Mainnet (`57073`) |
-| SDK deployment | `INK_PUBLIC_PAYMASTER` | `INK_PUBLIC_PAYMASTER_V08` |
-| EntryPoint | `0x0000000071727De22E5E9d8BAf0edAc6f37da032` | `0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108` |
-| Prepaid paymaster | `0x4d850D985C334f0eb8b49CFb5cbfe8D23169cc9b` | `0xE361E63515109BFDC4c32EfC4d2e0ede4d4744D8` |
-| Quote version | 2 | 3 |
-| Reimbursement tokens | USDC, USD₮0, and USDG | USDC |
+| Surface                 | EntryPoint v0.7                              | EIP-7702 / EntryPoint v0.8                   |
+| ----------------------- | -------------------------------------------- | -------------------------------------------- |
+| Network                 | Ink Mainnet (`57073`)                        | Ink Mainnet (`57073`)                        |
+| SDK deployment          | `INK_PUBLIC_PAYMASTER`                       | `INK_PUBLIC_PAYMASTER_V08`                   |
+| EntryPoint              | `0x0000000071727De22E5E9d8BAf0edAc6f37da032` | `0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108` |
+| Prepaid paymaster       | `0x4d850D985C334f0eb8b49CFb5cbfe8D23169cc9b` | `0xFd1Ee688E0aC5905c28a0b99316E451beEc650d0` |
+| Quote version           | 2                                            | 4                                            |
+| Reimbursement tokens    | USDC, USD₮0, and USDG                        | USDC                                         |
+| First-operation funding | ETH for an owner-paid approval               | No ETH required with an EIP-2612 permit      |
 
-Both deployments require `@hellomoon/ink-paymaster` v0.2.3 or later and Viem
+Both deployments require `@hellomoon/ink-paymaster` v0.3.0 or later and Viem
 v2.55.18 or later, below v3.
 
 ## Install the SDK
 
 ```bash
-pnpm add @hellomoon/ink-paymaster@^0.2.3 viem
+pnpm add @hellomoon/ink-paymaster@^0.3.0 viem
 ```
 
 The SDK pins the public Ink deployment metadata, validates quote responses,

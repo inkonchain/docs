@@ -16,7 +16,7 @@ export default function CopyableCode({
   href,
 }: CopyableCodeProps) {
   const CodeContent = () => (
-    <code className="bg-magic-semi-deep-purple/15 text-magic-purple dark:text-magic-white text-sm rounded-md px-2 py-0.5">
+    <code className="bg-container text-primary text-[0.85em] rounded-md px-1.5 py-0.5">
       {display || code}
     </code>
   );
