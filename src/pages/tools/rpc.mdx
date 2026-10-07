@@ -85,7 +85,7 @@ BoltRPC provides dedicated HTTPS and WebSocket RPC endpoints for Ink, operated b
 <br />
 <br />
 
-# Public Endpoints
+## Public Endpoints
 
 To connect to Ink Sepolia or Ink Mainnet, you can select from multiple RPC providers, each offering reliable infrastructure with unique features and capabilities.
 
@@ -152,3 +152,24 @@ dRPC provides globally distributed nodes for public and premium Ink RPC endpoint
 - HTTPS: <CopyableCode code="https://ink-sepolia.drpc.org" />
 - Websocket: <CopyableCode code="wss://ink-sepolia.drpc.org" />
 
+---
+
+### Subblocks
+
+Subblocks (formerly Flashblocks) are partial blocks that the Ink sequencer streams while it is still building the full block, roughly every 200 ms. They let your application see a transaction's outcome as a pre-confirmation, before the block is sealed.
+
+The subblocks endpoints are WebSocket streams. Each message is a JSON payload with a `payload_id`, an `index`, and a `diff` of the block being built. The first message for a block (`index` 0) also includes a `base` containing the block header fields.
+
+#### Ink Mainnet
+
+- Websocket: <CopyableCode code="wss://subblocks.inkonchain.com/ws" />
+
+#### Ink Sepolia
+
+- Websocket: <CopyableCode code="wss://subblocks-sepolia.inkonchain.com/ws" />
+
+<Callout type="warning">
+  A pre-confirmation carries the sequencer's trust assumption, not the protocol's. It can be revoked under the same conditions that allow the sequencer to reorg unsafe blocks. In streamed payloads, `state_root` and `block_hash` are always zero, so do not treat them as authoritative.
+</Callout>
+
+To read pre-confirmed state over JSON-RPC (for example with `eth_call` or `eth_getBalance` and the `pending` block tag), use an RPC provider that supports subblocks. See the [Optimism subblocks documentation](https://docs.optimism.io/op-stack/features/subblocks) for more detail.
