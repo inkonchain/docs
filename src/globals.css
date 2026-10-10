@@ -12,13 +12,16 @@
     --container: 242 242 242;
     --container-2: 233 233 233;
     --primary: 0 0 0;
-    --secondary: 128 128 128;
+    /* WCAG AA for body text (>= 4.5:1) on --background, --container and
+       --container-2; #808080 only reached 3.95:1 on white */
+    --secondary: 102 102 102;
     --outline: 204 204 204;
     --outline-subtle: 231 231 231;
     --ink: 113 50 245;
     --ink-light: 158 112 255;
     --ink-soft: 242 236 255;
-    --positive: 75 188 45;
+    /* Success text on --background; #4bbc2d was 2.46:1 */
+    --positive: 46 125 31;
     --positive-bg: 233 248 229;
     --warning: 231 139 25;
     --warning-bg: 252 241 228;
@@ -74,7 +77,8 @@
   }
 
   ::selection {
-    @apply bg-ink-light text-white;
+    /* ink-light behind white text is 3.38:1; ink is 6.04:1 */
+    @apply bg-ink text-white;
   }
 
   a:not(.nextra-sidebar-container a):not(nav a):not(.toc-link):not(
