@@ -12,8 +12,9 @@ export const InkHero = () => {
     import("./interactive-ink");
   }, []);
 
-  // React 18 passes `className` through to custom elements verbatim (it never
-  // becomes `class`), so the layout styles live on a wrapper div instead.
+  // Layout styles live on a wrapper div rather than the custom element. (This
+  // started as a React 18 workaround, where `className` on a custom element
+  // never became `class`; React 19 handles it, but the wrapper is kept.)
   return (
     <div className="relative mt-8 aspect-[4/3] w-full sm:aspect-[12/5] overflow-hidden rounded-3xl border border-outline-subtle">
       <interactive-ink
