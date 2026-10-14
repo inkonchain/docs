@@ -1,0 +1,15 @@
+diff --git a/dist/server/webpack-plugins/nextra-search.js b/dist/server/webpack-plugins/nextra-search.js
+index 6066612e2973274d5c9a76004e0b136d928cafb7..1d72be67bfea3348913edb215834dcfd29795969 100644
+--- a/dist/server/webpack-plugins/nextra-search.js
++++ b/dist/server/webpack-plugins/nextra-search.js
+@@ -2,7 +2,9 @@ import { createRequire } from "module";
+ import { IS_PRODUCTION } from "../constants.js";
+ const require2 = createRequire(import.meta.url);
+ const pkg = require2("next/dist/compiled/webpack/webpack.js");
+-pkg.init();
++// Next.js <16 exposed a lazy `init()`; Next.js 16+ initialises on require and
++// no longer exports it.
++pkg.init?.();
+ const { sources, webpack } = (
+   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+   pkg
