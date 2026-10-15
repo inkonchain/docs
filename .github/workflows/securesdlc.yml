@@ -4,8 +4,6 @@ run-name: "[Nautilus SecureSDLC Reusable] Ref:${{ github.ref_name }} Event:${{ g
 on:
   workflow_dispatch: {}
   workflow_call: {}
-  push:
-    branches: [ main ]
 
 jobs:
   securesdlc-umbrella:
