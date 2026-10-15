@@ -18,7 +18,8 @@ An advanced, streamlined documentation platform built with Next.js and Nextra fo
 
 ## 📋 Requirements
 
-* **Node.js**: v20.11.0 or higher
+* **Node.js**: v22.14.0
+* **pnpm**: v9.12.3
 
 ## 📖 Overview
 
