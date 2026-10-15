@@ -115,7 +115,7 @@ jobs:
           persist-credentials: false
       - name: Deploy preview to Vercel
         run: |
-          URL=$(npx vercel@latest deploy --yes --token=${{ secrets.VERCEL_TOKEN }})
+          URL=$(npx vercel@64.1.0 deploy --yes --token=${{ secrets.VERCEL_TOKEN }})
           echo "### Vercel preview" >> $GITHUB_STEP_SUMMARY
           echo "$URL" >> $GITHUB_STEP_SUMMARY
 
@@ -138,4 +138,4 @@ jobs:
         with:
           persist-credentials: false
       - name: Deploy to Vercel (production)
-        run: npx vercel@latest deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+        run: npx vercel@64.1.0 deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
