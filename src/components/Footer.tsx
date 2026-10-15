@@ -16,7 +16,7 @@ const docsLinks = [
 
 const externalLinks = [
   { label: "Terms", href: "https://inkonchain.com/en-US/terms" },
-  { label: "Privacy", href: "https://inkonchain.com/en-US/privacy" },
+  { label: "Privacy", href: "https://www.kraken.com/en-us/legal/privacy" },
   { label: "Status", href: URLS.statusPageUrl },
   { label: "GitHub", href: URLS.githubOrgUrl },
   { label: "App", href: URLS.appUrl },
