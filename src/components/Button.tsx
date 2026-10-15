@@ -42,7 +42,7 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
   }
 
   return (
-    <button className={classes} onClick={onClick}>
+    <button type="button" className={classes} onClick={onClick}>
       {children}
     </button>
   );
