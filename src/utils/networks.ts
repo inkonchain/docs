@@ -28,13 +28,14 @@ export const networkParams = {
 };
 
 export async function isNetworkAdded(network: NetworkType): Promise<boolean> {
-  if (!(window as any).ethereum) return false;
+  if (typeof window === "undefined" || !(window as any).ethereum) return false;
 
   try {
     const chainId = await (window as any).ethereum.request({
       method: "eth_chainId",
     });
     return (
+      typeof chainId === "string" &&
       chainId.toLowerCase() === networkParams[network].chainId.toLowerCase()
     );
   } catch (error) {
@@ -65,8 +66,9 @@ export function useNetwork(network: NetworkType): UseNetworkResponse {
             method: "eth_chainId",
           });
           const isCurrentNetwork =
+            typeof chainId === "string" &&
             chainId.toLowerCase() ===
-            networkParams[network].chainId.toLowerCase();
+              networkParams[network].chainId.toLowerCase();
           setIsSelected(isCurrentNetwork);
           setIsAdded((prev) => isCurrentNetwork || prev); // If we're on the network, it must be added
         } catch (error) {
