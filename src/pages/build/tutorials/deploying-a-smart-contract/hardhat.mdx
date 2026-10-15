@@ -25,7 +25,7 @@ npm init -y
 2. Install Hardhat and necessary dependencies:
 
 ```bash
-npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox
+npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox dotenv
 ```
 
 3. Create a new Hardhat project:
@@ -122,7 +122,7 @@ describe("InkContract", function () {
   it("Should return the correct greeting", async function () {
     const InkContract = await ethers.getContractFactory("InkContract");
     const contract = await InkContract.deploy();
-    await contract.deployed();
+    await contract.waitForDeployment();
 
     expect(await contract.greeting()).to.equal("Hello, Ink!");
   });
@@ -144,9 +144,9 @@ async function main() {
   const InkContract = await ethers.getContractFactory("InkContract");
   const contract = await InkContract.deploy();
 
-  await contract.deployed();
+  await contract.waitForDeployment();
 
-  console.log("InkContract deployed to:", contract.address);
+  console.log("InkContract deployed to:", await contract.getAddress);
 }
 
 main()
