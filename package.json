@@ -1,7 +1,7 @@
 {
   "name": "inkchain-docs",
   "volta": {
-    "node": "22.14.0",
+    "node": "22.23.4",
     "pnpm": "9.12.3"
   },
   "packageManager": "pnpm@9.12.3",

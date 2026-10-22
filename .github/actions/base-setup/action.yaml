@@ -8,10 +8,13 @@ runs:
       with:
         run_install: false
 
-    - name: Setup Node 22
+    # Pin to .nvmrc rather than "22.x": with the default check-latest=false,
+    # setup-node will happily reuse an older 22.x preinstalled on the runner
+    # image, so a floating range doesn't guarantee we get Node security patches.
+    - name: Setup Node
       uses: actions/setup-node@v4
       with:
-        node-version: "22.x"
+        node-version-file: ".nvmrc"
         cache: "pnpm"
 
     - name: Add pnpm store path to env var
