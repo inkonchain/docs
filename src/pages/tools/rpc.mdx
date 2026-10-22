@@ -152,6 +152,31 @@ dRPC provides globally distributed nodes for public and premium Ink RPC endpoint
 - HTTPS: <CopyableCode code="https://ink-sepolia.drpc.org" />
 - Websocket: <CopyableCode code="wss://ink-sepolia.drpc.org" />
 
+### Combine endpoints with automatic failover
+
+To spread traffic across the public endpoints above and fail over when one is slow or down, you can run an open-source RPC proxy such as [eRPC](https://github.com/erpc/erpc) in front of them:
+
+```yaml
+projects:
+  - id: main
+    networks:
+      - architecture: evm
+        evm:
+          chainId: 57073
+        alias: ink
+    upstreams:
+      - endpoint: https://rpc-gel.inkonchain.com
+      - endpoint: https://rpc-ten.inkonchain.com
+      - endpoint: https://rpc-qnd.inkonchain.com
+      - endpoint: https://ink.drpc.org
+```
+
+```bash
+docker run -p 4000:4000 -v $(pwd)/erpc.yaml:/erpc.yaml ghcr.io/erpc/erpc:latest
+```
+
+Your app then uses `http://localhost:4000/main/ink` as its Ink Mainnet RPC URL.
+
 ---
 
 ### Subblocks
