@@ -16,7 +16,7 @@ export const notifyCopied = () => window.dispatchEvent(new Event(EVENT));
  */
 export const CopyToast = () => {
   const [visible, setVisible] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     const show = () => {

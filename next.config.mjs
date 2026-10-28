@@ -34,15 +34,19 @@ const config = withNextra({
       },
     ];
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  // Keep plain .ts out of pageExtensions so Next 15's route-export validation
+  // Keep plain .ts out of pageExtensions so Next's route-export validation
   // doesn't treat Nextra's _meta.ts files as pages (Nextra discovers them itself).
   pageExtensions: ["tsx"],
   images: {
     unoptimized: true,
   },
+  // Don't let `next dev` generate AGENTS.md: remark lints every markdown
+  // file in the repo as MDX and chokes on the HTML comments it contains.
+  agentRules: false,
+  // Nextra 3 is webpack-only (its page-map and search index are webpack
+  // plugins), so `dev`/`build` opt out of Next 16's default Turbopack with
+  // `--webpack`. Without the flag Next 16 refuses to build when a webpack
+  // config is present.
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,

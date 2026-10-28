@@ -1,9 +1,11 @@
 ---
 title: Brand Kit
-description: The core essence of the Ink branding, featuring logos, colors, typefaces, illustrations, and best practices
+description: The Ink logo, colors and typeface, with logo files to download
 ---
 
 import Image from "next/image";
+import { BrandColors, BrandTypography } from "@/components/BrandKit";
+import { Button } from "@/components/Button";
 import { DownloadButton } from "@/components/DownloadButton";
 import { DownloadIcon } from "@/icons/Download";
 
@@ -14,168 +16,42 @@ import { DownloadIcon } from "@/icons/Download";
     src="/images/brand-kit/docs-hero.png"
     alt="Ink Brand Kit Banner"
     width={1200}
-    height={400}
+    height={650}
     priority
   />
 </div>
 
-This brand kit includes the core essence of the Ink branding, featuring logos, colors, typefaces, illustrations, and best practices. It should help any and all creative work.
+Everything you need to work with the Ink brand. The brand kit includes the Ink logo, avatar and mark in every color, as SVG and PNG.
 
 <div className="mt-6">
   <DownloadButton
     sourceFilePath="/downloads/ink-brand-kit.zip"
     destinationFileName="ink-brand-kit.zip"
     label="Download Brand Kit"
-    size="1.5 MB"
+    size="117 KB"
   />
-</div>
-
-## Logo
-
-The Ink logo consists of a symbol and a word mark.<br/>
-Wherever possible, the horizontal full logo should be used.
-
-<div className="mt-6">
-  <DownloadButton
-    sourceFilePath="/downloads/ink-logos.zip"
-    destinationFileName="ink-logos.zip"
-    label="Download Logos"
-    size="493 KB"
-  />
-</div>
-
-### Logo System
-
-<div className="flex flex-col gap-8">
-  <div className="flex gap-4 mt-7">
-    <div className="flex-[2.0619] flex flex-col gap-3">
-      <Image
-        src="/images/brand-kit/docs-logo-wordmark.png"
-        alt="Ink Full Logo"
-        width={1099}
-        height={528}
-        priority
-        className="w-full"
-      />
-      <span className="font-bold text-xs">Full Ink logo</span>
-    </div>
-    <div className="flex-1 flex flex-col gap-3">
-      <Image
-        src="/images/brand-kit/docs-logo-symbol.png"
-        alt="Ink Chain Mark"
-        width={533}
-        height={528}
-        priority
-        className="w-full"
-      />
-      <span className="font-bold text-xs">Ink chain mark</span>
-    </div>
-  </div>
-  <div className="flex gap-4">
-    <div className="flex-[2.0619] flex flex-col gap-3">
-      <Image
-        src="/images/brand-kit/docs-logo-wordmark-margin.png"
-        alt="Ink Full Logo with Safe Margin"
-        width={1099}
-        height={528}
-        priority
-        className="w-full"
-      />
-      <span className="font-bold text-xs">Safe margin</span>
-    </div>
-    <div className="flex-1 flex flex-col gap-3">
-      <Image
-        src="/images/brand-kit/docs-logo-symbol-margin.png"
-        alt="Ink Chain Mark with Safe Margin"
-        width={533}
-        height={528}
-        priority
-        className="w-full"
-      />
-      <span className="font-bold text-xs">Safe margin</span>
-    </div>
-  </div>
-</div>
-
-### Logo Extensions
-
-<div className="flex flex-col gap-8">
-  <div className="flex gap-4 mt-7">
-    <div className="flex-1 flex flex-col gap-3">
-      <Image
-        src="/images/brand-kit/docs-logo-extension-kraken.png"
-        alt="Ink Logo with Kraken Extension"
-        width={815}
-        height={529}
-        priority
-        className="w-full"
-      />
-      <span className="font-bold text-xs">With Kraken</span>
-    </div>
-    <div className="flex-1 flex flex-col gap-3">
-      <Image
-        src="/images/brand-kit/docs-logo-stacked.png"
-        alt="Ink Logo Stacked with Other Marks"
-        width={815}
-        height={529}
-        priority
-        className="w-full"
-      />
-      <span className="font-bold text-xs">With other marks</span>
-    </div>
-  </div>
-  <div className="flex-1 flex flex-col gap-3">
-    <Image
-      src="/images/brand-kit/docs-logo-partnerships.png"
-      alt="Ink Logo Partnership Examples"
-      width={1668}
-      height={529}
-      priority
-      className="w-full"
-    />
-    <span className="font-bold text-xs">Partnerships</span>
-  </div>
 </div>
 
 ## Color
 
-Ink purple should be used whenever possible.<br/>
-Backgrounds typically use gradients.
+Ink is built on black and white, with Ink purple as the accent.<br/>
+Click a color to copy its hex value.
 
-<div className="my-8">
-  <Image
-    src="/images/brand-kit/docs-color.png"
-    alt="Ink Colors"
-    width={1666}
-    height={1417}
-    priority
-    className="w-full"
-  />
-</div>
+<BrandColors />
 
 ## Typography
 
-Ink uses the open source typeface Plus Jakarta Sans.<br/>
-Lurus Alternatives are used in most cases.
+Ink uses Satoshi, a free typeface by Indian Type Foundry.<br/>
+It's available to download from Fontshare.
 
 <div className="flex flex-col gap-8 mt-6">
   <div>
-    <DownloadButton
-      sourceFilePath="/downloads/ink-typeface.zip"
-      destinationFileName="ink-typeface.zip"
-      label="Download Typeface"
-      size="1 MB"
-    />
+    <Button variant="primary" href="https://www.fontshare.com/fonts/satoshi">
+      <DownloadIcon />
+      <span>Download Satoshi</span>
+      <span className="text-background/70">Fontshare</span>
+    </Button>
   </div>
 
-  <div>
-    <Image
-      src="/images/brand-kit/docs-type.png"
-      alt="Ink Typography"
-      width={1666}
-      height={1417}
-      priority
-      className="w-full"
-    />
-  </div>
+  <BrandTypography />
 </div>
