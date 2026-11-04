@@ -5,8 +5,28 @@ on:
     branches:
       - main
 
+# Nothing in this workflow writes to the repository: every job checks out
+# code, lints, builds, or deploys to Vercel with a PAT (VERCEL_TOKEN) that is
+# independent of GITHUB_TOKEN. Caches go through the Actions runtime token.
+# Declare read-only for the whole file instead of inheriting whatever the
+# repository default happens to be, so a compromised action from a pinned
+# dependency cannot push to this repo.
+permissions:
+  contents: read
+
 jobs:
   securesdlc:
+    # A job that calls a reusable workflow is capped by the permissions set
+    # here, and inkonchain/.github's securesdlc.yml asks for
+    # contents/security-events/actions so that the Nautilus SAST, SCA and
+    # Zizmor scans can call github/codeql-action/upload-sarif. Grant exactly
+    # what that chain declares — all three leaves declare the same three
+    # scopes — or the SARIF upload starts failing under the read-only
+    # workflow default above.
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
     uses: inkonchain/.github/.github/workflows/securesdlc.yml@main
     secrets: inherit
 
