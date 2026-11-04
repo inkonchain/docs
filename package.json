@@ -96,6 +96,9 @@
   "pnpm": {
     "patchedDependencies": {
       "nextra@3.3.1": "patches/nextra@3.3.1.patch"
+    },
+    "overrides": {
+      "dompurify": "^3.4.17"
     }
   }
 }
