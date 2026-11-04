@@ -1,14 +1,6 @@
+const nextCoreWebVitals = require("eslint-config-next/core-web-vitals");
+const prettier = require("eslint-config-prettier");
 const simpleImportSort = require("eslint-plugin-simple-import-sort");
-const path = require("node:path");
-const js = require("@eslint/js");
-const { FlatCompat } = require("@eslint/eslintrc");
-
-const baseDirectory = __dirname;
-const compat = new FlatCompat({
-  baseDirectory: baseDirectory,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
 
 module.exports = [
   // Default ignores - node_modules is ignored by default in recent ESLint, but good to be explicit.
@@ -17,8 +9,10 @@ module.exports = [
     ignores: ["**/node_modules/**", "**/.next/**", "**/out/**"],
   },
 
-  // Spread the configurations from extended configs
-  ...compat.extends("next/core-web-vitals", "prettier"),
+  // eslint-config-next@16 ships native flat configs, so they can be spread
+  // directly instead of going through FlatCompat.
+  ...nextCoreWebVitals,
+  prettier,
 
   // Configuration for JS/JSX/TS/TSX files
   {
@@ -29,6 +23,14 @@ module.exports = [
     },
     rules: {
       "react-hooks/exhaustive-deps": "error",
+      // React Compiler-derived rules added to `recommended` in
+      // eslint-plugin-react-hooks 7 (via eslint-config-next 16). Kept as
+      // warnings for now so the Next 16 upgrade doesn't fail lint on
+      // pre-existing component patterns; fix the call sites and promote to
+      // "error" when convenient.
+      "react-hooks/immutability": "warn",
+      "react-hooks/set-state-in-effect": "warn",
+      "react-hooks/static-components": "warn",
       "import/newline-after-import": ["error", { count: 1 }],
       "simpleImportSort/imports": [
         "error",
