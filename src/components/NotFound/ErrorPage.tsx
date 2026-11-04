@@ -18,8 +18,8 @@ export const ErrorPage = ({ code, title, description }: ErrorPageProps) => {
     import("./interactive-ascii");
   }, []);
 
-  // As with the home hero, React 18 won't turn `className` into `class` on a
-  // custom element, so layout lives on the wrapper.
+  // As with the home hero, layout lives on the wrapper rather than the custom
+  // element (originally a React 18 `className` workaround, kept as-is).
   return (
     <div className="relative mt-16 flex h-[min(70vh,40rem)] w-full items-center justify-center overflow-hidden rounded-3xl border border-outline-subtle">
       <interactive-ascii
