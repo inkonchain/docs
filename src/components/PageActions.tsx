@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 
+import { copyText } from "@/utils/clipboard";
 import { pageToMarkdown } from "@/utils/page-to-markdown";
 
 import { notifyCopied } from "./CopyToast";
@@ -116,7 +117,7 @@ export const PageActions = () => {
 
   const copyPage = async () => {
     try {
-      await navigator.clipboard.writeText(getMarkdown());
+      await copyText(getMarkdown());
       notifyCopied();
     } catch (error) {
       console.error("Failed to copy page:", error);
@@ -124,10 +125,16 @@ export const PageActions = () => {
   };
 
   const viewMarkdown = () => {
-    const blob = new Blob([getMarkdown()], {
-      type: "text/plain;charset=utf-8",
-    });
-    window.open(URL.createObjectURL(blob), "_blank", "noopener");
+    const url = URL.createObjectURL(
+      new Blob([getMarkdown()], { type: "text/plain;charset=utf-8" })
+    );
+    // Revoke the object URL once the new tab has had a chance to load it;
+    // revoke immediately if the popup was blocked so nothing leaks.
+    if (window.open(url, "_blank", "noopener")) {
+      window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    } else {
+      URL.revokeObjectURL(url);
+    }
   };
 
   const openIn = (base: string) => {

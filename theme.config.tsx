@@ -63,7 +63,7 @@ const config: DocsThemeConfig = {
     content: (
       <a
         className="!text-white hover:!text-white/80"
-        href="/"
+        href={URLS.statusPageUrl}
         target="_blank"
         rel="noopener noreferrer"
       >

@@ -20,6 +20,16 @@ const SKIP = [
 
 const collapse = (text: string) => text.replace(/\s+/g, " ");
 
+// new URL() throws on malformed hrefs; fall back to the raw value so one
+// bad link can't break copying the whole page.
+const absolutize = (value: string, origin: string): string => {
+  try {
+    return new URL(value, origin).href;
+  } catch {
+    return value;
+  }
+};
+
 const INLINE_TAGS = new Set([
   "A",
   "SPAN",
@@ -54,7 +64,7 @@ function inline(node: Node, origin: string): string {
       return "\n";
     case "IMG": {
       const img = node as HTMLImageElement;
-      return `![${img.alt}](${new URL(img.getAttribute("src") ?? "", origin).href})`;
+      return `![${img.alt}](${absolutize(img.getAttribute("src") ?? "", origin)})`;
     }
     case "INPUT": {
       const input = node as HTMLInputElement;
@@ -64,7 +74,7 @@ function inline(node: Node, origin: string): string {
       const href = node.getAttribute("href");
       const text = children().trim();
       if (!href || href.startsWith("#")) return text;
-      return `[${text}](${new URL(href, origin).href})`;
+      return `[${text}](${absolutize(href, origin)})`;
     }
     default:
       return children();
