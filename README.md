@@ -4,21 +4,9 @@
 
 An advanced, streamlined documentation platform built with Next.js and Nextra for InkChain.
 
-## 🚀 Build & Run
-
-1. **Build Docker image**:
-   ```bash
-   docker build -t docs .
-   ```
-
-2. **Run Docker container**:
-   ```bash
-   docker run -p 3000:3000 docs
-   ```
-
 ## 📋 Requirements
 
-* **Node.js**: v20.11.0 or higher
+* **Node.js**: v22.23.4 (pinned in [`.nvmrc`](.nvmrc); CI installs the same version)
 
 ## 📖 Overview
 
@@ -52,15 +40,15 @@ Our development setup includes multiple tools to maintain high-quality code and 
 
 Our CI/CD setup utilizes GitHub Actions to run automated checks on every pull request (PR):
 
-* **js-lint**: Ensures proper JavaScript code formatting with ESLint.
-* **md-lint**: Checks Markdown code formatting with Remark.
-* **format**: Enforces consistent code style with Prettier.
-* **spell-check**: Uses CSpell to verify correct spelling in the documentation. For any unique terms (e.g., "InkChain"), add them to the [`./cspell/project-words.txt`](./cspell/project-words.txt) file to whitelist.
+* **js-lint**: Lints JavaScript and TypeScript with ESLint.
+* **md-lint**: Checks Markdown and MDX files with Remark.
+* **format**: Checks code style with Prettier.
+* **spell-check**: Uses CSpell to verify spelling in the documentation. For any unique terms (e.g., "InkChain"), add them to [`./cspell/project-words.txt`](./cspell/project-words.txt).
 
 ## 🌐 Feature Branch Deployment
 
-For every new PR, our CI/CD pipeline deploys a temporary environment via **AWS Amplify**. This real-time deployment enables live testing and review of changes before merging, ensuring a smoother workflow. The deployment URL is automatically provided within the PR checks, allowing team members to interact with new features.
+For every new PR opened from a branch in this repository, our CI/CD pipeline deploys a temporary preview environment via **Vercel**. This real-time deployment enables live testing and review of changes before merging, ensuring a smoother workflow. The deployment URL is posted to the `vercel-preview` job's summary. Preview jobs are skipped for fork PRs because those runs cannot access the deploy token.
 
 ## 🚀 Production Deployment
 
-The `main` branch is configured for automatic continuous deployment via **AWS Amplify**. Every merge triggers a new build and deployment, ensuring that the latest version of the documentation is available to users without manual intervention.
+The `main` branch is configured for automatic continuous deployment via **Vercel**. Every merge triggers a new build and deployment, ensuring that the latest version of the documentation is available to users without manual intervention.
