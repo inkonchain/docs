@@ -71,26 +71,20 @@ function inline(node: Node, origin: string): string {
   }
 }
 
-function list(element: HTMLElement, origin: string, depth: number): string {
+function list(element: HTMLElement, origin: string): string {
   const ordered = element.tagName === "OL";
-  const indent = "  ".repeat(depth);
 
   return Array.from(element.children)
     .filter((child): child is HTMLElement => child.tagName === "LI")
     .map((item, index) => {
-      const nested = Array.from(item.children).filter((child) =>
-        ["UL", "OL"].includes(child.tagName)
-      ) as HTMLElement[];
-      const text = Array.from(item.childNodes)
-        .filter((child) => !nested.includes(child as HTMLElement))
-        .map((child) => inline(child, origin))
-        .join("")
-        .trim();
       const marker = ordered ? `${index + 1}.` : "-";
-      const sublists = nested
-        .map((sub) => `\n${list(sub, origin, depth + 1)}`)
-        .join("");
-      return `${indent}${marker} ${text}${sublists}`;
+      const text = blocks(item, origin).join("\n\n");
+      const [first, ...continuation] = text.split("\n");
+      const indent = " ".repeat(marker.length + 1);
+      return [
+        `${marker} ${first}`,
+        ...continuation.map((line) => (line ? `${indent}${line}` : "")),
+      ].join("\n");
     })
     .join("\n");
 }
@@ -112,26 +106,33 @@ function table(element: HTMLTableElement, origin: string): string {
 
 function blocks(element: Element, origin: string): string[] {
   const out: string[] = [];
+  let inlineText = "";
+  const flushInline = () => {
+    if (inlineText.trim()) out.push(inlineText.trim());
+    inlineText = "";
+  };
 
   for (const node of Array.from(element.childNodes)) {
     if (node.nodeType === Node.TEXT_NODE) {
-      const text = collapse(node.textContent ?? "").trim();
-      if (text) out.push(text);
+      inlineText += collapse(node.textContent ?? "");
       continue;
     }
     if (!(node instanceof HTMLElement)) continue;
 
     const tag = node.tagName;
-    if (INLINE_TAGS.has(tag)) {
-      const text = inline(node, origin).trim();
-      if (text) out.push(text);
-    } else if (/^H[1-6]$/.test(tag)) {
+    if (INLINE_TAGS.has(tag) || tag === "BR" || tag === "INPUT") {
+      inlineText += inline(node, origin);
+      continue;
+    }
+    flushInline();
+
+    if (/^H[1-6]$/.test(tag)) {
       out.push(`${"#".repeat(Number(tag[1]))} ${inline(node, origin).trim()}`);
     } else if (tag === "P") {
       const text = inline(node, origin).trim();
       if (text) out.push(text);
     } else if (tag === "UL" || tag === "OL") {
-      out.push(list(node, origin, 0));
+      out.push(list(node, origin));
     } else if (tag === "PRE") {
       const language = node.getAttribute("data-language") ?? "";
       out.push(
@@ -157,6 +158,7 @@ function blocks(element: Element, origin: string): string[] {
     }
   }
 
+  flushInline();
   return out.filter(Boolean);
 }
 

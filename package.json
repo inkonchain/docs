@@ -6,6 +6,7 @@
   },
   "packageManager": "pnpm@9.12.3",
   "scripts": {
+    "test": "node --experimental-strip-types --test tests/page-to-markdown.test.mjs",
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "postbuild": "next-sitemap",
@@ -72,6 +73,7 @@
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-mdx": "3.6.2",
     "eslint-plugin-simple-import-sort": "12.1.1",
+    "linkedom": "0.18.12",
     "mdx": "0.3.1",
     "postcss": "8.5.6",
     "prettier": "3.6.2",
