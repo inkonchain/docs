@@ -1,6 +1,69 @@
+# Dependabot version updates.
+#
+# This file only controls scheduled version bumps. Dependabot *alerts* and
+# *security updates* are a repository setting (Settings → Advanced Security)
+# that an org admin has to switch on; they are currently disabled for this repo.
+#
+# Dependabot auto-pauses version updates after 90 days without anyone merging,
+# closing or commenting on one of its PRs. Any change to this file resumes it.
 version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    # package.json pins exact versions, so bump the pin rather than widen it.
+    versioning-strategy: "increase"
+    # Produces "chore(deps): ..." / "chore(deps-dev): ..." titles.
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    # Don't pick up a release until it has been public for a week, so a
+    # compromised publish can be caught and pulled before it lands here.
+    # Security updates are not subject to the cooldown.
+    cooldown:
+      default-days: 7
+    groups:
+      # Packages that must move in lockstep get one PR each, majors included.
+      next:
+        patterns: ["next", "eslint-config-next"]
+      react:
+        patterns: ["react", "react-dom", "@types/react", "@types/react-dom"]
+      nextra:
+        patterns: ["nextra", "nextra-theme-docs"]
+      # Everything else: a single weekly PR for minor and patch bumps. Majors
+      # are left ungrouped so each one gets its own PR and review.
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      # Nextra 4 requires the App Router; this site is on the Pages Router
+      # (see README). Also, nextra@3.3.1 is patched in patches/, and the patch
+      # key is version-specific.
+      - dependency-name: "nextra"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "nextra-theme-docs"
+        update-types: ["version-update:semver-major"]
+      # Tailwind 4 is a config + PostCSS plugin migration, not a drop-in bump.
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+      # Node types track the runtime major pinned in .nvmrc / volta, not npm
+      # latest. Bump this by hand together with the Node version.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "github-actions"
+    # "/" covers .github/workflows; the glob covers composite actions such as
+    # .github/actions/base-setup, which "/" alone does not scan.
+    directories: ["/", "/.github/actions/*"]
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    groups:
+      github-actions:
+        patterns: ["*"]
