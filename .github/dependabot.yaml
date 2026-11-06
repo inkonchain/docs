@@ -64,6 +64,10 @@ updates:
     commit-message:
       prefix: "ci"
       include: "scope"
+    # Same supply-chain buffer as for npm: actions run with CI secrets, so a
+    # freshly tagged release is at least as risky as a fresh npm publish.
+    cooldown:
+      default-days: 7
     groups:
       github-actions:
         patterns: ["*"]
