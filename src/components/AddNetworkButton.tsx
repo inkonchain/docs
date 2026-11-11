@@ -60,7 +60,7 @@ const AddNetworkButtonContent = ({
 
   if (isAdded && isSelected) {
     return (
-      <span className="text-green-500 font-bold flex gap-1 items-center">
+      <span className="text-positive font-bold flex gap-1 items-center">
         <span>Network added & selected.</span>
       </span>
     );
@@ -68,7 +68,7 @@ const AddNetworkButtonContent = ({
 
   if (isAdded) {
     return (
-      <span className="text-green-500 font-bold flex flex-col gap-1">
+      <span className="text-positive font-bold flex flex-col gap-1">
         <p>Network added.</p>
         <p
           onClick={selectNetwork}

@@ -2,18 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Brand tokens — mirror the INK token website. Stored as RGB triplets so
+ * Tailwind opacity modifiers work (see tailwind.config.js).
+ */
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --container: 242 242 242;
+    --container-2: 233 233 233;
+    --primary: 0 0 0;
+    --secondary: 128 128 128;
+    --outline: 204 204 204;
+    --outline-subtle: 231 231 231;
+    --ink: 113 50 245;
+    --ink-light: 158 112 255;
+    --ink-soft: 242 236 255;
+    --positive: 75 188 45;
+    --positive-bg: 233 248 229;
+    --warning: 231 139 25;
+    --warning-bg: 252 241 228;
+    /* Read by the ASCII animation (components/NotFound); it needs
+       comma-separated rgb() */
+    --surface-page: rgb(255, 255, 255);
+    --text-primary: rgb(0, 0, 0);
+  }
+
+  .dark {
+    --background: 5 5 6;
+    --container: 19 19 22;
+    --container-2: 28 28 32;
+    --primary: 245 245 247;
+    --secondary: 152 152 159;
+    --outline: 35 35 40;
+    --outline-subtle: 26 26 30;
+    --ink: 113 50 245;
+    --ink-light: 158 112 255;
+    --ink-soft: 33 26 51;
+    --positive: 85 185 58;
+    --positive-bg: 18 37 12;
+    --warning: 231 139 25;
+    --warning-bg: 42 28 13;
+    --surface-page: rgb(5, 5, 6);
+    --text-primary: rgb(245, 245, 247);
+  }
+}
+
 @layer utilities {
   body {
     font-family:
-      var(--font-plus-jakarta-sans),
-      var(--font-inter),
+      var(--font-satoshi),
+      ui-sans-serif,
+      system-ui,
       -apple-system,
       BlinkMacSystemFont,
       "Segoe UI",
       Helvetica,
-      "Apple Color Emoji",
       Arial,
       sans-serif,
+      "Apple Color Emoji",
       "Segoe UI Emoji",
       "Segoe UI Symbol";
     -webkit-font-smoothing: antialiased;
@@ -22,35 +69,38 @@
 }
 
 @layer base {
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply !text-magic-deep-purple dark:!text-magic-white;
+  body {
+    @apply text-primary;
   }
 
-  a:not(.nextra-sidebar-container a):not(nav a):not(.toc-link) {
-    @apply !text-magic-purple dark:!text-magic-soft-pink !underline hover:!text-magic-purple/80 dark:hover:!text-magic-soft-pink/80;
+  ::selection {
+    @apply bg-ink-light text-white;
+  }
+
+  a:not(.nextra-sidebar-container a):not(nav a):not(.toc-link):not(
+      .ink-footer a
+    ):not(.nextra-banner-container a):not(a[title]:has(> svg)):not(
+      .ink-button
+    ):not(.nextra-search-results a) {
+    /* Text-coloured with a quiet underline (like Linear's docs); ink only on
+       hover, so pages full of links don't turn purple */
+    @apply !text-primary !underline decoration-secondary/40 underline-offset-[3px] transition-colors hover:!text-ink hover:decoration-ink dark:hover:!text-ink-light dark:hover:decoration-ink-light;
   }
 
   nav > a {
-    @apply !text-ink-grey-400 dark:!text-magic-white dark:hover:!text-ink-grey-400 hover:!text-ink-grey-700 !no-underline;
+    @apply !text-secondary hover:!text-primary !no-underline;
   }
 
   nav > a > svg {
-    @apply !fill-magic-black dark:!fill-magic-white;
+    @apply size-5 !fill-primary;
   }
 
   nav {
-    @apply bg-white dark:bg-magic-black;
-  }
-
-  pre {
-    @apply !bg-magic-semi-deep-purple/15;
+    @apply bg-background;
   }
 
   .toc-link {
-    @apply cursor-pointer !text-ink-grey-400 dark:!text-magic-white group-hover:!text-ink-grey-700 dark:group-hover:!text-ink-grey-700;
+    @apply cursor-pointer !text-secondary group-hover:!text-primary;
   }
 
   /* We need to override the underline for nav links and sidebar items */
@@ -58,6 +108,471 @@
   .toc-link {
     @apply no-underline;
   }
+}
+
+/*
+ * Layout chrome — restyle Nextra's navbar, search and sidebar with the brand
+ * tokens. Nextra ships its own `_`-prefixed utilities, so these override them.
+ */
+
+/* Navbar — a hairline always marks where it ends (at the very top the gap
+   to the content otherwise read as a missing margin); the blurred
+   background comes in once scrolled (see components/ScrollState.tsx) */
+/* Styled on the full-width container — the inner <nav> is capped at 90rem */
+.nextra-nav-container {
+  @apply border-b border-outline-subtle !bg-transparent transition-colors;
+}
+
+.nextra-nav-container nav {
+  @apply !bg-transparent;
+}
+
+html[data-scrolled] .nextra-nav-container {
+  @apply !bg-background/80 backdrop-blur-md;
+}
+
+/* Narrower layout with roomier side gutters (like aave.com/docs). Nextra caps
+   the navbar, page and its footer at 90rem; our Footer uses the same var. */
+:root {
+  /* 72rem on laptops, growing with the viewport on big displays */
+  --layout-width: clamp(72rem, 70vw, 84rem);
+}
+
+._max-w-\[90rem\] {
+  max-width: var(--layout-width) !important;
+}
+
+@media (min-width: 1024px) {
+  .nextra-nav-container nav {
+    padding-left: max(env(safe-area-inset-left), 2.5rem) !important;
+    padding-right: max(env(safe-area-inset-right), 2.5rem) !important;
+  }
+
+  .nextra-sidebar-container {
+    @apply !pl-6;
+  }
+}
+
+/* 64px between the navbar and the sidebar / content / TOC columns */
+.nextra-sidebar-container .nextra-scrollbar,
+.nextra-sidebar-container .no-scrollbar {
+  @apply !pt-16;
+}
+
+.nextra-content main {
+  @apply !pt-16;
+}
+
+.nextra-nav-container nav a[aria-current] {
+  @apply rounded-full px-3 py-2.5 text-sm font-medium !text-secondary transition-colors hover:!text-primary;
+}
+
+/* Items are spaced by their own px-3 (like the INK token website), not
+   Nextra's gap-4 on the wrapper */
+.nextra-nav-container nav > div:has(> a[aria-current]) {
+  @apply !gap-0;
+}
+
+@media (min-width: 768px) {
+  /* Links centred in the bar and search pushed to the far right, like the
+     INK token website */
+  .nextra-nav-container nav {
+    @apply relative;
+  }
+
+  .nextra-nav-container nav > div:has(> a[aria-current]) {
+    @apply absolute left-1/2 -translate-x-1/2;
+  }
+
+  .nextra-nav-container nav > div:has(> input[type="search"]) {
+    @apply order-last;
+  }
+}
+
+.nextra-nav-container nav a[aria-current="true"] {
+  @apply font-bold !text-primary;
+}
+
+/*
+ * Search — Nextra's own Flexsearch, restyled. In the navbar it collapses to a
+ * round icon button; focusing it (click or ⌘K) turns it into a centred modal
+ * over a blurred backdrop. Esc / clicking outside blurs it again
+ * (see components/NavbarActions.tsx).
+ */
+:root {
+  --search-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+  --search-top: 15vh;
+  --search-width: min(640px, calc(100vw - 2rem));
+  --search-height: 3.5rem;
+  --search-shadow: 0 24px 48px -12px rgb(0 0 0 / 0.25);
+}
+
+.nextra-nav-container div:has(> input[type="search"]) input {
+  @apply text-primary placeholder:!text-secondary;
+}
+
+.nextra-nav-container div:has(> input[type="search"])::before {
+  content: "";
+  @apply pointer-events-none absolute z-10 size-[18px] bg-background;
+  mask: var(--search-icon) center / contain no-repeat;
+}
+
+/* Every screen size (Nextra hides the navbar search on mobile and puts an
+   input in the menu instead; here it's the same round button everywhere) */
+.nextra-nav-container nav > div:has(> input[type="search"]) {
+  display: flex !important;
+}
+
+.nextra-sidebar-container > div:has(input[type="search"]) {
+  @apply hidden;
+}
+
+/* Mobile order: … theme, search, menu */
+@media (max-width: 767px) {
+  .nextra-nav-container nav > div:has(> input[type="search"]) {
+    @apply order-1;
+  }
+
+  .nextra-nav-container .nextra-hamburger {
+    @apply order-2;
+  }
+}
+
+/* Collapsed: 36px dark circle */
+.nextra-nav-container div:has(> input[type="search"]) {
+  @apply size-9;
+}
+
+.nextra-nav-container div:has(> input[type="search"])::before {
+  @apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
+.nextra-nav-container div:has(> input[type="search"]) input {
+  @apply !size-9 cursor-pointer !rounded-full !bg-primary !p-0 !text-transparent transition-opacity placeholder:!text-transparent hover:opacity-85;
+}
+
+.nextra-nav-container div:has(> input[type="search"]) kbd {
+  @apply hidden;
+}
+
+/* Open: centred modal */
+.nextra-nav-container div:has(> input[type="search"]):focus-within {
+  @apply fixed inset-x-0 z-50 mx-auto;
+  top: var(--search-top);
+  width: var(--search-width);
+  height: var(--search-height);
+}
+
+.nextra-nav-container div:has(> input[type="search"]):focus-within::before {
+  @apply left-5 translate-x-0 bg-secondary;
+}
+
+/* Backdrop */
+.nextra-nav-container div:has(> input[type="search"]):focus-within::after {
+  content: "";
+  @apply fixed inset-0 -z-10 bg-black/40 backdrop-blur-sm;
+}
+
+.nextra-nav-container div:has(> input[type="search"]):focus-within input {
+  @apply !h-full !w-full cursor-text !rounded-2xl border border-outline-subtle !bg-background !pl-12 !pr-14 text-base font-medium !text-primary !outline-none placeholder:!text-secondary hover:opacity-100;
+  /* Replaces Nextra's violet focus ring (drawn with box-shadow) */
+  box-shadow: var(--search-shadow) !important;
+}
+
+/* With results open, the input becomes the header of one joined card */
+html:has(.nextra-search-results:not(:empty))
+  .nextra-nav-container
+  div:has(> input[type="search"]):focus-within
+  input {
+  @apply !rounded-b-none !border-b-outline-subtle;
+}
+
+/* Close (✕) — see NavbarActions; shown only while the modal is open */
+.ink-search-close {
+  @apply fixed z-[55] hidden size-8 items-center justify-center rounded-full text-secondary transition-colors hover:bg-container hover:text-primary;
+  top: calc(var(--search-top) + (var(--search-height) - 2rem) / 2);
+  right: calc((100% - var(--search-width)) / 2 + 0.75rem);
+}
+
+html:has(.nextra-nav-container input[type="search"]:focus) .ink-search-close {
+  @apply flex;
+}
+
+/* A blurred ancestor would become the containing block for the fixed modal */
+/* (`:has()` can't be nested, so this matches the focused input directly) */
+html:has(.nextra-nav-container input[type="search"]:focus)
+  .nextra-nav-container {
+  @apply !backdrop-filter-none;
+}
+
+/* Results sit right under the modal input (overrides headlessui's inline
+     anchor position) */
+.nextra-search-results {
+  position: fixed !important;
+  top: calc(var(--search-top) + var(--search-height) - 1px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: var(--search-width) !important;
+  @apply !z-[60] mx-auto !rounded-t-none !border-t-0;
+  box-shadow: var(--search-shadow) !important;
+}
+
+.nextra-search-results {
+  @apply rounded-2xl border-outline-subtle !bg-background shadow-2xl;
+}
+
+.nextra-search-results {
+  @apply !px-2 !py-2;
+}
+
+/* Section label (page title) */
+.nextra-search-results > div:not(:has(*)) {
+  @apply !mx-3 !mb-1 !mt-4 !border-0 !px-0 !pb-0 text-[11px] !font-semibold uppercase tracking-wide !text-secondary first:!mt-2;
+}
+
+.nextra-search-results a {
+  @apply !mx-0 !rounded-xl !px-3 !py-2.5 !text-primary transition-colors;
+}
+
+.nextra-search-results a[data-focus] {
+  @apply !bg-container;
+}
+
+.nextra-search-results a > div:first-child {
+  @apply !text-sm !font-semibold !leading-5 !text-primary;
+}
+
+.nextra-search-results a .excerpt {
+  @apply !mt-0.5 line-clamp-2 !text-[13px] !font-medium !leading-5 !text-secondary;
+}
+
+/* Matched characters */
+.nextra-search-results span._text-primary-600 {
+  @apply !text-ink dark:!text-ink-light;
+}
+
+/*
+ * Sidebar — no item backgrounds: grey links, primary section labels, and the
+ * active page in ink.
+ */
+/* One 30px rhythm for labels and items: 14/20 text + 5px vertical padding */
+.nextra-sidebar-container ul {
+  @apply !gap-0;
+}
+
+.nextra-sidebar-container :is(a, button) {
+  @apply relative !py-[5px] text-sm font-medium leading-5 !bg-transparent !text-secondary transition-colors hover:!text-primary;
+}
+
+.nextra-sidebar-container :is(a, button) svg {
+  @apply text-secondary;
+}
+
+/* Active page */
+.nextra-sidebar-container a._bg-primary-100 {
+  @apply !text-ink dark:!text-ink-light;
+}
+
+/* Section labels (the `--- Title` separators in _meta.ts) */
+.nextra-sidebar-container li._font-semibold {
+  @apply !mb-0 !py-[5px] text-sm !font-medium leading-5 !text-primary;
+}
+
+.nextra-sidebar-container li._font-semibold:not(:first-child) {
+  @apply !mt-6;
+}
+
+/* Sections are separated by whitespace, not rules (`+++` separators) */
+.nextra-sidebar-container li:has(> hr) {
+  @apply hidden;
+}
+
+/* Vertical guide line next to nested pages */
+.nextra-sidebar-container ul::before {
+  @apply !bg-outline-subtle;
+}
+
+/* With the collapse button off there is no sidebar footer: let the list use
+   the full height. The bottom padding lets the last items scroll clear of
+   the edge overlay below. */
+@media (min-width: 768px) {
+  .nextra-sidebar-container .nextra-scrollbar {
+    height: calc(100vh - var(--nextra-navbar-height)) !important;
+  }
+}
+
+.nextra-sidebar-container .nextra-scrollbar {
+  @apply !pb-16;
+}
+
+/* Bottom edge (like aave.com/docs): a progressive backdrop blur under a
+   background-coloured gradient, so items dissolve into the page */
+@media (min-width: 768px) {
+  .nextra-sidebar-container::before,
+  .nextra-sidebar-container::after {
+    content: "";
+    @apply pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24;
+  }
+
+  .nextra-sidebar-container::before {
+    backdrop-filter: blur(8px);
+    mask-image: linear-gradient(to bottom, transparent, black);
+  }
+
+  .nextra-sidebar-container::after {
+    background: linear-gradient(
+      to bottom,
+      rgb(var(--background) / 0),
+      rgb(var(--background)) 90%
+    );
+  }
+}
+
+/* Scrollable, but without a visible scrollbar */
+.nextra-sidebar-container .nextra-scrollbar {
+  scrollbar-width: none;
+}
+
+.nextra-sidebar-container .nextra-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+ * Typography — calmer hierarchy in the spirit of Linear / Aave docs:
+ * semibold headings that step down clearly, softer 16/26 body text.
+ * (Nextra ships bold 36/30/24px headings and slate body text.)
+ */
+.nextra-content main {
+  /* Satoshi's 400 cut reads thin at body size; 500 matches the sidebar */
+  @apply text-base font-medium leading-[1.625rem] !text-primary/75;
+}
+
+.nextra-content main :is(h1, h2, h3, h4, h5, h6, strong) {
+  @apply !text-primary;
+}
+
+.nextra-content main :is(h1, h2, h3, h4, h5, h6) {
+  @apply !font-semibold !tracking-[-0.02em];
+}
+
+/* Title row: h1 + page actions (components/PageTitle), ruled underneath */
+.nextra-content main .ink-page-title {
+  @apply flex flex-col-reverse items-start gap-4 border-b border-outline-subtle pb-5 sm:flex-row sm:justify-between;
+}
+
+/* Long titles wrap; the actions stay beside the first line */
+.nextra-content main .ink-page-title > h1 {
+  @apply min-w-0 flex-1;
+}
+
+/* "Copy page" once per page: only on the first title, even if a page has a
+   stray second h1 */
+.nextra-content main .ink-page-title ~ .ink-page-title > .ink-page-actions {
+  @apply !hidden;
+}
+
+.nextra-content main .ink-page-title > .ink-page-actions {
+  @apply sm:mt-1;
+}
+
+.nextra-content main h1 {
+  @apply !mt-0 !text-[2rem] !leading-10;
+}
+
+.nextra-content main h2 {
+  @apply !mt-12 !border-0 !pb-0 !text-2xl !leading-8;
+}
+
+.nextra-content main h3 {
+  @apply !mt-10 !text-xl !leading-7;
+}
+
+.nextra-content main :is(h4, h5, h6) {
+  @apply !mt-8 !text-base !leading-6;
+}
+
+.nextra-content main p {
+  @apply !leading-[1.625rem];
+}
+
+.nextra-content main :is(p, ul, ol):not(:first-child) {
+  @apply !mt-4;
+}
+
+.nextra-content main .ink-page-title + :is(p, ul, ol) {
+  @apply !mt-6;
+}
+
+.nextra-content main li {
+  @apply !my-1.5;
+}
+
+/* "Last updated on …" — left-aligned under a hairline */
+.nextra-content main div._mt-12._mb-8._block {
+  @apply !mb-0 !mt-16 border-t border-outline-subtle pt-6 !text-left text-[13px] font-medium !text-secondary;
+}
+
+/* Breadcrumb — dropped: the sidebar already marks the current page */
+.nextra-breadcrumb {
+  @apply !hidden;
+}
+
+/*
+ * Prev / next pagination — two cards with a small "Previous" / "Next" label
+ * above the page title (like aave.com/docs). The label and chevron are
+ * positioned into the top row; the title stays as the link's text.
+ */
+.nextra-content main div:has(> a[title] > svg) {
+  @apply !mt-16 grid grid-cols-2 gap-4 !border-0 !pt-0;
+}
+
+.nextra-content main div:has(> a[title] > svg) > a {
+  @apply relative !m-0 !block !max-w-none rounded-2xl border border-outline-subtle px-6 pb-5 pt-12 !text-base !font-medium !text-primary !no-underline transition-colors hover:bg-container;
+}
+
+.nextra-content main div:has(> a[title] > svg) > a::before {
+  @apply absolute top-5 text-sm font-medium text-secondary;
+}
+
+.nextra-content main div:has(> a[title] > svg) > a > svg {
+  @apply absolute top-[22px] !size-4 text-secondary;
+}
+
+/* Previous vs next: Nextra gives only the next link `ml-auto` (the chevron's
+   position can't tell them apart — :first-child ignores text nodes) */
+/* Previous */
+.nextra-content main div:has(> a[title] > svg) > a:not([class*="_ml-auto"]) {
+  @apply col-start-1;
+}
+
+.nextra-content
+  main
+  div:has(> a[title] > svg)
+  > a:not([class*="_ml-auto"])::before {
+  content: "Previous";
+  @apply left-11;
+}
+
+.nextra-content
+  main
+  div:has(> a[title] > svg)
+  > a:not([class*="_ml-auto"])
+  > svg {
+  @apply left-6;
+}
+
+/* Next */
+.nextra-content main div:has(> a[title] > svg) > a[class*="_ml-auto"] {
+  @apply col-start-2 text-right;
+}
+
+.nextra-content main div:has(> a[title] > svg) > a[class*="_ml-auto"]::before {
+  content: "Next";
+  @apply right-11;
+}
+
+.nextra-content main div:has(> a[title] > svg) > a[class*="_ml-auto"] > svg {
+  @apply right-6;
 }
 
 /* Some custom hacks to override some issues with Nextra */
@@ -68,6 +583,13 @@
 /* Target both the banner container and its text */
 .nextra-banner-container {
   @apply text-white !important;
+  /* Darkest background token (dark --background), same in both themes */
+  background: rgb(5 5 6) !important;
+}
+
+/* Dark mode: the banner is the page colour, so rule it off */
+.dark .nextra-banner-container {
+  @apply border-b border-outline;
 }
 
 .nextra-banner-container a {
@@ -83,4 +605,393 @@
 /* Ensure all text in banner is white, not just links */
 .nextra-banner-container {
   @apply text-white !important;
+}
+
+/*
+ * Callouts — neutral `container` cards like the INK token website instead of
+ * Nextra's blue/yellow alerts. The emoji column is hidden; warnings and
+ * errors keep a tinted background so they still read as cautions.
+ */
+.nextra-callout {
+  @apply rounded-2xl border-0 !bg-container px-5 py-4 text-sm !text-primary;
+}
+
+.nextra-callout > div:first-child {
+  @apply hidden;
+}
+
+.nextra-callout > div:last-child {
+  /* 14/24 — overrides Nextra's leading-7 on the content div */
+  @apply !leading-6;
+}
+
+.nextra-callout:is(._bg-yellow-50, ._bg-red-100) {
+  @apply !bg-warning-bg;
+}
+
+/* Inline code — Nextra's own inline selector, so code blocks are untouched */
+:not(pre) > code.nextra-code {
+  @apply rounded-md !border-0 !bg-container px-1.5 py-0.5 !text-[0.85em] text-primary;
+}
+
+/*
+ * Code blocks (like the Aave docs): a white card with a hairline border in
+ * light mode, the `container` surface in dark; line numbers; highlighted
+ * lines on an ink-soft band; Departure Mono. Token colours come from
+ * src/utils/shiki-ink-theme.mjs.
+ */
+.nextra-code pre {
+  /* A real border instead of Nextra's inset ring (the fill bled past the
+     anti-aliased ring on rounded corners and looked jagged) */
+  @apply !rounded-2xl border border-outline-subtle !bg-background !bg-clip-padding !py-4 !ring-0 dark:!bg-container;
+}
+
+.nextra-code pre,
+.nextra-code pre code {
+  font-family:
+    var(--font-departure-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px !important;
+  line-height: 22px;
+  font-variant-ligatures: none;
+  font-feature-settings: normal !important;
+}
+
+/* Each line is inset so highlighted lines read as rounded bands */
+.nextra-code pre code > span {
+  @apply !mx-3 rounded-lg !px-2;
+}
+
+.nextra-code pre code > span[data-highlighted-line] {
+  @apply !bg-ink-soft;
+  box-shadow: none !important;
+}
+
+/* Line numbers (not on one-line snippets like install commands) */
+.nextra-code pre code {
+  counter-reset: line;
+}
+
+.nextra-code pre code > span::before {
+  counter-increment: line;
+  content: counter(line);
+  @apply mr-4 inline-block w-5 text-right text-secondary/60;
+}
+
+.nextra-code pre code:has(> span:only-child) > span::before {
+  content: none;
+}
+
+.nextra-code pre ::selection {
+  @apply bg-ink-light/30;
+}
+
+/* Filename bar */
+.nextra-code > div:first-child:not(:last-child):has(+ pre) {
+  @apply !rounded-none !rounded-t-2xl !border-outline-subtle !bg-container/60 text-[13px] font-medium !text-secondary dark:!bg-container-2;
+}
+
+/* With a filename bar the two join into one rounded card */
+.nextra-code > div:first-child + pre {
+  @apply !rounded-t-none;
+}
+
+/* Copy / word-wrap buttons */
+.nextra-code button {
+  @apply !rounded-lg !border-0 !bg-transparent !text-secondary hover:!bg-container hover:!text-primary dark:hover:!bg-container-2;
+}
+
+/*
+ * TOC — on wide screens it sits outside the layout, in the right gutter (like
+ * aave.com/docs), so the content column spans the full layout width; it
+ * fades in once the page is scrolled. Narrower screens have no gutter to
+ * spare, so there it stays in the layout and is always visible.
+ */
+@media (min-width: 1600px) {
+  ._max-w-\[90rem\]:has(> .nextra-toc) {
+    @apply relative;
+  }
+
+  .nextra-toc {
+    @apply absolute inset-y-0 left-full pl-8;
+    /* Never wider than the gutter it sits in */
+    width: min(
+      16rem,
+      calc((100vw - var(--layout-width)) / 2 - 1.5rem)
+    ) !important;
+  }
+
+  .ink-toc {
+    @apply transition-opacity duration-300;
+  }
+
+  html:not([data-scrolled]) .ink-toc {
+    @apply pointer-events-none opacity-0;
+  }
+}
+
+/*
+ * Tables — 14px, left-aligned header on a `container` band, hairline row
+ * dividers (no column rules) inside a rounded subtle border; no zebra striping.
+ */
+.nextra-content main table {
+  @apply !mt-6 w-full border-separate border-spacing-0 rounded-2xl border border-outline-subtle text-sm leading-5;
+}
+
+/* Full content width on desktop (Nextra makes tables display:block, which
+   keeps them content-sized); mobile keeps the block + horizontal scroll */
+@media (min-width: 768px) {
+  .nextra-content main table {
+    @apply !table;
+  }
+}
+
+.nextra-content main table tr {
+  @apply !m-0 !border-0 !bg-transparent;
+}
+
+.nextra-content main table :is(th, td) {
+  /* Only a bottom rule per row (Nextra draws a full grid) */
+  @apply !m-0 !border-x-0 !border-b !border-t-0 !border-outline-subtle !px-4 !py-3 text-left align-middle;
+}
+
+.nextra-content main table tr:last-child > td {
+  @apply !border-b-0;
+}
+
+.nextra-content main table th {
+  @apply bg-container text-[13px] !font-semibold text-primary;
+}
+
+.nextra-content main table tr:first-child > th:first-child {
+  @apply rounded-tl-2xl;
+}
+
+.nextra-content main table tr:first-child > th:last-child {
+  @apply rounded-tr-2xl;
+}
+
+/* A lone prev or next card spans the full width */
+.nextra-content main div:has(> a[title] > svg) > a:only-child {
+  grid-column: 1 / -1;
+}
+
+/* Home: the hero sits right under the title, so no rule there */
+.nextra-content main .ink-page-title:has(+ div interactive-ink) {
+  @apply !border-b-0 !pb-0;
+}
+
+/* Edit link right under "Last updated" (pages without pagination) */
+.nextra-content main div._mt-12._mb-8._block + .ink-edit-link {
+  @apply !mt-4;
+}
+
+/* Sidebar folder chevrons — Nextra's fixed radius, tied to --round instead */
+.nextra-sidebar-container svg._rounded-sm {
+  border-radius: calc(0.375rem * var(--round, 1));
+  @apply hover:!bg-container dark:hover:!bg-container;
+}
+
+/* Long tokens (contract addresses, env names) wrap inside their cell instead
+   of pushing the table past the content column */
+.nextra-content main table :is(td, th) {
+  overflow-wrap: anywhere;
+}
+
+.nextra-content main table code {
+  @apply whitespace-normal break-all;
+}
+
+/* Violet line over nested sidebar lists' guide line (SidebarIndicator) */
+.ink-sidebar-indicator {
+  @apply pointer-events-none absolute top-0 z-[1] w-px bg-ink opacity-0 dark:bg-ink-light;
+  transition:
+    transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 320ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 150ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ink-sidebar-indicator {
+    transition: opacity 150ms ease;
+  }
+}
+
+/* After "Last updated", pagination keeps the same 32px rhythm as the edit
+   link below it */
+.nextra-content main div._mt-12._mb-8._block + div:has(> a[title] > svg) {
+  @apply !mt-8;
+}
+
+/*
+ * Task-list checkboxes (`- [ ]` in MDX) — tokens instead of the browser's
+ * greyed-out disabled box. They're decorative, so no pointer cursor.
+ */
+.nextra-content main input[type="checkbox"] {
+  @apply relative mr-2.5 inline-block size-4 shrink-0 appearance-none border border-outline bg-background align-[-0.2em] opacity-100;
+  border-radius: min(calc(0.25rem * var(--round, 1)), 0.5rem);
+}
+
+.nextra-content main input[type="checkbox"]:checked {
+  @apply border-ink bg-ink dark:border-ink-light dark:bg-ink-light;
+}
+
+.nextra-content main input[type="checkbox"]:checked::after {
+  content: "";
+  @apply absolute inset-0 bg-white;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 8.5 2.5 2.5L12 5.5'/%3E%3C/svg%3E")
+    center / 12px no-repeat;
+}
+
+/* Content images — one fixed radius (not tied to the tuner) and a hairline
+   so white screenshots don't bleed into the page */
+.nextra-content main img {
+  @apply border border-outline-subtle;
+  border-radius: 1rem;
+}
+
+/*
+ * Theme switch (ThemeToggle) — the new theme wipes up from the bottom with a
+ * soft leading edge, as on inkonchain.com.
+ */
+@property --theme-wipe {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: theme-wipe 760ms cubic-bezier(0.32, 0.72, 0, 1) both;
+  mask-image: linear-gradient(
+    0deg,
+    rgb(0 0 0 / 1) var(--theme-wipe),
+    rgb(0 0 0 / 0.72) calc(var(--theme-wipe) + 6%),
+    rgb(0 0 0 / 0.24) calc(var(--theme-wipe) + 13%),
+    rgb(0 0 0 / 0) calc(var(--theme-wipe) + 22%)
+  );
+}
+
+@keyframes theme-wipe {
+  from {
+    --theme-wipe: -24%;
+  }
+  to {
+    --theme-wipe: 100%;
+  }
+}
+
+/* Browsers without View Transitions: a quick colour fade */
+html.theme-fallback-transition,
+html.theme-fallback-transition *,
+html.theme-fallback-transition *::before,
+html.theme-fallback-transition *::after {
+  transition-property:
+    background-color, border-color, color, box-shadow, fill, stroke !important;
+  transition-duration: 420ms !important;
+  transition-timing-function: ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mask-image: none;
+  }
+}
+
+/* Typed text in Departure Mono (components/Typewriter) */
+.ink-typer {
+  font-family:
+    var(--font-departure-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  @apply tracking-normal;
+}
+
+.ink-banner-typer {
+  @apply text-[13px];
+}
+
+.ink-typer__prompt {
+  color: #969696;
+}
+
+/* Sized in em so it scales with the text */
+.ink-typer__caret {
+  @apply ml-[0.15em] inline-block h-[1em] w-[0.54em] translate-y-[0.15em];
+  background: #969696;
+  animation: ink-caret 1.06s steps(1) infinite;
+}
+
+@keyframes ink-caret {
+  50% {
+    background: rgb(150 150 150 / 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ink-typer__caret {
+    animation: none;
+  }
+}
+
+/* No underline on the typed banner link; the caret is enough of a cue */
+/* (doubled selectors to outrank the banner underline rule above) */
+.nextra-banner-container.nextra-banner-container
+  a:has(.ink-banner-typer):not(nav a):not(.toc-link):not(.ink-footer a) {
+  @apply !no-underline hover:!text-white/80;
+}
+
+/* Bottom search pill (components/SearchBar) steps aside while the search
+   modal is open */
+html:has(.nextra-nav-container input[type="search"]:focus) .ink-search-bar {
+  @apply hidden;
+}
+
+/* The navbar search button is hidden: the bottom pill (SearchBar) and ⌘K
+   open search now. The input stays in the DOM (still focusable) because the
+   modal is built on it; it only takes space once focused. */
+.nextra-nav-container div:has(> input[type="search"]):not(:focus-within) {
+  @apply pointer-events-none absolute size-px overflow-hidden opacity-0;
+}
+
+/* Code blocks get the same breathing room below as above (Nextra only sets
+   the top margin, so a following list item sat almost flush) */
+.nextra-content main .nextra-code {
+  @apply !mb-6 last:!mb-0;
+}
+
+/*
+ * External-link icon for the sidebar and navbar, restoring what the "mark
+ * external nav links" change did with ↗ in the titles. Nextra
+ * opens external items in a new tab, so key off target="_blank": the icon
+ * appears automatically for any future external link too.
+ */
+:root {
+  --external-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3C/svg%3E");
+}
+
+.nextra-sidebar-container a[target="_blank"]::after,
+.nextra-sidebar-container a[href="/status"]::after,
+.nextra-nav-container nav a[aria-current][target="_blank"]::after {
+  content: "";
+  @apply inline-block size-3.5 shrink-0 bg-current opacity-60;
+  mask: var(--external-icon) center / contain no-repeat;
+}
+
+/* Sidebar: right-aligned like the folder chevrons (as on aave.com/docs) */
+.nextra-sidebar-container a[target="_blank"]::after,
+.nextra-sidebar-container a[href="/status"]::after {
+  @apply ml-auto self-center;
+}
+
+/* (/status is a local page that opens status.inkonchain.com in a new tab,
+   so it's external for the reader even though Nextra renders it as local) */
+
+/* Navbar: right after the label */
+.nextra-nav-container nav a[aria-current][target="_blank"] {
+  @apply inline-flex items-center gap-1;
 }

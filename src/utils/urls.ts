@@ -1,4 +1,5 @@
 export const URLS = {
+  appUrl: "https://inkonchain.com",
   githubOrgUrl: "https://github.com/inkonchain",
   statusPageUrl: "https://status.inkonchain.com/",
   faucetUrl: "https://app.optimism.io/faucet",

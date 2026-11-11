@@ -6,7 +6,8 @@ export default {
       breadcrumb: false,
       footer: true,
       sidebar: true,
-      toc: true,
+      // The home page is cards; its TOC only took width from them
+      toc: false,
       pagination: false,
     },
   },
@@ -16,10 +17,11 @@ export default {
     theme: {
       layout: "full",
       breadcrumb: false,
-      footer: true,
-      sidebar: true,
+      footer: false,
+      sidebar: false,
       toc: false,
       pagination: false,
+      timestamp: false,
     },
   },
   "500": {
@@ -28,14 +30,15 @@ export default {
     theme: {
       layout: "full",
       breadcrumb: false,
-      footer: true,
-      sidebar: true,
+      footer: false,
+      sidebar: false,
       toc: false,
       pagination: false,
+      timestamp: false,
     },
   },
   header_status: {
-    title: "Status Page ↗",
+    title: "Status Page",
     type: "page",
     href: "https://status.inkonchain.com/",
     newWindow: true,
@@ -123,7 +126,7 @@ export default {
     title: "FAQ",
   },
   status: {
-    title: "Status Page ↗",
+    title: "Status Page",
     href: "https://status.inkonchain.com/",
     newWindow: true,
     theme: {
