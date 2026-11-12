@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
-    "postbuild": "next-sitemap",
+    "postbuild": "next-sitemap && node scripts/copy-404.mjs",
     "start": "next start",
     "lint": "pnpm run lint:js && pnpm run lint:mdx && pnpm run format:js:check && pnpm run spellcheck:lint",
     "lint:fix": "pnpm run lint:js:fix && pnpm run lint:mdx:fix && pnpm run format:js && pnpm run spellcheck:fix",
