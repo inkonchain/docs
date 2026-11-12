@@ -96,6 +96,28 @@
   "pnpm": {
     "patchedDependencies": {
       "nextra@3.3.1": "patches/nextra@3.3.1.patch"
+    },
+    "overrides": {
+      "@apidevtools/json-schema-ref-parser": "^11.2.0",
+      "@xmldom/xmldom": "^0.9.11",
+      "brace-expansion@<1.1.16": "^1.1.16",
+      "brace-expansion@>=2.0.0 <2.1.2": "^2.1.2",
+      "browserslist": "^4.28.7",
+      "dompurify": "^3.4.17",
+      "flatted": "^3.4.2",
+      "glob@<10.5.0": "^10.5.0",
+      "js-yaml@<3.15.0": "^3.15.0",
+      "js-yaml@>=4.0.0 <4.3.0": "^4.3.0",
+      "lodash-es": "^4.18.0",
+      "minimatch@<3.1.4": "^3.1.4",
+      "minimatch@>=9.0.0 <9.0.7": "^9.0.7",
+      "nanoid": "^3.3.18",
+      "picomatch@<2.3.2": "^2.3.2",
+      "picomatch@>=4.0.0 <4.0.4": "^4.0.4",
+      "postcss": "^8.5.30",
+      "smol-toml": "^1.7.1",
+      "source-map-js": "^1.2.2",
+      "trim-newlines": "^3.0.1"
     }
   }
 }
