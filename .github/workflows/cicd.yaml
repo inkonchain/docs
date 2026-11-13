@@ -10,8 +10,13 @@ jobs:
     uses: inkonchain/.github/.github/workflows/securesdlc.yml@main
     secrets: inherit
 
+  # Deliberately not `needs: securesdlc`. The SecureSDLC umbrella skips its
+  # jobs when the actor is dependabot[bot], and a `needs` on a skipped job
+  # skips everything downstream, so Dependabot PRs used to get no lint or
+  # build at all while still showing as clean. SecureSDLC is enforced
+  # independently by the branch ruleset's required workflow, so nothing
+  # here needs to wait for it.
   install_modules:
-    needs: securesdlc
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -102,9 +107,11 @@ jobs:
 
   # Deploys to the foundation-owned Vercel team using a token (no Vercel GitHub
   # App install needed on this org). Preview deploys only run for branches in
-  # this repo, since fork PRs can't access secrets.
+  # this repo, since fork PRs can't access secrets. Dependabot runs are
+  # excluded too: they only see Dependabot secrets, not repository secrets,
+  # so VERCEL_TOKEN would be empty and the deploy would fail.
   vercel-preview:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     needs: build
     permissions:

@@ -52,6 +52,17 @@ const config = withNextra({
       ...config.resolve.alias,
       "@": path.join(__dirname, "src"),
     };
+    // webpack's persistent cache treats everything under node_modules as
+    // immutable per name@version, so a pnpm patch to an already-cached
+    // package is silently ignored whenever .next/cache exists (locally and on
+    // Vercel, which restores the cache between builds). Hash the patches into
+    // the cache key so a patch change rebuilds from scratch.
+    if (config.cache && typeof config.cache === "object") {
+      config.cache.buildDependencies = {
+        ...config.cache.buildDependencies,
+        patches: [path.join(__dirname, "patches/")],
+      };
+    }
     return config;
   },
   experimental: {
