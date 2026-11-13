@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   nextra@3.3.1:
-    hash: loyw7z2ceswzwl5s52wyutoagq
+    hash: mg3bpic72zdajwivjyuhpr2kee
     path: patches/nextra@3.3.1.patch
 
 importers:
@@ -27,10 +27,10 @@ importers:
         version: 0.4.6(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       nextra:
         specifier: 3.3.1
-        version: 3.3.1(patch_hash=loyw7z2ceswzwl5s52wyutoagq)(@types/react@19.3.0)(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.8.3)
+        version: 3.3.1(patch_hash=mg3bpic72zdajwivjyuhpr2kee)(@types/react@19.3.0)(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.8.3)
       nextra-theme-docs:
         specifier: 3.3.1
-        version: 3.3.1(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(nextra@3.3.1(patch_hash=loyw7z2ceswzwl5s52wyutoagq)(@types/react@19.3.0)(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.8.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 3.3.1(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(nextra@3.3.1(patch_hash=mg3bpic72zdajwivjyuhpr2kee)(@types/react@19.3.0)(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.8.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react:
         specifier: 19.3.1
         version: 19.3.1
@@ -1183,7 +1183,7 @@ packages:
   '@types/react-dom@19.3.0':
     resolution: {integrity: sha512-ZI7bU42mZXXKHn/qNLEw2IrbiINU7X5+vfgdixBHkCNpYWXjKgfQ/P+uyGb5CjOLB9UcnTeg3rylQtV2hym44Q==}
     peerDependencies:
-      '@types/react': 19.3.0
+      '@types/react': ^19.3.0
 
   '@types/react@19.3.0':
     resolution: {integrity: sha512-N0rFCuH9YoxG9/m61l9MfpJKfmLOVU0em7ipIz6TRgSSkvReLB9vL85GB+yr8Bs5leqpvg96JSwF4ZS1s4viQg==}
@@ -8424,7 +8424,7 @@ snapshots:
       - '@types/node'
       - babel-plugin-macros
 
-  nextra-theme-docs@3.3.1(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(nextra@3.3.1(patch_hash=loyw7z2ceswzwl5s52wyutoagq)(@types/react@19.3.0)(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.8.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
+  nextra-theme-docs@3.3.1(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(nextra@3.3.1(patch_hash=mg3bpic72zdajwivjyuhpr2kee)(@types/react@19.3.0)(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.8.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       '@headlessui/react': 2.2.10(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       clsx: 2.1.1
@@ -8432,13 +8432,13 @@ snapshots:
       flexsearch: 0.7.43
       next: 16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       next-themes: 0.4.6(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      nextra: 3.3.1(patch_hash=loyw7z2ceswzwl5s52wyutoagq)(@types/react@19.3.0)(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.8.3)
+      nextra: 3.3.1(patch_hash=mg3bpic72zdajwivjyuhpr2kee)(@types/react@19.3.0)(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.8.3)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       scroll-into-view-if-needed: 3.1.0
       zod: 3.24.4
 
-  nextra@3.3.1(patch_hash=loyw7z2ceswzwl5s52wyutoagq)(@types/react@19.3.0)(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.8.3):
+  nextra@3.3.1(patch_hash=mg3bpic72zdajwivjyuhpr2kee)(@types/react@19.3.0)(next@16.4.1(@babel/core@7.29.7)(@types/node@24.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.8.3):
     dependencies:
       '@formatjs/intl-localematcher': 0.5.10
       '@headlessui/react': 2.2.10(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
