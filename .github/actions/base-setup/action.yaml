@@ -4,7 +4,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup pnpm
-      uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+      uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
       with:
         run_install: false
 
@@ -12,7 +12,7 @@ runs:
     # setup-node will happily reuse an older 22.x preinstalled on the runner
     # image, so a floating range doesn't guarantee we get Node security patches.
     - name: Setup Node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7
       with:
         node-version-file: ".nvmrc"
         cache: "pnpm"
@@ -23,7 +23,7 @@ runs:
       run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
     - name: Restore Cache
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: |
           ${{ steps.pnpm-cache.outputs.STORE_PATH }}
