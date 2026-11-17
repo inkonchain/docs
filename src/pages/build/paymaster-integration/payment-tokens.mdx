@@ -87,13 +87,21 @@ Read `refundCredit` with `getPublicPaymasterAccountState`. Applications may
 claim it through the smart account using `encodePublicPaymasterRefundClaim`.
 Refunds and allowances are independent for each token.
 
+Pass the same token used to read `refundCredit`. The example below claims USDG;
+omitting the token selection uses the deployment's default (USDC for
+`INK_PUBLIC_PAYMASTER`).
+
 ```ts
 import {
   encodePublicPaymasterRefundClaim,
   INK_PUBLIC_PAYMASTER,
 } from "@hellomoon/ink-paymaster";
 
-const claim = encodePublicPaymasterRefundClaim(recipient);
+const claim = encodePublicPaymasterRefundClaim(
+  recipient,
+  INK_PUBLIC_PAYMASTER,
+  "USDG",
+);
 const encodedCall = await smartAccount.encodeCalls([
   {
     to: INK_PUBLIC_PAYMASTER.paymaster,
