@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "clsx": "2.1.1",
-    "next": "16.4.5",
+    "next": "16.4.6",
     "next-sitemap": "4.2.3",
     "next-themes": "0.4.6",
     "nextra": "3.3.1",
@@ -67,7 +67,7 @@
     "autoprefixer": "10.6.2",
     "cspell": "10.4.0",
     "eslint": "10.14.0",
-    "eslint-config-next": "16.4.5",
+    "eslint-config-next": "16.4.6",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-simple-import-sort": "14.0.0",
