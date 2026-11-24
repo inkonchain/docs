@@ -28,8 +28,8 @@ export const AddNetworkButton = ({
           <span>{heading}</span>
           {isSelected && <ConnectedPulse className="size-6" />}
           <a
-            href="#mainnet"
-            id="mainnet"
+            href={`#${network}`}
+            id={network}
             className="subheading-anchor"
             aria-label="Permalink for this section"
           ></a>
