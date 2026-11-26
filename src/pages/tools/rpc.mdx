@@ -81,6 +81,14 @@ BoltRPC provides dedicated HTTPS and WebSocket RPC endpoints for Ink, operated b
 
 - Ink Mainnet
 
+## [BlockVectra](https://blockvectra.com/en/chains/ink_mainnet/?ref=gh-ink-docs)
+
+BlockVectra provides HTTPS JSON-RPC access to Ink Mainnet, including a public endpoint that accepts JSON-RPC POST requests without an API key.
+
+**Supported Networks**
+
+- Ink Mainnet
+
 <br />
 <br />
 <br />
@@ -151,6 +159,22 @@ dRPC provides globally distributed nodes for public and premium Ink RPC endpoint
 
 - HTTPS: <CopyableCode code="https://ink-sepolia.drpc.org" />
 - Websocket: <CopyableCode code="wss://ink-sepolia.drpc.org" />
+
+### 5. BlockVectra
+
+Send JSON-RPC requests using HTTP POST; opening the URL in a browser sends a GET request. Available public methods, rate limits, and history limits are listed in the [live chain catalog](https://api.blockvectra.com/v1/chains).
+
+#### Ink Mainnet
+
+- HTTPS: <CopyableCode code="https://api.blockvectra.com/v1/ink_mainnet/public" />
+
+Read Ink's chain ID without an API key:
+
+```sh
+curl https://api.blockvectra.com/v1/ink_mainnet/public \
+  -H 'Content-Type: application/json' \
+  --data '{"jsonrpc":"2.0","id":1,"method":"eth_chainId","params":[]}'
+```
 
 ---
 
