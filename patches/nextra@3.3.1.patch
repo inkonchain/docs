@@ -1,3 +1,24 @@
+diff --git a/dist/client/setup-page.js b/dist/client/setup-page.js
+index 6015254ec237aec18e26c8be6c9027fdbcb5119c..099162f83609aa87b13fa307d3258f13dfe131cf 100644
+--- a/dist/client/setup-page.js
++++ b/dist/client/setup-page.js
+@@ -5,7 +5,15 @@ import { useRouter } from "./hooks/index.js";
+ import { DataProvider } from "./hooks/use-data.js";
+ import { useMDXComponents } from "./mdx.js";
+ function HOC_MDXWrapper(MDXContent, route, pageOpts, useTOC) {
+-  const __nextra_internal__ = globalThis[NEXTRA_INTERNAL];
++  // This runs when the page module is evaluated. The global is normally
++  // created by the code Nextra's loader injects into `_app`, but on Vercel
++  // with Next.js 16 the `/404` page is served from a serverless function
++  // that evaluates the page module before `_app`, so the global does not
++  // exist yet and `.route = ...` throws "Cannot set properties of undefined".
++  // Create it here with the same `||=` idiom `_app` uses; whichever module
++  // runs second merges into the same object.
++  const __nextra_internal__ = globalThis[NEXTRA_INTERNAL] ||= Object.create(null);
++  __nextra_internal__.context ||= Object.create(null);
+   __nextra_internal__.route = route;
+   __nextra_internal__.pageMap = pageOpts.pageMap;
+   __nextra_internal__.context[route] = {
 diff --git a/dist/server/webpack-plugins/nextra-search.js b/dist/server/webpack-plugins/nextra-search.js
 index 6066612e2973274d5c9a76004e0b136d928cafb7..1d72be67bfea3348913edb215834dcfd29795969 100644
 --- a/dist/server/webpack-plugins/nextra-search.js
